@@ -357,6 +357,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/Main/MainContext.cs"
+"Assets/Main/MainRoot.cs"
 "Assets/StrangeIoC/examples/Assets/scripts/multiplecontexts/game/controller/GameEvent.cs"
 "Assets/StrangeIoC/examples/Assets/scripts/multiplecontexts/game/controller/GameOverCommand.cs"
 "Assets/StrangeIoC/examples/Assets/scripts/multiplecontexts/game/controller/RemoveSocialContextCommand.cs"
