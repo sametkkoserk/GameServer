@@ -120,6 +120,7 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
+-r:"Assets/Scripts/Multiplayer/RiptideNetworking.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.15f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.15f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.15f1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
@@ -357,8 +358,18 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/Main/MainContext.cs"
-"Assets/Main/MainRoot.cs"
+"Assets/Scripts/GameLogic.cs"
+"Assets/Scripts/Lobby.cs"
+"Assets/Scripts/Main/Command/CreateNetworkContextCommand.cs"
+"Assets/Scripts/Main/Config/MainContext.cs"
+"Assets/Scripts/Main/Config/MainRoot.cs"
+"Assets/Scripts/Multiplayer/Command/ServerStartCommand.cs"
+"Assets/Scripts/Multiplayer/Config/NetworkContext.cs"
+"Assets/Scripts/Multiplayer/Config/NetworkRoot.cs"
+"Assets/Scripts/Multiplayer/MessageExtensions.cs"
+"Assets/Scripts/Multiplayer/Services/NetworkManager/INetworkManagerService.cs"
+"Assets/Scripts/Multiplayer/Services/NetworkManager/NetworkManagerService.cs"
+"Assets/Scripts/Player.cs"
 "Assets/StrangeIoC/examples/Assets/scripts/multiplecontexts/game/controller/GameEvent.cs"
 "Assets/StrangeIoC/examples/Assets/scripts/multiplecontexts/game/controller/GameOverCommand.cs"
 "Assets/StrangeIoC/examples/Assets/scripts/multiplecontexts/game/controller/RemoveSocialContextCommand.cs"
