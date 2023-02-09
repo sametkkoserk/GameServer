@@ -10,7 +10,7 @@ namespace Multiplayer.Command
         public INetworkManagerService networkManager{get;set;}
         public override void Execute()
         {
-            networkManager.Connect(8084, 10);
+            networkManager.StartServer(8084, 10);
         }
     }
 }

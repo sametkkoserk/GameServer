@@ -1,6 +1,9 @@
 using Multiplayer.Command;
+using Multiplayer.Enum;
+using Multiplayer.Processor;
 using Multiplayer.Services.NetworkManager;
 using Multiplayer.View.Deneme;
+using RiptideNetworking;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
@@ -35,6 +38,9 @@ namespace Multiplayer.Config
             //The START event is fired as soon as mappings are complete.
             //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
             commandBinder.Bind(ContextEvent.START).To<ServerStartCommand>();
+            commandBinder.Bind(NetworkEvent.SendResponse).To<SendResponseCommand>();
+
+            commandBinder.Bind(ClientToServerId.test).To<HandleMessageProcessor>();
 
         }
     }

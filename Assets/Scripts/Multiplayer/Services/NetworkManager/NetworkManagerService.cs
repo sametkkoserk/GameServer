@@ -12,7 +12,7 @@ namespace Multiplayer.Services.NetworkManager
         [SerializeField] private ushort port;
         [SerializeField] private ushort maxClientCount;
 
-        public void Connect(ushort _port ,ushort _maxClientCount)
+        public void StartServer(ushort _port ,ushort _maxClientCount)
         {
             port = _port;
             maxClientCount = _maxClientCount;
