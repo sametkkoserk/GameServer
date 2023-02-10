@@ -1,6 +1,6 @@
 using Multiplayer.Command;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using UnityEngine;
 
 namespace Multiplayer.Services.NetworkManager
@@ -26,7 +26,7 @@ namespace Multiplayer.Services.NetworkManager
         {
             if (Server != null)
             {
-                Server.Tick();
+                Server.Update();
             }
         }
 

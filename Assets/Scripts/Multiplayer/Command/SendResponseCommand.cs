@@ -1,6 +1,6 @@
 using Multiplayer.Enum;
 using Multiplayer.Services.NetworkManager;
-using RiptideNetworking;
+using Riptide;
 using strange.extensions.command.impl;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace Multiplayer.Command
         public INetworkManagerService networkManager{get;set;}
         public override void Execute()
         {
-            Message message = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientId.response);
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.response);
             message.AddString("okay");
             networkManager.Server.Send(message,1);
             Debug.Log("Message sent");

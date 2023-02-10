@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638112075992543297
-    m_Hash: 1010242877
+      ticks: 638116359417055983
+    m_Hash: 2505297405
   m_LockFileStatus:
     m_FilePath: C:/Users/samet/Desktop/Online_Game/GameServer/GameServer/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638112076592306673
-    m_Hash: 1035663092
+      ticks: 638116359417527494
+    m_Hash: 3445013465
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -1064,6 +1064,56 @@ m_ResolvedPackages:
     path: 
   unityLifecycle:
     version: 1.7.8
+    nextVersion: 
+- packageId: net.tomweiland.riptide@https://github.com/RiptideNetworking/Riptide.git?path=/Packages/Core#2.0.0
+  testable: 0
+  isDirectDependency: 1
+  version: 2.0.0
+  source: 5
+  resolvedPath: C:\Users\samet\Desktop\Online_Game\GameServer\GameServer\Library\PackageCache\net.tomweiland.riptide@bb252ba2ea
+  assetPath: Packages/net.tomweiland.riptide
+  name: net.tomweiland.riptide
+  displayName: Riptide Networking
+  author:
+    name: Tom Weiland
+    email: contact@tomweiland.net
+    url: https://www.youtube.com/c/tomweiland
+  category: 
+  type: 
+  description: Riptide is a lightweight C# networking library primarily designed
+    for use in multiplayer games.
+  status: 0
+  errors: []
+  versions:
+    all: []
+    compatible: []
+    verified: 
+  dependencies: []
+  resolvedDependencies: []
+  keywords:
+  - riptide
+  - networking
+  - multiplayer
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+  hideInEditor: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: https://riptide.tomweiland.net
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/RiptideNetworking/Riptide
+    revision: 
+    path: 
+  unityLifecycle:
+    version: 
     nextVersion: 
 - packageId: com.unity.modules.ai@1.0.0
   testable: 0
