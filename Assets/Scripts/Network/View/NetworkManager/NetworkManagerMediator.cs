@@ -1,22 +1,20 @@
+using System;
 using Network.Enum;
 using Network.Services.NetworkManager;
+using Riptide;
 using strange.extensions.mediation.impl;
+using UnityEngine;
 
 namespace Network.View.NetworkManager
 {
     public class NetworkManagerMediator : EventMediator
     {
-        public bool control;
         [Inject]
         public INetworkManagerService networkManager{get;set;}
+        
         private void FixedUpdate()
         {
             networkManager.Ticker();
-            if (control)
-            {
-                dispatcher.Dispatch(NetworkEvent.SendResponse);
-                control = false;
-            }
         }
 
         private void OnApplicationQuit()

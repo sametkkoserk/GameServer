@@ -1,4 +1,5 @@
 using Network.Enum;
+using Network.Vo;
 using Riptide;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
@@ -9,13 +10,17 @@ namespace Network.Processor
 {
     public class HandleMessageProcessor : EventCommand
     {
-        [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-        public IEventDispatcher dispatcher{ get; set;}
-        [MessageHandler((ushort)ClientToServerId.test)]
-        private static void Test(ushort fromClientId, Message message)
+        public override void Execute()
         {
-            Debug.Log(message.GetString());
-            //dispatcher.Dispatch(NetworkEvent.SendResponse);
+            MessageReceivedVo vo = (MessageReceivedVo)evt.data;
+            ushort fromId = vo.fromId;
+            Message message = vo.message;
+            string testMessage = message.GetString();
+            
+            Debug.Log(fromId);
+            Debug.Log(testMessage);
+            
+            dispatcher.Dispatch(NetworkEvent.SendResponse);
         }
     }
 }
