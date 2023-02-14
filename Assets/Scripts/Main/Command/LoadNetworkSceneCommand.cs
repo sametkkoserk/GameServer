@@ -1,6 +1,7 @@
 using Main.Enum;
 using strange.extensions.command.impl;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace Main.Command
 {
@@ -8,7 +9,7 @@ namespace Main.Command
     {
         public override void Execute()
         {
-            Addressables.LoadSceneAsync(SceneKeys.NetworkScene);
+            Addressables.LoadSceneAsync(SceneKeys.NetworkScene,LoadSceneMode.Additive);
         }
     }
 }

@@ -21,24 +21,22 @@ namespace Network.Config
         
         protected override void mapBindings()
         {
-            //Injection binding.
-            //Map a mock model and a mock service, both as Singletons
-            //injectionBinder.Bind<IExampleModel>().To<ExampleModel>().ToSingleton();
+            //Service
             injectionBinder.Bind<INetworkManagerService>().To<NetworkManagerService>().ToSingleton();
-            //View/Mediator binding
-            //This Binding instantiates a new ExampleMediator whenever as ExampleView
-            //Fires its Awake method. The Mediator communicates to/from the View
-            //and to/from the App. This keeps dependencies between the view and the app
-            //separated.
+            
+            //Model
+            
+            
+            //View/Mediator 
             mediationBinder.Bind<NetworkManagerView>().To<NetworkManagerMediator>();
             
-            //Event/Command binding
-            //commandBinder.Bind(ExampleEvent.REQUEST_WEB_SERVICE).To<CallWebServiceCommand>();
-            //The START event is fired as soon as mappings are complete.
-            //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
+            //Command
             commandBinder.Bind(ContextEvent.START).To<ServerStartCommand>();
+            
+            
             commandBinder.Bind(NetworkEvent.SendResponse).To<SendResponseCommand>();
 
+            //Processor
             commandBinder.Bind(ClientToServerId.test).To<HandleMessageProcessor>();
 
         }

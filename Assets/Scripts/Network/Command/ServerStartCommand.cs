@@ -9,7 +9,9 @@ namespace Network.Command
         public INetworkManagerService networkManager{get;set;}
         public override void Execute()
         {
+            Retain();
             networkManager.StartServer(8084, 10);
+            Release();
         }
     }
 }
