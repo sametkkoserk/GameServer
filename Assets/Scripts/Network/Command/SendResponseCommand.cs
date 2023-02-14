@@ -3,6 +3,7 @@ using Riptide;
 using strange.extensions.command.impl;
 using UnityEngine;
 using Network.Enum;
+using Network.Vo;
 
 namespace Network.Command
 {
@@ -12,9 +13,10 @@ namespace Network.Command
         public INetworkManagerService networkManager{get;set;}
         public override void Execute()
         {
+            MessageReceivedVo vo = (MessageReceivedVo)evt.data;
             Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.response);
             message.AddString("okay");
-            networkManager.Server.Send(message,1);
+            networkManager.Server.Send(message,vo.fromId);
             Debug.Log("Message sent");
             
             
