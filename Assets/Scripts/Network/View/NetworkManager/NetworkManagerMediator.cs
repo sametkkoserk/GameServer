@@ -10,16 +10,16 @@ namespace Network.View.NetworkManager
     public class NetworkManagerMediator : EventMediator
     {
         [Inject]
-        public INetworkManagerService networkManager{get;set;}
+        public INetworkManagerService networkManagerService {get;set;}
         
         private void FixedUpdate()
         {
-            networkManager.Ticker();
+            networkManagerService.Ticker();
         }
 
         private void OnApplicationQuit()
         {
-            networkManager.OnQuit();
+            networkManagerService.OnQuit();
         }
     }
 }

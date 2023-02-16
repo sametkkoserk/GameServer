@@ -52,7 +52,7 @@ namespace strange.examples.multiplecontexts.social
 			if (userVO == null || vo.serviceId == userVO.serviceId)
 			{
 				userVO = vo;
-				updateImage(userVO.imgUrl);
+	//			updateImage(userVO.imgUrl);
 				updateName(userVO.userFirstName);
 				updateScore(userVO.highScore);
 			}
@@ -82,6 +82,8 @@ namespace strange.examples.multiplecontexts.social
 			gameObject.transform.position = dest;
 		}
 		
+		// ReSharper disable Unity.PerformanceAnalysis
+		[Obsolete("Obsolete")]
 		private void updateImage(string url)
 		{
 			if (url == imgUrl)
@@ -92,10 +94,12 @@ namespace strange.examples.multiplecontexts.social
 			imgUrl = url;
 			if (!String.IsNullOrEmpty(imgUrl))
 			{
+				// ReSharper disable once HeapView.ObjectAllocation
 				StartCoroutine(loadUserImg());
 			}
 		}
 		
+		[Obsolete("Obsolete")]
 		private IEnumerator loadUserImg()
 		{
 			WWW www = new WWW(imgUrl);

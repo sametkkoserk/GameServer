@@ -14,7 +14,7 @@ namespace Network.Command
         public override void Execute()
         {
             MessageReceivedVo vo = (MessageReceivedVo)evt.data;
-            Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.response);
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.RESPONSE);
             message.AddString("okay");
             networkManager.Server.Send(message,vo.fromId);
             Debug.Log("Message sent");

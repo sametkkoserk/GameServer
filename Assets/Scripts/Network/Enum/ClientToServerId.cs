@@ -2,7 +2,7 @@ namespace Network.Enum
 {
     public enum ClientToServerId : ushort
     {
-        test=1,
+        TEST = 1,
         createLobby=2
     }
 }

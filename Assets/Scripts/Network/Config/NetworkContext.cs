@@ -34,10 +34,10 @@ namespace Network.Config
             commandBinder.Bind(ContextEvent.START).To<ServerStartCommand>();
             
             
-            commandBinder.Bind(NetworkEvent.SendResponse).To<SendResponseCommand>();
+            commandBinder.Bind(NetworkEvent.SEND_RESPONSE).To<SendResponseCommand>();
 
             //Processor
-            commandBinder.Bind(ClientToServerId.test).To<HandleMessageProcessor>();
+            commandBinder.Bind(ClientToServerId.TEST).To<HandleMessageProcessor>();
 
         }
     }
