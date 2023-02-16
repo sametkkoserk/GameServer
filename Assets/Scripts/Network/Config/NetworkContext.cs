@@ -22,7 +22,7 @@ namespace Network.Config
         protected override void mapBindings()
         {
             //Service
-            injectionBinder.Bind<INetworkManagerService>().To<NetworkManagerService>().ToSingleton();
+            injectionBinder.Bind<INetworkManagerService>().To<NetworkManagerService>().ToSingleton().CrossContext();
             
             //Model
             

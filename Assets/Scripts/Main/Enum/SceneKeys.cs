@@ -4,5 +4,6 @@ namespace Main.Enum
     {
         public const string MainScene = "MainScene";
         public const string NetworkScene = "NetworkScene";
+        public const string LobbyScene = "LobbyScene";
     }
 }

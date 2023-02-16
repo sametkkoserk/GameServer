@@ -11,8 +11,8 @@ namespace Network.Services.NetworkManager
     public class NetworkManagerService : INetworkManagerService 
     {
         
-        [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-        public IEventDispatcher dispatcher{ get; set;}
+        [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
+        public IEventDispatcher crossDispatcher{ get; set;}
         
         public Server Server { get; private set; }
 
@@ -44,7 +44,7 @@ namespace Network.Services.NetworkManager
             MessageReceivedVo vo = new MessageReceivedVo();
             vo.fromId = messageArgs.FromConnection.Id;
             vo.message = messageArgs.Message;
-            dispatcher.Dispatch((ClientToServerId)messageArgs.MessageId,vo);
+            crossDispatcher.Dispatch((ClientToServerId)messageArgs.MessageId,vo);
         }
 
         public void OnQuit()
