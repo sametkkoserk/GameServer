@@ -20,7 +20,7 @@ namespace Network.Processor
             Debug.Log(fromId);
             Debug.Log(testMessage);
             
-            dispatcher.Dispatch(NetworkEvent.SendResponse, vo);
+            dispatcher.Dispatch(NetworkEvent.SEND_RESPONSE, vo);
         }
     }
 }
