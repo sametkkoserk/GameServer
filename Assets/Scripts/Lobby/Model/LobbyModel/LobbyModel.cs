@@ -18,6 +18,7 @@ namespace Lobby.Model.LobbyModel
         public void NewLobbyCreated(LobbyVo vo)
         {
             createdLobbyVo = vo;
+            createdLobbyVo.lobbyId = lobbyCount;
             lobbies[lobbyCount] = vo;
             lobbyCount += 1;
             Debug.Log("model process completed");

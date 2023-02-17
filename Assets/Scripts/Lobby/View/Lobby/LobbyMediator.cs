@@ -22,10 +22,16 @@ namespace Lobby.View.Lobby
         private void Start()
         {
             LobbyVo vo = lobbyModel.createdLobbyVo;
+            view.lobbyId = vo.lobbyId;
             view.lobbyName = vo.lobbyName;
             view.isPrivate = vo.isPrivate;
             view.leaderId = vo.leaderId;
             Debug.Log("lobby Inited");
+            
+            JoinedToLobbyVo joinedToLobbyVo = new JoinedToLobbyVo();
+            joinedToLobbyVo.lobby = vo;
+            joinedToLobbyVo.clientId = vo.leaderId;
+            dispatcher.Dispatch(LobbyEvent.JoinedToLobby,joinedToLobbyVo);
 
         }
 

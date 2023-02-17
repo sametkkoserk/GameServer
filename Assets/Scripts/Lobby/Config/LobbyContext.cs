@@ -1,7 +1,10 @@
+using Lobby.Command;
+using Lobby.Enum;
 using Lobby.Model.LobbyModel;
 using Lobby.Processor;
 using Lobby.View.Lobby;
 using Lobby.View.LobbyContainer;
+using Lobby.Vo;
 using Main.Command;
 using Network.Enum;
 using strange.extensions.context.api;
@@ -38,7 +41,10 @@ namespace Lobby.Config
             //The START event is fired as soon as mappings are complete.
             //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
             //commandBinder.Bind(ContextEvent.START).To<>();
+            commandBinder.Bind(LobbyEvent.JoinedToLobby).To<JoinedToLobbyCommand>();
+            
             commandBinder.Bind(ClientToServerId.createLobby).To<CreateLobbyProcessor>();
+            
         }
     }
 }

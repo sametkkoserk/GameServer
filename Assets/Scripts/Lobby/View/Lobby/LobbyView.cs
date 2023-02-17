@@ -5,9 +5,11 @@ namespace Lobby.View.Lobby
 {
     public class LobbyView : EventView
     {
+        public ushort lobbyId;
+        public string lobbyName;
         public bool isPrivate;
         public ushort leaderId;
-        public string lobbyName;
+        
         
         
         

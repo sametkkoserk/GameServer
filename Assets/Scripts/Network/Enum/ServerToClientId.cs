@@ -2,6 +2,7 @@ namespace Network.Enum
 {
     public enum ServerToClientId : ushort
     {
-        RESPONSE = 1
+        RESPONSE = 1,
+        JoinedToLobby=2
     }
 }
