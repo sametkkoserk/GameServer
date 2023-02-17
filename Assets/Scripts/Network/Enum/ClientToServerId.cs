@@ -3,6 +3,8 @@ namespace Network.Enum
     public enum ClientToServerId : ushort
     {
         TEST = 1,
-        createLobby=2
+        CreateLobby=2,
+        GetLobbies=3,
+        JoinLobby=4,
     }
 }

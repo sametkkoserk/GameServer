@@ -42,8 +42,11 @@ namespace Lobby.Config
             //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
             //commandBinder.Bind(ContextEvent.START).To<>();
             commandBinder.Bind(LobbyEvent.JoinedToLobby).To<JoinedToLobbyCommand>();
+            commandBinder.Bind(LobbyEvent.SendLobbies).To<SendLobbiesCommand>();
             
-            commandBinder.Bind(ClientToServerId.createLobby).To<CreateLobbyProcessor>();
+            commandBinder.Bind(ClientToServerId.CreateLobby).To<CreateLobbyProcessor>();
+            commandBinder.Bind(ClientToServerId.GetLobbies).To<GetLobbiesProcessor>();
+            commandBinder.Bind(ClientToServerId.JoinLobby).To<JoinLobbyProcessor>();
             
         }
     }
