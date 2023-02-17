@@ -1,3 +1,4 @@
+using System;
 using Lobby.Enum;
 using Lobby.Model.LobbyModel;
 using Lobby.Vo;
@@ -18,7 +19,10 @@ namespace Lobby.View.Lobby
         public override void OnRegister()
         {
             dispatcher.AddListener(LobbyEvent.JoinLobby,OnJoinLobby);
+            dispatcher.AddListener(LobbyEvent.OutFromLobby,OnOutFromLobby);
         }
+
+
         private void Start()
         {
             view.lobbyVo = lobbyModel.createdLobbyVo;
@@ -37,21 +41,41 @@ namespace Lobby.View.Lobby
             OnJoin(joinLobbyVo.clientId);
         }
 
-
-
         private void OnJoin(ushort id)
         {
             ClientVo clientVo = new ClientVo();
             clientVo.id = id;
             clientVo.inLobbyId = view.lobbyVo.playerCount;
             clientVo.colorId = view.lobbyVo.playerCount;
+            
             view.lobbyVo.playerCount += 1;
             view.lobbyVo.clients.Add(clientVo);
             
             JoinedToLobbyVo joinedToLobbyVo = new JoinedToLobbyVo();
             joinedToLobbyVo.lobby = view.lobbyVo;
-            joinedToLobbyVo.clientId = id;
+            joinedToLobbyVo.clientVo = clientVo;
             dispatcher.Dispatch(LobbyEvent.JoinedToLobby,joinedToLobbyVo);
+            
+            
+            
+        }
+        
+        
+        private void OnOutFromLobby(IEvent payload)
+        {
+            OutFromLobbyVo outFromLobbyVo = (OutFromLobbyVo)payload.data;
+            if (outFromLobbyVo.lobbyId!=view.lobbyId)
+                return;
+            Debug.Log(outFromLobbyVo.inLobbyId);
+            view.lobbyVo.clients.RemoveAt(outFromLobbyVo.inLobbyId);
+            view.lobbyVo.playerCount -= 1;
+            for (ushort i = outFromLobbyVo.inLobbyId; i < view.lobbyVo.playerCount; i++)
+            {
+                view.lobbyVo.clients[i].inLobbyId = i;
+            }
+            
+            outFromLobbyVo.clients=view.lobbyVo.clients;
+            dispatcher.Dispatch(LobbyEvent.OutFromLobbyDone,outFromLobbyVo);
         }
 
         public override void OnRemove()

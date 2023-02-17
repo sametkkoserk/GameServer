@@ -5,6 +5,8 @@ namespace Lobby.Enum
         CreateLobby,
         JoinedToLobby,
         SendLobbies,
-        JoinLobby
+        JoinLobby,
+        OutFromLobby,
+        OutFromLobbyDone
     }
 }

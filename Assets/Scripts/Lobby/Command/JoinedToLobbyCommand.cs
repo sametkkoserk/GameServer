@@ -25,17 +25,33 @@ namespace Lobby.Command
       message.AddUShort(lobbyVo.leaderId);
       message.AddUShort(lobbyVo.playerCount);
       message.AddUShort(lobbyVo.maxPlayerCount);
-      for (int i = 0; i < lobbyVo.playerCount; i++)
+      message.AddUShort(vo.clientVo.inLobbyId);
+      for (ushort i = 0; i < lobbyVo.playerCount; i++)
       {
         ClientVo clientVo = lobbyVo.clients[i];
         message.AddUShort(clientVo.id);
         message.AddUShort(clientVo.inLobbyId);
         //message.AddString(clientVo.userName);
         message.AddUShort(clientVo.colorId);
-        
       }
-      networkManager.Server.Send(message,vo.clientId);
+
+      networkManager.Server.Send(message,vo.clientVo.id);
       Debug.Log("Joined to Lobby Message sent");
+      
+      Message messageToOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.NewPlayerToLobby);
+
+      messageToOthers.AddUShort(vo.clientVo.id);
+      messageToOthers.AddUShort(vo.clientVo.inLobbyId);
+      //messageToOthers.AddString(vo.clientVo.userName);
+      messageToOthers.AddUShort(vo.clientVo.colorId);
+      
+      for (ushort i = 0; i < lobbyVo.playerCount; i++)
+      {
+        if (i!=vo.clientVo.inLobbyId)
+        {
+          networkManager.Server.Send(messageToOthers,lobbyVo.clients[i].id);
+        }
+      }
     }
   }
 }

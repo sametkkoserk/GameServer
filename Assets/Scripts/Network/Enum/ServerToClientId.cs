@@ -4,6 +4,9 @@ namespace Network.Enum
     {
         RESPONSE = 1,
         JoinedToLobby=2,
-        SendLobbies=3
+        NewPlayerToLobby=3,
+        SendLobbies=4,
+        OutFromLobbyDone=5,
+        
     }
 }
