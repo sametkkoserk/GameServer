@@ -12,8 +12,10 @@ namespace Lobby.View.Lobby
         public string lobbyName;
         public bool isPrivate;
         public ushort leaderId;
-
-        public List<ushort> clients;
+        public ushort maxPlayerCount;
+        public ushort playerCount;
+        
+        public List<ClientVo> clients;
 
 
 

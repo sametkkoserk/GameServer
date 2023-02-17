@@ -19,43 +19,44 @@ namespace Lobby.View.Lobby
         {
             dispatcher.AddListener(LobbyEvent.JoinLobby,OnJoinLobby);
         }
+        private void Start()
+        {
+            view.lobbyVo = lobbyModel.createdLobbyVo;
 
+            Debug.Log("lobby Inited");
+
+            OnJoin(view.lobbyVo.leaderId);
+
+        }
+        
         private void OnJoinLobby(IEvent payload)
         {
             JoinLobbyVo joinLobbyVo = (JoinLobbyVo)payload.data;
             if (joinLobbyVo.lobbyId!=view.lobbyId)
                 return;
-            view.clients.Add(joinLobbyVo.clientId);
-            Debug.Log("Client Added");
+            OnJoin(joinLobbyVo.clientId);
+        }
+
+
+
+        private void OnJoin(ushort id)
+        {
+            ClientVo clientVo = new ClientVo();
+            clientVo.id = id;
+            clientVo.inLobbyId = view.lobbyVo.playerCount;
+            clientVo.colorId = view.lobbyVo.playerCount;
+            view.lobbyVo.playerCount += 1;
+            view.lobbyVo.clients.Add(clientVo);
             
             JoinedToLobbyVo joinedToLobbyVo = new JoinedToLobbyVo();
             joinedToLobbyVo.lobby = view.lobbyVo;
-            joinedToLobbyVo.clientId = joinLobbyVo.clientId;
+            joinedToLobbyVo.clientId = id;
             dispatcher.Dispatch(LobbyEvent.JoinedToLobby,joinedToLobbyVo);
-        }
-
-        private void Start()
-        {
-            
-            LobbyVo vo = lobbyModel.createdLobbyVo;
-            view.lobbyVo = vo;
-            view.lobbyId = vo.lobbyId;
-            view.lobbyName = vo.lobbyName;
-            view.isPrivate = vo.isPrivate;
-            view.leaderId = vo.leaderId;
-            Debug.Log("lobby Inited");
-            
-            view.clients.Add(vo.leaderId);
-            
-            JoinedToLobbyVo joinedToLobbyVo = new JoinedToLobbyVo();
-            joinedToLobbyVo.lobby = vo;
-            joinedToLobbyVo.clientId = vo.leaderId;
-            dispatcher.Dispatch(LobbyEvent.JoinedToLobby,joinedToLobbyVo);
-
         }
 
         public override void OnRemove()
         {
+            dispatcher.RemoveListener(LobbyEvent.JoinLobby,OnJoinLobby);
         }
     }
 }

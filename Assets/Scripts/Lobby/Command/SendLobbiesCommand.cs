@@ -30,6 +30,8 @@ namespace Lobby.Command
           message.AddUShort(lobbyVo.lobbyId);
           message.AddString(lobbyVo.lobbyName);
           message.AddBool(lobbyVo.isPrivate);
+          message.AddUShort(lobbyVo.playerCount);
+          message.AddUShort(lobbyVo.maxPlayerCount);
           message.AddUShort(lobbyVo.leaderId);
         }
       }

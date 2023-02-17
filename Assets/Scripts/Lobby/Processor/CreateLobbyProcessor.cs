@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Lobby.Enum;
 using Lobby.Model.LobbyModel;
 using Lobby.Vo;
@@ -24,7 +25,10 @@ namespace Lobby.Processor
             LobbyVo lobbyVo = new LobbyVo();
             lobbyVo.lobbyName = message.GetString();
             lobbyVo.isPrivate = message.GetBool();
+            lobbyVo.maxPlayerCount = message.GetUShort();
             lobbyVo.leaderId = fromId;
+            lobbyVo.playerCount = 0;
+            lobbyVo.clients = new List<ClientVo>();
             Debug.Log("CreateLobby message received");
             lobbyModel.NewLobbyCreated(lobbyVo);
             dispatcher.Dispatch(LobbyEvent.CreateLobby);
