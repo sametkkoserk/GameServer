@@ -10,7 +10,7 @@ namespace Network.Command
         public override void Execute()
         {
             Retain();
-            networkManagerService.StartServer(8084, 10);
+            networkManagerService.StartServer(8083, 10);
             Release();
         }
     }

@@ -11,7 +11,7 @@ namespace Main.Command
         {
             Addressables.LoadSceneAsync(SceneKeys.NetworkScene,LoadSceneMode.Additive);
             Addressables.LoadSceneAsync(SceneKeys.LobbyScene, LoadSceneMode.Additive);
-
+            Addressables.LoadSceneAsync(SceneKeys.MainGameScene, LoadSceneMode.Additive);
         }
     }
 }

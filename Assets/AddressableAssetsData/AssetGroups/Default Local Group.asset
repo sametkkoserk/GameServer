@@ -17,16 +17,16 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 6434662d035c72444a038b62a84ac9a4
   m_SerializeEntries:
-  - m_GUID: 058913f8238606c48832ac97e490b739
-    m_Address: LobbyScene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 5daa63db5715e60498e6ee736f0729c5
     m_Address: NetworkManager
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: b48909ce4c7254247b679d76789b806a
     m_Address: Lobby
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 78da5f80d18aa5346a1efbdbfaf19980
+    m_Address: MainMap
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

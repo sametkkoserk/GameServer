@@ -25,6 +25,14 @@ MonoBehaviour:
     m_Address: NetworkScene
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 058913f8238606c48832ac97e490b739
+    m_Address: LobbyScene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e33e664e87cde084095f8fb7c834c58c
+    m_Address: MainGameScene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a1fa58bda4f047a4c9c3b2c1a9db6b22, type: 2}
   m_SchemaSet:
