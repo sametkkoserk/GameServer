@@ -20,6 +20,21 @@ namespace Lobby.View.Lobby
         {
             dispatcher.AddListener(LobbyEvent.JoinLobby,OnJoinLobby);
             dispatcher.AddListener(LobbyEvent.OutFromLobby,OnOutFromLobby);
+            dispatcher.AddListener(LobbyEvent.PlayerReady,OnReady);
+        }
+
+        private void OnReady(IEvent payload)
+        {
+            PlayerReadyVo playerReadyVo = (PlayerReadyVo)payload.data;
+            if (playerReadyVo.lobbyId!=view.lobbyId)
+                return;
+            view.lobbyVo.clients[playerReadyVo.inLobbyId].ready=true;
+            view.lobbyVo.readyCount += 1;
+            playerReadyVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
+            playerReadyVo.clients = view.lobbyVo.clients;
+            dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse,playerReadyVo);
+            Debug.Log("player is ready confirmed");
+
         }
 
 
@@ -67,8 +82,15 @@ namespace Lobby.View.Lobby
             if (outFromLobbyVo.lobbyId!=view.lobbyId)
                 return;
             Debug.Log(outFromLobbyVo.inLobbyId);
+            
+            if (view.lobbyVo.clients[outFromLobbyVo.inLobbyId].ready)
+            {
+                view.lobbyVo.readyCount -= 1;
+            }
+            
             view.lobbyVo.clients.RemoveAt(outFromLobbyVo.inLobbyId);
             view.lobbyVo.playerCount -= 1;
+            
             for (ushort i = outFromLobbyVo.inLobbyId; i < view.lobbyVo.playerCount; i++)
             {
                 view.lobbyVo.clients[i].inLobbyId = i;
@@ -81,6 +103,8 @@ namespace Lobby.View.Lobby
         public override void OnRemove()
         {
             dispatcher.RemoveListener(LobbyEvent.JoinLobby,OnJoinLobby);
+            dispatcher.RemoveListener(LobbyEvent.OutFromLobby,OnOutFromLobby);
+            dispatcher.RemoveListener(LobbyEvent.PlayerReady,OnReady);
         }
     }
 }

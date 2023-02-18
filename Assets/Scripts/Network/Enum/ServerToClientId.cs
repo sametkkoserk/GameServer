@@ -7,6 +7,6 @@ namespace Network.Enum
         NewPlayerToLobby=3,
         SendLobbies=4,
         OutFromLobbyDone=5,
-        
+        playerReadyResponse=6,
     }
 }

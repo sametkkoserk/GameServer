@@ -11,6 +11,7 @@ namespace Lobby.Vo
         public ushort leaderId;
         public ushort maxPlayerCount;
         public ushort playerCount;
+        public ushort readyCount;
         public List<ClientVo> clients;
     }
 }

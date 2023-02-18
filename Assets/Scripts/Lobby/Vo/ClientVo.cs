@@ -8,5 +8,6 @@ namespace Lobby.Vo
     public ushort inLobbyId;
     public string userName;
     public ushort colorId;
+    public bool ready;
   }
 }

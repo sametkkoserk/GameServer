@@ -7,6 +7,8 @@ namespace Lobby.Enum
         SendLobbies,
         JoinLobby,
         OutFromLobby,
-        OutFromLobbyDone
+        OutFromLobbyDone,
+        PlayerReady,
+        PlayerReadyResponse
     }
 }

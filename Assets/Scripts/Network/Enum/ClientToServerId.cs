@@ -6,6 +6,7 @@ namespace Network.Enum
         CreateLobby=2,
         GetLobbies=3,
         JoinLobby=4,
-        OutFromLobby=5
+        OutFromLobby=5,
+        PlayerReady=6
     }
 }
