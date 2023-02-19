@@ -27,7 +27,7 @@ namespace Lobby.Command
       message.AddUShort(playerReadyVo.inLobbyId);
       message.AddBool(playerReadyVo.startGame);
       
-      for (int i = 0; i < playerReadyVo.lobbyVo.clients.Count; i++)
+      for (ushort i = 0; i < playerReadyVo.lobbyVo.clients.Count; i++)
       {
         networkManager.Server.Send(message,playerReadyVo.lobbyVo.clients[i].id);
       }

@@ -18,7 +18,7 @@ namespace Lobby.Command
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.OutFromLobbyDone);
       message.AddUShort(outFromLobbyVo.inLobbyId);
       
-      for (int i = 0; i < outFromLobbyVo.clients.Count; i++)
+      for (ushort i = 0; i < outFromLobbyVo.clients.Count; i++)
       {
         networkManager.Server.Send(message,outFromLobbyVo.clients[i].id);
       }

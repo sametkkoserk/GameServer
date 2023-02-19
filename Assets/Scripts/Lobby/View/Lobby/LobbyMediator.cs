@@ -66,7 +66,7 @@ namespace Lobby.View.Lobby
             clientVo.colorId = view.lobbyVo.playerCount;
             
             view.lobbyVo.playerCount += 1;
-            view.lobbyVo.clients.Add(clientVo);
+            view.lobbyVo.clients[clientVo.inLobbyId]=clientVo;
             
             JoinedToLobbyVo joinedToLobbyVo = new JoinedToLobbyVo();
             joinedToLobbyVo.lobby = view.lobbyVo;
@@ -90,13 +90,15 @@ namespace Lobby.View.Lobby
                 view.lobbyVo.readyCount -= 1;
             }
             
-            view.lobbyVo.clients.RemoveAt(outFromLobbyVo.inLobbyId);
             view.lobbyVo.playerCount -= 1;
             
             for (ushort i = outFromLobbyVo.inLobbyId; i < view.lobbyVo.playerCount; i++)
             {
+                view.lobbyVo.clients[i] = view.lobbyVo.clients[(ushort)(i+1)];
                 view.lobbyVo.clients[i].inLobbyId = i;
             }
+            view.lobbyVo.clients.Remove(view.lobbyVo.playerCount);
+
             
             outFromLobbyVo.clients=view.lobbyVo.clients;
             dispatcher.Dispatch(LobbyEvent.OutFromLobbyDone,outFromLobbyVo);

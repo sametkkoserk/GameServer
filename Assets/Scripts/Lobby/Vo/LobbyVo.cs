@@ -19,6 +19,6 @@ namespace Lobby.Vo
         
         public ushort readyCount;
         
-        public List<ClientVo> clients;
+        public Dictionary<ushort,ClientVo> clients;
     }
 }

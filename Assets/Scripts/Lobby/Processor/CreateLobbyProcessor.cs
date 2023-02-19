@@ -28,7 +28,7 @@ namespace Lobby.Processor
             lobbyVo.maxPlayerCount = message.GetUShort();
             lobbyVo.leaderId = fromId;
             lobbyVo.playerCount = 0;
-            lobbyVo.clients = new List<ClientVo>();
+            lobbyVo.clients = new Dictionary<ushort, ClientVo>();
             Debug.Log("CreateLobby message received");
             lobbyModel.NewLobbyCreated(lobbyVo);
             dispatcher.Dispatch(LobbyEvent.CreateLobby);

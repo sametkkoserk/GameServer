@@ -31,7 +31,7 @@ namespace MainGame.Command
         message.AddInt(cityVo.ownerID);
       }
       
-      for (int i = 0; i < mapGeneratorVo.clients.Count; i++)
+      for (ushort i = 0; i < mapGeneratorVo.clients.Count; i++)
       {
         networkManager.Server.Send(message, mapGeneratorVo.clients[i].id);
       }

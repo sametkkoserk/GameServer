@@ -7,6 +7,6 @@ namespace MainGame.Vo
   {
     public Dictionary<int, CityVo> cityVos;
 
-    public List<ClientVo> clients; 
+    public Dictionary<ushort,ClientVo> clients; 
   }
 }

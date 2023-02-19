@@ -7,6 +7,6 @@ namespace Lobby.Vo
     public ushort clientId;
     public ushort lobbyId;
     public ushort inLobbyId;
-    public List<ClientVo> clients;
+    public Dictionary<ushort,ClientVo> clients;
   }
 }
