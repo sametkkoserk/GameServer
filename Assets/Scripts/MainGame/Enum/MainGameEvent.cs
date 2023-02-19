@@ -2,6 +2,7 @@ namespace MainGame.Enum
 {
   public enum MainGameEvent
   {
-    CreateMap
+    CreateMap,
+    SendMap
   }
 }

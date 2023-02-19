@@ -1,7 +1,11 @@
 using Lobby.Enum;
 using Lobby.Model.LobbyModel;
+using Lobby.Vo;
 using MainGame.Enum;
+using MainGame.Model.MainGameModel;
+using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace MainGame.View.MainMapContainer
@@ -10,14 +14,22 @@ namespace MainGame.View.MainMapContainer
   {
     [Inject]
     public MainMapContainerView view { get; set; }
+    
+    [Inject]
+    public IMainGameModel mainGameModel { get; set; }
     public override void OnRegister()
     {
       dispatcher.AddListener(MainGameEvent.CreateMap, OnCreateMap);
     }
 
-    public void OnCreateMap()
+    public void OnCreateMap(IEvent payload)
     {
       Addressables.InstantiateAsync(MainGameKeys.MainMap, gameObject.transform);
+
+      mainGameModel.createdLobbyVo = (LobbyVo)payload.data;
+      
+      Debug.Log(mainGameModel.createdLobbyVo.clients);
+      Debug.Log(mainGameModel.createdLobbyVo);
     }
 
     public override void OnRemove()

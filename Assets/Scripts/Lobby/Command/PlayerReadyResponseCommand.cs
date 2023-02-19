@@ -22,7 +22,7 @@ namespace Lobby.Command
     {
       PlayerReadyVo playerReadyVo = (PlayerReadyVo)evt.data;
       
-      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.playerReadyResponse);
+      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.PlayerReadyResponse);
       
       message.AddUShort(playerReadyVo.inLobbyId);
       message.AddBool(playerReadyVo.startGame);
@@ -33,6 +33,7 @@ namespace Lobby.Command
       }
 
       crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyVo.lobbyVo);
+      
     }
   }
 }

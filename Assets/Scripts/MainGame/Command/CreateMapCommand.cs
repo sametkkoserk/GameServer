@@ -8,7 +8,6 @@ namespace MainGame.Command
   {
     public override void Execute()
     {
-      dispatcher.Dispatch(MainGameEvent.CreateMap);
     }
   }
 }

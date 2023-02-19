@@ -1,4 +1,6 @@
 using MainGame.Command;
+using MainGame.Enum;
+using MainGame.Model.MainGameModel;
 using MainGame.View.MainMap;
 using MainGame.View.MainMapContainer;
 using strange.extensions.context.api;
@@ -19,6 +21,7 @@ namespace MainGame.Config
         
         protected override void mapBindings()
         {
+            injectionBinder.Bind<IMainGameModel>().To<MainGameModel>().ToSingleton();
             //Injection binding.
             //Map a mock model and a mock service, both as Singletons
             //injectionBinder.Bind<INetworkManagerService>().To<NetworkManagerService>().ToSingleton();
@@ -36,6 +39,7 @@ namespace MainGame.Config
             //The START event is fired as soon as mappings are complete.
             //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
             // commandBinder.Bind(ContextEvent.START).To<CreateMapCommand>();
+            commandBinder.Bind(MainGameEvent.SendMap).To<SendMapCommand>();
         }
     }
 }

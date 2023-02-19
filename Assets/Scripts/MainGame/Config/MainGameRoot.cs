@@ -8,7 +8,6 @@ namespace MainGame.Config
         {
             //Instantiate the context, passing it this instance.
             context = new MainGameContext(this);
-
         }
     }
 }
