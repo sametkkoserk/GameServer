@@ -32,9 +32,6 @@ namespace MainGame.View.MainMap
 
       view.cities = mainGameModel.RandomMapGenerator();
 
-      Debug.Log(view.cities);
-      Debug.Log(view.lobbyVo.clients);
-      
       MapGeneratorVo mapGeneratorVo = new()
       {
         cityVos = view.cities,

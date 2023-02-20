@@ -9,7 +9,7 @@ namespace MainGame.Vo
     
     public bool isPlayable;
 
-    public ushort soldierCount;
+    public int soldierCount;
 
     public Vector3 position;
 
