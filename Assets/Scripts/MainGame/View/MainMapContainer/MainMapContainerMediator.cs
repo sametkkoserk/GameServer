@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Lobby.Enum;
 using Lobby.Model.LobbyModel;
 using Lobby.Vo;
@@ -27,9 +28,6 @@ namespace MainGame.View.MainMapContainer
       Addressables.InstantiateAsync(MainGameKeys.MainMap, gameObject.transform);
 
       mainGameModel.createdLobbyVo = (LobbyVo)payload.data;
-      
-      Debug.Log(mainGameModel.createdLobbyVo.clients);
-      Debug.Log(mainGameModel.createdLobbyVo);
     }
 
     public override void OnRemove()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using strange.extensions.mediation.impl;
 
 namespace Lobby.Vo
 {
@@ -19,6 +18,6 @@ namespace Lobby.Vo
         
         public ushort readyCount;
         
-        public Dictionary<ushort,ClientVo> clients;
+        public Dictionary<ushort, ClientVo> clients;
     }
 }
