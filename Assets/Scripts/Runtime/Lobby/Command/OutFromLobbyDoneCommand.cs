@@ -15,7 +15,7 @@ namespace Runtime.Lobby.Command
     {
       OutFromLobbyVo outFromLobbyVo = (OutFromLobbyVo)evt.data;
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.OutFromLobbyDone);
-      message.AddUShort(outFromLobbyVo.inLobbyId);
+      message=networkManager.SetData(message,outFromLobbyVo.inLobbyId);
       
       for (ushort i = 0; i < outFromLobbyVo.clients.Count; i++)
       {

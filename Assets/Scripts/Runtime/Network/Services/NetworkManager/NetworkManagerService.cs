@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 using Riptide;
 using Riptide.Utils;
 using Runtime.Network.Enum;
@@ -56,7 +57,7 @@ namespace Runtime.Network.Services.NetworkManager
         Debug.Log(z[i]);
       }
     }
-
+    
     public void Ticker()
     {
       Server?.Update();
@@ -67,10 +68,28 @@ namespace Runtime.Network.Services.NetworkManager
       MessageReceivedVo vo = new()
       {
         fromId = messageArgs.FromConnection.Id,
-        message = messageArgs.Message
+        message = messageArgs.Message.GetString()
       };
       crossDispatcher.Dispatch((ClientToServerId)messageArgs.MessageId, vo);
     }
+    
+    public T GetData<T>(string message) where T : new()
+    {
+      if ( message== null)
+        return default(T);
+
+      return JsonConvert.DeserializeObject<T>(message);
+    }
+    public Message SetData(Message message,object obj)
+    {
+      if ( obj== null)
+        Debug.LogError("Set data object is null");
+      string objStr=JsonConvert.SerializeObject(obj);
+      message.AddString(objStr);
+
+      return message;
+    }
+
 
     public void OnQuit()
     {

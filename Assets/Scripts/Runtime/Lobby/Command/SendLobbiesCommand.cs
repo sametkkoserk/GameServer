@@ -19,22 +19,8 @@ namespace Runtime.Lobby.Command
     {
       ushort clientId = (ushort)evt.data;
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendLobbies);
-      Dictionary<ushort, LobbyVo> lobbyDict = lobbyModel.lobbies;
-      LobbyVo lobbyVo;
-      message.AddInt(lobbyDict.Count);
-      for (ushort i = 0; i < 10; i++)
-      {
-        if (lobbyDict.ContainsKey(i))
-        {
-          lobbyVo = lobbyDict[i];
-          message.AddUShort(lobbyVo.lobbyId);
-          message.AddString(lobbyVo.lobbyName);
-          message.AddBool(lobbyVo.isPrivate);
-          message.AddUShort(lobbyVo.playerCount);
-          message.AddUShort(lobbyVo.maxPlayerCount);
-          message.AddUShort(lobbyVo.leaderId);
-        }
-      }
+      message=networkManager.SetData(message,lobbyModel.lobbies);
+
       networkManager.Server.Send(message,clientId);
     }
   }

@@ -1,6 +1,7 @@
 using Riptide;
 using Runtime.Lobby.Enum;
 using Runtime.Lobby.Vo;
+using Runtime.Network.Services.NetworkManager;
 using Runtime.Network.Vo;
 using strange.extensions.command.impl;
 
@@ -9,23 +10,17 @@ namespace Runtime.Lobby.Processor
   public class PlayerReadyProcessor : EventCommand
   {
 
+    [Inject]
+    public INetworkManagerService networkManager { get; set; }
     public override void Execute()
     {
       MessageReceivedVo vo = (MessageReceivedVo) evt.data;
       
       ushort fromId = vo.fromId;
-      Message message = vo.message;
-      
-      ushort lobbyId = message.GetUShort();
-      ushort inLobbyId = message.GetUShort();
-      
-      PlayerReadyVo playerReadyVo = new()
-      {
-        lobbyId = lobbyId,
-        inLobbyId = inLobbyId
-      };
-      
-      dispatcher.Dispatch(LobbyEvent.PlayerReady,playerReadyVo);
+      string message = vo.message;
+      PlayerReadyResponseVo playerReadyResponseVo = networkManager.GetData<PlayerReadyResponseVo>(message);;
+
+      dispatcher.Dispatch(LobbyEvent.PlayerReady,playerReadyResponseVo);
     }
   }
 }

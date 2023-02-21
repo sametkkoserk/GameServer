@@ -1,6 +1,4 @@
 using Runtime.Network.Command;
-using Runtime.Network.Enum;
-using Runtime.Network.Processor;
 using Runtime.Network.Services.NetworkManager;
 using Runtime.Network.View.NetworkManager;
 using strange.extensions.context.api;
@@ -34,10 +32,8 @@ namespace Runtime.Network.Config
             commandBinder.Bind(ContextEvent.START).To<ServerStartCommand>();
             
             
-            commandBinder.Bind(NetworkEvent.SEND_RESPONSE).To<SendResponseCommand>();
 
             //Processor
-            commandBinder.Bind(ClientToServerId.TEST).To<HandleMessageProcessor>();
 
         }
     }

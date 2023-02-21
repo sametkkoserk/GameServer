@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Riptide;
 
 namespace Runtime.Network.Vo
@@ -5,6 +6,7 @@ namespace Runtime.Network.Vo
     public class MessageReceivedVo
     {
         public ushort fromId { get; set; }
-        public Message message { get; set; }
+        public string message { get; set; }
+        
     }
 }

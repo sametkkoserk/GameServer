@@ -12,7 +12,7 @@ namespace Runtime.Lobby.Processor
     {
       MessageReceivedVo vo = (MessageReceivedVo)evt.data;
       ushort fromId = vo.fromId;
-      Message message = vo.message;
+      string message = vo.message;
       
       dispatcher.Dispatch(LobbyEvent.SendLobbies,fromId);
     }

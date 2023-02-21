@@ -3,6 +3,7 @@ using Riptide;
 using Runtime.Lobby.Enum;
 using Runtime.Lobby.Model.LobbyModel;
 using Runtime.Lobby.Vo;
+using Runtime.Network.Services.NetworkManager;
 using Runtime.Network.Vo;
 using strange.extensions.command.impl;
 using UnityEngine;
@@ -13,18 +14,25 @@ namespace Runtime.Lobby.Processor
     {
         [Inject] 
         public ILobbyModel lobbyModel { get; set; }
+        
+        [Inject]
+        public INetworkManagerService networkManager { get; set; }
+
         public override void Execute()
         {
             MessageReceivedVo vo = (MessageReceivedVo)evt.data;
             ushort fromId = vo.fromId;
-            Message message = vo.message;
-
-            LobbyVo lobbyVo = new LobbyVo();
-            lobbyVo.lobbyName = message.GetString();
-            lobbyVo.isPrivate = message.GetBool();
-            lobbyVo.maxPlayerCount = message.GetUShort();
+            string message = vo.message;
+            
+            LobbyVo lobbyVo = networkManager.GetData<LobbyVo>(message);
             lobbyVo.leaderId = fromId;
-            lobbyVo.playerCount = 0;
+            Debug.Log(message);
+            Debug.Log(fromId);
+            // lobbyVo.lobbyName = message.GetString();
+            // lobbyVo.isPrivate = message.GetBool();
+            // lobbyVo.maxPlayerCount = message.GetUShort();
+            // lobbyVo.leaderId = fromId;
+            // lobbyVo.playerCount = 0;
             lobbyVo.clients = new Dictionary<ushort, ClientVo>();
             Debug.Log("CreateLobby message received");
             lobbyModel.NewLobbyCreated(lobbyVo);

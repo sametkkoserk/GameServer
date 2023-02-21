@@ -24,17 +24,17 @@ namespace Runtime.Lobby.View.Lobby
 
         private void OnReady(IEvent payload)
         {
-            PlayerReadyVo playerReadyVo = (PlayerReadyVo)payload.data;
+            PlayerReadyResponseVo playerReadyResponseVo = (PlayerReadyResponseVo)payload.data;
             
-            if (playerReadyVo.lobbyId != view.lobbyId)
+            if (playerReadyResponseVo.lobbyId != view.lobbyId)
                 return;
             
-            view.lobbyVo.clients[playerReadyVo.inLobbyId].ready=true;
+            view.lobbyVo.clients[playerReadyResponseVo.inLobbyId].ready=true;
             view.lobbyVo.readyCount += 1;
-            playerReadyVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
-            playerReadyVo.lobbyVo = view.lobbyVo;
+            playerReadyResponseVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
+            playerReadyResponseVo.lobbyVo = view.lobbyVo;
             
-            dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse,playerReadyVo);
+            dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse,playerReadyResponseVo);
             Debug.Log("player is ready confirmed");
         }
 
