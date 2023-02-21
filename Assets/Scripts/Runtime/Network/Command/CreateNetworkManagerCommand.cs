@@ -1,0 +1,15 @@
+using Runtime.Network.Enum;
+using strange.extensions.command.impl;
+using UnityEngine.AddressableAssets;
+
+namespace Runtime.Network.Command
+{
+    public class CreateNetworkManagerCommand : EventCommand
+    {
+
+        public override void Execute()
+        {
+            Addressables.InstantiateAsync(NetworkKeys.NetworkManager);
+        }
+    }
+}
