@@ -189,7 +189,7 @@ namespace Editor.Tools.Quick.UpperButtons
       if (EditorApplication.isPlaying)
         return;
     
-      EditorSceneManager.OpenScene("Assets/Scripts/Runtime/Main/Main.unity");
+      EditorSceneManager.OpenScene("Assets/Scripts/Runtime/Contexts/Main/Main.unity");
       EditorApplication.isPlaying = true;
     }
 
