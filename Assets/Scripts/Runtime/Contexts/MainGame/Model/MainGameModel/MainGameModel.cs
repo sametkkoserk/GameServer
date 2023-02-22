@@ -16,7 +16,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
         public Dictionary<int, CityVo> RandomMapGenerator()
         {
-            int totalCity = 25;
+            int totalCity = 9;
             int xPos = 0;
             int zPos = 0;
             
@@ -37,7 +37,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
                 xPos++;
 
-                if (xPos != 5) continue;
+                if (xPos != 3) continue;
                 xPos = 0;
                 zPos++;
             }

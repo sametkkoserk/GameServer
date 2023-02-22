@@ -21,10 +21,6 @@ MonoBehaviour:
     m_Address: NetworkManager
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: b48909ce4c7254247b679d76789b806a
-    m_Address: Lobby
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 78da5f80d18aa5346a1efbdbfaf19980
     m_Address: MainMap
     m_ReadOnly: 0

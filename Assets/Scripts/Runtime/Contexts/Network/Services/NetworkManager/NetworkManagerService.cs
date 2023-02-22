@@ -2,6 +2,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.UnityConverters.Math;
 using Riptide;
 using Riptide.Utils;
 using Runtime.Contexts.Network.Enum;
@@ -16,6 +19,16 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
   {
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
     public IEventDispatcher crossDispatcher { get; set; }
+
+    private JsonSerializerSettings settings = new JsonSerializerSettings {
+      Converters = new JsonConverter[] {
+        new Vector3Converter(),
+        new StringEnumConverter(),
+      },
+      ContractResolver = new DefaultContractResolver(),
+    };
+
+    private int maxPacketSize = 1200;
 
     public Server Server { get; private set; }
 
@@ -42,22 +55,22 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       //
       // sl<LobbyVo>(y);
     }
-
-    public void sl<T>(T fre)
-    {
-      // TODO: Şafak: Silinecek. Bunlar deneme çalışmaları.
-      Type type = typeof(T);
-      MemberInfo[] privateMembers = type.GetMembers();
-      var z = privateMembers.ToList();
-
-      Debug.Log(z.Count);
-
-      for (int i = 0; i < z.Count; i++)
-      {
-        Debug.Log(z[i]);
-      }
-    }
-    
+    //
+    // public void sl<T>(T fre)
+    // {
+    //   // TODO: Şafak: Silinecek. Bunlar deneme çalışmaları.
+    //   Type type = typeof(T);
+    //   MemberInfo[] privateMembers = type.GetMembers();
+    //   var z = privateMembers.ToList();
+    //
+    //   Debug.Log(z.Count);
+    //
+    //   for (int i = 0; i < z.Count; i++)
+    //   {
+    //     Debug.Log(z[i]);
+    //   }
+    // }
+    //
     public void Ticker()
     {
       Server?.Update();
@@ -84,9 +97,9 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
     {
       if ( obj== null)
         Debug.LogError("Set data object is null");
-      string objStr=JsonConvert.SerializeObject(obj);
+      string objStr=JsonConvert.SerializeObject(obj,settings);
+      
       message.AddString(objStr);
-
       return message;
     }
 
