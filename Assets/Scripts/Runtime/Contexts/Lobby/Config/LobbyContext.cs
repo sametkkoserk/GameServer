@@ -5,13 +5,14 @@ using Runtime.Contexts.Lobby.Processor;
 using Runtime.Contexts.Lobby.View.Lobby;
 using Runtime.Contexts.Lobby.View.LobbyContainer;
 using Runtime.Contexts.Network.Enum;
+using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 
 namespace Runtime.Contexts.Lobby.Config
 {
-    public class LobbyContext : MVCSContext
+    public class LobbyContext : GeneralContext
     {
         public LobbyContext (MonoBehaviour view) : base(view)
         {

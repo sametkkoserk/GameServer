@@ -59,17 +59,21 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
         private void OnJoin(ushort id)
         {
-            ClientVo clientVo = new ClientVo();
-            clientVo.id = id;
-            clientVo.inLobbyId = view.lobbyVo.playerCount;
-            clientVo.colorId = view.lobbyVo.playerCount;
-            
+            ClientVo clientVo = new()
+            {
+                id = id,
+                inLobbyId = view.lobbyVo.playerCount,
+                colorId = view.lobbyVo.playerCount
+            };
+
             view.lobbyVo.playerCount += 1;
             view.lobbyVo.clients[clientVo.inLobbyId]=clientVo;
             
-            JoinedToLobbyVo joinedToLobbyVo = new JoinedToLobbyVo();
-            joinedToLobbyVo.lobby = view.lobbyVo;
-            joinedToLobbyVo.clientVo = clientVo;
+            JoinedToLobbyVo joinedToLobbyVo = new()
+            {
+                lobby = view.lobbyVo,
+                clientVo = clientVo
+            };
             dispatcher.Dispatch(LobbyEvent.JoinedToLobby,joinedToLobbyVo);
             
             

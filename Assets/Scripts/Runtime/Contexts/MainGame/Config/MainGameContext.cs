@@ -3,13 +3,14 @@ using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.MainGame.View.MainMapContainer;
+using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Config
 {
-    public class MainGameContext : MVCSContext
+    public class MainGameContext : GeneralContext
     {
         public MainGameContext (MonoBehaviour view) : base(view)
         {

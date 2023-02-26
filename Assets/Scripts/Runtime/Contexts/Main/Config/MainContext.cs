@@ -1,11 +1,12 @@
 using Runtime.Contexts.Main.Command;
+using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 
 namespace Runtime.Contexts.Main.Config
 {
-    public class MainContext : MVCSContext
+    public class MainContext : GeneralContext
     {
         public MainContext (MonoBehaviour view) : base(view)
         {
