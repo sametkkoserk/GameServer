@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -20,8 +17,10 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
     public IEventDispatcher crossDispatcher { get; set; }
 
-    private JsonSerializerSettings settings = new JsonSerializerSettings {
-      Converters = new JsonConverter[] {
+    private JsonSerializerSettings settings = new()
+    {
+      Converters = new JsonConverter[]
+      {
         new Vector3Converter(),
         new StringEnumConverter(),
       },
@@ -55,6 +54,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       //
       // sl<LobbyVo>(y);
     }
+
     //
     // public void sl<T>(T fre)
     // {
@@ -85,20 +85,21 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       };
       crossDispatcher.Dispatch((ClientToServerId)messageArgs.MessageId, vo);
     }
-    
+
     public T GetData<T>(string message) where T : new()
     {
-      if ( message== null)
+      if (message == null)
         return default(T);
 
       return JsonConvert.DeserializeObject<T>(message);
     }
-    public Message SetData(Message message,object obj)
+
+    public Message SetData(Message message, object obj)
     {
-      if ( obj== null)
+      if (obj == null)
         Debug.LogError("Set data object is null");
-      string objStr=JsonConvert.SerializeObject(obj,settings);
-      
+      string objStr = JsonConvert.SerializeObject(obj, settings);
+
       message.AddString(objStr);
       return message;
     }

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a5c855cdcbb994980f6414090e74c1, type: 3}
   m_Name: DebugXData
   m_EditorClassIdentifier: 
-  loggerList: []
+  loggerList:
+  - key: 0
+    active: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
