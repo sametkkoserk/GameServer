@@ -7,6 +7,7 @@ namespace Runtime.Contexts.Network.Enum
     GetLobbies = 3,
     JoinLobby = 4,
     OutFromLobby = 5,
-    PlayerReady = 6
+    PlayerReady = 6,
+    GameStart = 7
   }
 }

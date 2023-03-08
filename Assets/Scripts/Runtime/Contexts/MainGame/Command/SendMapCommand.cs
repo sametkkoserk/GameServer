@@ -13,14 +13,22 @@ namespace Runtime.Contexts.MainGame.Command
 
     public override void Execute()
     {
-      MapGeneratorVo mapGeneratorVo = (MapGeneratorVo) evt.data;
-      
-      Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.SendMap);
-      message=networkManager.SetData(message,mapGeneratorVo);
+      MapGeneratorVo mapGeneratorVo = (MapGeneratorVo)evt.data;
+
+      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendMap);
+      message = networkManager.SetData(message, mapGeneratorVo);
 
       for (ushort i = 0; i < mapGeneratorVo.clients.Count; i++)
       {
         networkManager.Server.Send(message, mapGeneratorVo.clients[i].id);
+      }
+      
+      for (ushort i = 0; i < mapGeneratorVo.clients.Count; i++)
+      {
+        Message userLobbyIDMessage = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendUserLobbyID);
+        userLobbyIDMessage = networkManager.SetData(userLobbyIDMessage, mapGeneratorVo.clients[i].inLobbyId);
+        
+        networkManager.Server.Send(userLobbyIDMessage, mapGeneratorVo.clients[i].id);
       }
     }
   }

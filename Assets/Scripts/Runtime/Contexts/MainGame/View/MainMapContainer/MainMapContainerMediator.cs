@@ -22,6 +22,7 @@ namespace Runtime.Contexts.MainGame.View.MainMapContainer
     public void OnCreateMap(IEvent payload)
     {
       Addressables.InstantiateAsync(MainGameKeys.MainMap, gameObject.transform);
+      // Addressables.InstantiateAsync(MainGameKeys.MainGameManager, gameObject.transform.parent);
 
       mainGameModel.createdLobbyVo = (LobbyVo)payload.data;
     }

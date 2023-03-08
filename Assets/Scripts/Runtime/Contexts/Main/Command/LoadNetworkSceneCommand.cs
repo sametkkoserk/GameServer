@@ -9,9 +9,13 @@ namespace Runtime.Contexts.Main.Command
     {
         public override void Execute()
         {
-            Addressables.LoadSceneAsync(SceneKeys.NetworkScene,LoadSceneMode.Additive);
-            Addressables.LoadSceneAsync(SceneKeys.LobbyScene, LoadSceneMode.Additive);
-            Addressables.LoadSceneAsync(SceneKeys.MainGameScene, LoadSceneMode.Additive);
+            Addressables.LoadSceneAsync(SceneKeys.NetworkScene, LoadSceneMode.Additive).Completed += handle =>
+            {
+                Addressables.LoadSceneAsync(SceneKeys.LobbyScene, LoadSceneMode.Additive).Completed += handle =>
+                {
+                    Addressables.LoadSceneAsync(SceneKeys.MainGameScene, LoadSceneMode.Additive);
+                };
+            };
         }
     }
 }

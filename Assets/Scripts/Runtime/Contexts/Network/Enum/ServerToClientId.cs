@@ -9,5 +9,7 @@ namespace Runtime.Contexts.Network.Enum
     OutFromLobbyDone = 5,
     PlayerReadyResponse = 6,
     SendMap = 7,
+    SendUserLobbyID = 8,
+    SendTurn = 9
   }
 }

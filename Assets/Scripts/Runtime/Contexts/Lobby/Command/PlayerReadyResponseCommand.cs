@@ -13,27 +13,26 @@ namespace Runtime.Contexts.Lobby.Command
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
-    
+
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-    public IEventDispatcher crossDispatcher { get; set;}
+    public IEventDispatcher crossDispatcher { get; set; }
 
     public override void Execute()
     {
       PlayerReadyResponseVo playerReadyResponseVo = (PlayerReadyResponseVo)evt.data;
-      
+
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.PlayerReadyResponse);
-      message=networkManager.SetData(message,playerReadyResponseVo);
+      message = networkManager.SetData(message, playerReadyResponseVo);
 
       message.AddUShort(playerReadyResponseVo.inLobbyId);
       message.AddBool(playerReadyResponseVo.startGame);
-      
+
       for (ushort i = 0; i < playerReadyResponseVo.lobbyVo.clients.Count; i++)
       {
-        networkManager.Server.Send(message,playerReadyResponseVo.lobbyVo.clients[i].id);
+        networkManager.Server.Send(message, playerReadyResponseVo.lobbyVo.clients[i].id);
       }
 
       crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyResponseVo.lobbyVo);
-      
     }
   }
 }

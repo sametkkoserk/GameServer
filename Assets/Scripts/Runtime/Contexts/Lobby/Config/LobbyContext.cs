@@ -26,7 +26,7 @@ namespace Runtime.Contexts.Lobby.Config
         {
             //Injection binding.
             //Map a mock model and a mock service, both as Singletons
-            injectionBinder.Bind<ILobbyModel>().To<LobbyModel>().ToSingleton();
+            injectionBinder.Bind<ILobbyModel>().To<LobbyModel>().ToSingleton().CrossContext();
             //injectionBinder.Bind<INetworkManagerService>().To<NetworkManagerService>().ToSingleton();
             //View/Mediator binding
             //This Binding instantiates a new ExampleMediator whenever as ExampleView

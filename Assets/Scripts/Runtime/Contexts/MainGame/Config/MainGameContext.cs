@@ -1,8 +1,11 @@
+using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.MainGame.Command;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
+using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.MainGame.View.MainMapContainer;
+using Runtime.Contexts.Network.Enum;
 using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
@@ -33,6 +36,7 @@ namespace Runtime.Contexts.MainGame.Config
             //separated.
             mediationBinder.Bind<MainMapView>().To<MainMapMediator>();
             mediationBinder.Bind<MainMapContainerView>().To<MainMapContainerMediator>();
+            mediationBinder.Bind<MainGameManagerView>().To<MainGameManagerMediator>();
 
 
             //Event/Command binding
@@ -41,6 +45,8 @@ namespace Runtime.Contexts.MainGame.Config
             //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
             // commandBinder.Bind(ContextEvent.START).To<CreateMapCommand>();
             commandBinder.Bind(MainGameEvent.SendMap).To<SendMapCommand>();
+            
+            commandBinder.Bind(ClientToServerId.GameStart).To<GameStartCommand>();
         }
     }
 }

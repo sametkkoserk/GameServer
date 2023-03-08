@@ -14,14 +14,16 @@ namespace Runtime.Contexts.Lobby.Command
     public override void Execute()
     {
       OutFromLobbyVo outFromLobbyVo = (OutFromLobbyVo)evt.data;
-      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.OutFromLobbyDone);
-      message=networkManager.SetData(message,outFromLobbyVo.inLobbyId);
       
+      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.OutFromLobbyDone);
+      message = networkManager.SetData(message, outFromLobbyVo.inLobbyId);
+
       for (ushort i = 0; i < outFromLobbyVo.clients.Count; i++)
       {
-        networkManager.Server.Send(message,outFromLobbyVo.clients[i].id);
+        networkManager.Server.Send(message, outFromLobbyVo.clients[i].id);
       }
-      networkManager.Server.Send(message,outFromLobbyVo.clientId);
+
+      networkManager.Server.Send(message, outFromLobbyVo.clientId);
     }
   }
 }

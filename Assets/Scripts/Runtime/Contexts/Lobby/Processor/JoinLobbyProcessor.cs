@@ -17,11 +17,12 @@ namespace Runtime.Contexts.Lobby.Processor
       ushort fromId = vo.fromId;
       string message = vo.message;
       ushort lobbyId = networkManager.GetData<ushort>(message);
-      ;
 
-      JoinLobbyVo joinLobbyVo = new JoinLobbyVo();
-      joinLobbyVo.lobbyId = lobbyId;
-      joinLobbyVo.clientId = fromId;
+      JoinLobbyVo joinLobbyVo = new()
+      {
+        lobbyId = lobbyId,
+        clientId = fromId
+      };
       dispatcher.Dispatch(LobbyEvent.JoinLobby, joinLobbyVo);
     }
   }

@@ -88,10 +88,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
 
     public T GetData<T>(string message) where T : new()
     {
-      if (message == null)
-        return default(T);
-
-      return JsonConvert.DeserializeObject<T>(message);
+      return message == null ? default(T) : JsonConvert.DeserializeObject<T>(message);
     }
 
     public Message SetData(Message message, object obj)
