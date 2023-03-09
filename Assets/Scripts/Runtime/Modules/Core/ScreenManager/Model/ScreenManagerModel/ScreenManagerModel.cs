@@ -5,6 +5,8 @@ using Runtime.Modules.Core.ScreenManager.Enum;
 using Runtime.Modules.Core.ScreenManager.Vo;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Runtime.Modules.Core.ScreenManager.Model.ScreenManagerModel
 {
@@ -12,14 +14,17 @@ namespace Runtime.Modules.Core.ScreenManager.Model.ScreenManagerModel
   {
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
     public IEventDispatcher dispatcher{ get; set;}
+    
     public Dictionary<string, int> layerMap { get; set; }
     public List<string> sceneKeys { get; set; }
-    
+    public Dictionary<PanelVo, AsyncOperationHandle<GameObject>> instantiatedPanels { get; set; }
+
     [PostConstruct]
     public void OnPostConstruct()
     {
       layerMap = new Dictionary<string, int>();
       sceneKeys = new List<string>();
+      instantiatedPanels = new Dictionary<PanelVo, AsyncOperationHandle<GameObject>>();
     }
 
     public void AddLayerContainer(string sceneKey)
@@ -39,7 +44,7 @@ namespace Runtime.Modules.Core.ScreenManager.Model.ScreenManagerModel
       }
     }
     
-    public void OpenPanel(SceneKey sceneKey, LayerKey layerKey, PanelMode panelMode, PanelType panelType, string panelAddressableKey)
+    public void OpenPanel(string panelAddressableKey, SceneKey sceneKey, LayerKey layerKey, PanelMode panelMode, PanelType panelType)
     {
       if (!sceneKeys.Contains(sceneKey.ToString()))
       {
@@ -78,6 +83,18 @@ namespace Runtime.Modules.Core.ScreenManager.Model.ScreenManagerModel
     public void CloseLayerPanels(LayerKey layerKey)
     {
       dispatcher.Dispatch(PanelEvent.CloseLayerPanels, layerKey);
+    }
+
+    public void CloseSpecificLayer(SceneKey sceneKey, LayerKey layerKey)
+    {
+      KeyValuePair<SceneKey, LayerKey> specificLayer = new(sceneKey, layerKey);
+
+      dispatcher.Dispatch(PanelEvent.CloseSpecificLayerPanels, specificLayer);
+    }
+
+    public void CloseSpecificPanel(string panelAddressableKey)
+    {
+      dispatcher.Dispatch(PanelEvent.CloseSpecificPanel, panelAddressableKey);
     }
   }
 }

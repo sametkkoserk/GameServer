@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Riptide;
@@ -9,6 +8,8 @@ using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Runtime.Contexts.MainGame.View.MainGameManager
 {
@@ -26,6 +27,8 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     public override void OnRegister()
     {
       dispatcher.AddListener(MainGameEvent.GameStart, OnGameStartCheck);
+      
+      dispatcher.AddListener(ClientToServerId.NextTurn, TurnEnded);
     }
 
     /// <summary>It checks everyone see the main map and ready to start. If each player ready, method will determine queue of players.</summary>
@@ -63,13 +66,24 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
         networkManager.Server.Send(message, view.lobbyVo.clients[(ushort)i].id);
 
         view.queue++;
+        if (view.queue >= view.randomNumbers.Count)
+        {
+          view.queue = 0;
+        }
         return;
       }
+    }
+
+    private void TurnEnded(IEvent pay)
+    {
+      NextTurn();
     }
 
     public override void OnRemove()
     {
       dispatcher.RemoveListener(MainGameEvent.GameStart, OnGameStartCheck);
+      
+      dispatcher.RemoveListener(ClientToServerId.NextTurn, TurnEnded);
     }
   }
 }

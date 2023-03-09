@@ -7,5 +7,7 @@ namespace Runtime.Modules.Core.ScreenManager.Enum
     CloseAllPanels,
     CloseScenePanels,
     CloseLayerPanels,
+    CloseSpecificLayerPanels,
+    CloseSpecificPanel
   }
 }
