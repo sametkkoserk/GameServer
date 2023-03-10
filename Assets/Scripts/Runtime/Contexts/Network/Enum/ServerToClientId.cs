@@ -2,14 +2,16 @@ namespace Runtime.Contexts.Network.Enum
 {
   public enum ServerToClientId : ushort
   {
-    RESPONSE = 1,
-    JoinedToLobby = 2,
-    NewPlayerToLobby = 3,
-    SendLobbies = 4,
-    OutFromLobbyDone = 5,
-    PlayerReadyResponse = 6,
-    SendMap = 7,
-    SendUserLobbyID = 8,
-    SendTurn = 9
+    //Integer value automatically attached, there is no necessary manually set. Also, it must be same with file in the server.
+    Response,
+    JoinedToLobby,
+    NewPlayerToLobby,
+    SendLobbies,
+    QuitFromLobbyDone,
+    PlayerReadyResponse,
+    GameSettingsChanged,
+    SendMap,
+    SendUserLobbyID,
+    SendTurn
   }
 }

@@ -22,6 +22,15 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       dispatcher.AddListener(LobbyEvent.PlayerReady, OnReady);
     }
 
+    private void Start()
+    {
+      view.lobbyVo = lobbyModel.createdLobbyVo;
+
+      Debug.Log("lobby Inited");
+
+      OnJoin(view.lobbyVo.leaderId);
+    }
+    
     private void OnReady(IEvent payload)
     {
       PlayerReadyResponseVo playerReadyResponseVo = (PlayerReadyResponseVo)payload.data;
@@ -36,16 +45,6 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse, playerReadyResponseVo);
       Debug.Log("player is ready confirmed");
-    }
-
-
-    private void Start()
-    {
-      view.lobbyVo = lobbyModel.createdLobbyVo;
-
-      Debug.Log("lobby Inited");
-
-      OnJoin(view.lobbyVo.leaderId);
     }
 
     private void OnJoinLobby(IEvent payload)

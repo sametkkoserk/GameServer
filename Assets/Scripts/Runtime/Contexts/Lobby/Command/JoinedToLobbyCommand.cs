@@ -17,7 +17,7 @@ namespace Runtime.Contexts.Lobby.Command
       JoinedToLobbyVo vo = (JoinedToLobbyVo)evt.data;
       
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.JoinedToLobby);
-      message = networkManager.SetData(message, vo.lobby);
+      message = networkManager.SetData(message, vo);
       networkManager.Server.Send(message, vo.clientVo.id);
 
       Debug.Log(vo.clientVo.id);
