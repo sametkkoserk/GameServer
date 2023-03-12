@@ -18,7 +18,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     public override void OnRegister()
     {
       dispatcher.AddListener(LobbyEvent.JoinLobby, OnJoinLobby);
-      dispatcher.AddListener(LobbyEvent.OutFromLobby, OnOutFromLobby);
+      dispatcher.AddListener(LobbyEvent.QuitFromLobby, OnQuitFromLobby);
       dispatcher.AddListener(LobbyEvent.PlayerReady, OnReady);
     }
 
@@ -76,21 +76,21 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     }
 
 
-    private void OnOutFromLobby(IEvent payload)
+    private void OnQuitFromLobby(IEvent payload)
     {
-      OutFromLobbyVo outFromLobbyVo = (OutFromLobbyVo)payload.data;
-      if (outFromLobbyVo.lobbyId != view.lobbyId)
+      QuitFromLobbyVo quitFromLobbyVo = (QuitFromLobbyVo)payload.data;
+      if (quitFromLobbyVo.lobbyId != view.lobbyId)
         return;
-      Debug.Log(outFromLobbyVo.inLobbyId);
+      Debug.Log(quitFromLobbyVo.inLobbyId);
 
-      if (view.lobbyVo.clients[outFromLobbyVo.inLobbyId].ready)
+      if (view.lobbyVo.clients[quitFromLobbyVo.inLobbyId].ready)
       {
         view.lobbyVo.readyCount -= 1;
       }
 
       view.lobbyVo.playerCount -= 1;
 
-      for (ushort i = outFromLobbyVo.inLobbyId; i < view.lobbyVo.playerCount; i++)
+      for (ushort i = quitFromLobbyVo.inLobbyId; i < view.lobbyVo.playerCount; i++)
       {
         view.lobbyVo.clients[i] = view.lobbyVo.clients[(ushort)(i + 1)];
         view.lobbyVo.clients[i].inLobbyId = i;
@@ -98,15 +98,15 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       view.lobbyVo.clients.Remove(view.lobbyVo.playerCount);
 
-
-      outFromLobbyVo.clients = view.lobbyVo.clients;
-      dispatcher.Dispatch(LobbyEvent.OutFromLobbyDone, outFromLobbyVo);
+      quitFromLobbyVo.clients = view.lobbyVo.clients;
+      
+      dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
     }
 
     public override void OnRemove()
     {
       dispatcher.RemoveListener(LobbyEvent.JoinLobby, OnJoinLobby);
-      dispatcher.RemoveListener(LobbyEvent.OutFromLobby, OnOutFromLobby);
+      dispatcher.RemoveListener(LobbyEvent.QuitFromLobby, OnQuitFromLobby);
       dispatcher.RemoveListener(LobbyEvent.PlayerReady, OnReady);
     }
   }

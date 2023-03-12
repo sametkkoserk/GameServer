@@ -42,14 +42,14 @@ namespace Runtime.Contexts.Lobby.Config
             //commandBinder.Bind(ContextEvent.START).To<>();
             commandBinder.Bind(LobbyEvent.JoinedToLobby).To<JoinedToLobbyCommand>();
             commandBinder.Bind(LobbyEvent.SendLobbies).To<SendLobbiesCommand>();
-            commandBinder.Bind(LobbyEvent.OutFromLobbyDone).To<OutFromLobbyDoneCommand>();
+            commandBinder.Bind(LobbyEvent.QuitFromLobbyDone).To<OutFromLobbyDoneCommand>();
             commandBinder.Bind(LobbyEvent.PlayerReadyResponse).To<PlayerReadyResponseCommand>();
 
             
             commandBinder.Bind(ClientToServerId.CreateLobby).To<CreateLobbyProcessor>();
             commandBinder.Bind(ClientToServerId.GetLobbies).To<GetLobbiesProcessor>();
             commandBinder.Bind(ClientToServerId.JoinLobby).To<JoinLobbyProcessor>();
-            commandBinder.Bind(ClientToServerId.OutFromLobby).To<OutFromLobbyProcessor>();
+            commandBinder.Bind(ClientToServerId.QuitFromLobby).To<OutFromLobbyProcessor>();
             commandBinder.Bind(ClientToServerId.PlayerReady).To<PlayerReadyProcessor>();
             commandBinder.Bind(ClientToServerId.GameSettingsChanged).To<GameSettingsChangedCommand>();
         }

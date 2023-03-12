@@ -6,8 +6,8 @@ namespace Runtime.Contexts.Lobby.Enum
         JoinedToLobby,
         SendLobbies,
         JoinLobby,
-        OutFromLobby,
-        OutFromLobbyDone,
+        QuitFromLobby,
+        QuitFromLobbyDone,
         PlayerReady,
         PlayerReadyResponse
     }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
@@ -13,17 +14,17 @@ namespace Runtime.Contexts.Lobby.Command
 
     public override void Execute()
     {
-      OutFromLobbyVo outFromLobbyVo = (OutFromLobbyVo)evt.data;
+      QuitFromLobbyVo quitFromLobbyVo = (QuitFromLobbyVo)evt.data;
       
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.QuitFromLobbyDone);
-      message = networkManager.SetData(message, outFromLobbyVo.inLobbyId);
+      message = networkManager.SetData(message, quitFromLobbyVo.inLobbyId);
 
-      for (ushort i = 0; i < outFromLobbyVo.clients.Count; i++)
+      for (ushort i = 0; i < quitFromLobbyVo.clients.Count; i++)
       {
-        networkManager.Server.Send(message, outFromLobbyVo.clients[i].id);
+        networkManager.Server.Send(message, quitFromLobbyVo.clients.ElementAt(i).Value.id);
       }
 
-      networkManager.Server.Send(message, outFromLobbyVo.clientId);
+      networkManager.Server.Send(message, quitFromLobbyVo.clientId);
     }
   }
 }

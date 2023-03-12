@@ -16,9 +16,9 @@ namespace Runtime.Contexts.Lobby.Processor
       ushort lobbyId = vo.fromId;
       string message = vo.message;
       
-      OutFromLobbyVo outFromLobbyVo = networkManager.GetData<OutFromLobbyVo>(message);
-      outFromLobbyVo.clientId = lobbyId;
-      dispatcher.Dispatch(LobbyEvent.OutFromLobby,outFromLobbyVo);
+      QuitFromLobbyVo quitFromLobbyVo = networkManager.GetData<QuitFromLobbyVo>(message);
+      quitFromLobbyVo.clientId = lobbyId;
+      dispatcher.Dispatch(LobbyEvent.QuitFromLobby,quitFromLobbyVo);
     }
   }
 }

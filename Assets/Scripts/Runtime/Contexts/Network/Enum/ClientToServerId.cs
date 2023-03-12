@@ -6,7 +6,7 @@ namespace Runtime.Contexts.Network.Enum
     CreateLobby,
     GetLobbies,
     JoinLobby,
-    OutFromLobby,
+    QuitFromLobby,
     PlayerReady,
     GameSettingsChanged,
     GameStart,

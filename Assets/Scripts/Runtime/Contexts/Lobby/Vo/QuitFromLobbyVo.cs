@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 
 namespace Runtime.Contexts.Lobby.Vo
 {
-  public class OutFromLobbyVo
+  public class QuitFromLobbyVo
   {
     public ushort clientId;
     public ushort lobbyId;
     public ushort inLobbyId;
     [JsonIgnore]
-    public Dictionary<ushort,ClientVo> clients;
+    public Dictionary<ushort, ClientVo> clients;
   }
 }
