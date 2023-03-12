@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System.Linq;
 using Riptide;
-using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
@@ -8,7 +7,7 @@ using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
 using strange.extensions.command.impl;
 
-namespace Runtime.Contexts.Lobby.Command
+namespace Runtime.Contexts.Lobby.Processor
 {
   public class GameSettingsChangedCommand : EventCommand
   {
@@ -29,14 +28,11 @@ namespace Runtime.Contexts.Lobby.Command
       Message newMessage = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.GameSettingsChanged);
       newMessage = networkManager.SetData(newMessage, lobbySettingsVo);
 
-      for (ushort i = 0; i < lobbyModel.lobbies.Count; i++)
-      {
-        if (lobbyModel.lobbies[i].lobbyId != lobbySettingsVo.lobbyId) continue;
-        for (ushort j = 0; j < lobbyModel.lobbies[i].clients.Count; j++)
-        {
-          networkManager.Server.Send(newMessage, lobbyModel.lobbies[i].clients[j].id);
-        }
-      }
+      LobbyVo lobbyVo = lobbyModel.lobbies[lobbySettingsVo.lobbyId];
+      lobbyModel.lobbies[lobbySettingsVo.lobbyId].lobbySettingsVo = lobbySettingsVo;
+
+      for (int i = 0; i < lobbyVo.clients.Count; i++)
+        networkManager.Server.Send(newMessage, lobbyVo.clients.ElementAt(i).Value.id);
     }
   }
 }

@@ -10,7 +10,7 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         public Dictionary<ushort, LobbyVo> lobbies{ get; set; }
         public LobbyVo createdLobbyVo{ get; set; }
         [PostConstruct]
-        public void OnPostContruct()
+        public void OnPostConstruct()
         {
             lobbies = new Dictionary<ushort, LobbyVo>();
         }

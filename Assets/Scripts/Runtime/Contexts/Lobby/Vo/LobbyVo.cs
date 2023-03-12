@@ -19,5 +19,7 @@ namespace Runtime.Contexts.Lobby.Vo
         public ushort readyCount;
         
         public Dictionary<ushort, ClientVo> clients;
+
+        public LobbySettingsVo lobbySettingsVo;
     }
 }

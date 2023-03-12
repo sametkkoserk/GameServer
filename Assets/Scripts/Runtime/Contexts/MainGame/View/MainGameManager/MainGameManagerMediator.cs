@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Riptide;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
@@ -8,7 +7,6 @@ using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
-using UnityEngine;
 using Random = System.Random;
 
 namespace Runtime.Contexts.MainGame.View.MainGameManager
@@ -48,7 +46,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
         return;
 
       Random rnd = new();
-      view.randomNumbers = Enumerable.Range(0, view.readyCount).OrderBy(x => rnd.Next()).Take(view.readyCount).ToList();
+      view.queueList = Enumerable.Range(0, view.readyCount).OrderBy(x => rnd.Next()).Take(view.readyCount).ToList();
       
       NextTurn();
     }
@@ -58,7 +56,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       // In the future connection information must be checked. If player is AFK, it will be the next player's turn.
       for (int i = 0; i < view.lobbyVo.clients.Count; i++)
       {
-        if (view.lobbyVo.clients[(ushort)i].inLobbyId != view.randomNumbers[view.queue]) continue;
+        if (view.lobbyVo.clients[(ushort)i].inLobbyId != view.queueList[view.queue]) continue;
         
         Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendTurn);
         message = networkManager.SetData(message, view.lobbyVo.clients[(ushort)i].inLobbyId);
@@ -66,7 +64,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
         networkManager.Server.Send(message, view.lobbyVo.clients[(ushort)i].id);
 
         view.queue++;
-        if (view.queue >= view.randomNumbers.Count)
+        if (view.queue >= view.queueList.Count)
         {
           view.queue = 0;
         }
