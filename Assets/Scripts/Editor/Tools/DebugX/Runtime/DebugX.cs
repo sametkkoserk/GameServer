@@ -40,7 +40,8 @@ namespace Editor.Tools.DebugX.Runtime
     /// <summary>Logs a message.</summary>
     /// <param name="tag">The tag of message.</param>
     /// <param name="message">The message to log.</param>
-    public static void Log(DebugKey tag, string message)
+    /// <param name="logKey">The log type of message. <seealso cref="LogKey"/></param>
+    public static void Log(DebugKey tag, string message, LogKey logKey = LogKey.Log)
     {
 #if UNITY_EDITOR
       if (!_inited) Init();
@@ -53,7 +54,18 @@ namespace Editor.Tools.DebugX.Runtime
 
       string text = string.Format("<color=#{0}>" + "<b>{1}</b>" + "</color>: {2}", ColorUtility.ToHtmlStringRGBA(loggerVo.color), tag, message);
 
-      Debug.Log($"[{Thread.CurrentThread.ManagedThreadId}] {text}");
+      switch (logKey)
+      {
+        case LogKey.Log:
+          Debug.Log($"[{Thread.CurrentThread.ManagedThreadId}] {text}");
+          return;
+        case LogKey.Warning:
+          Debug.LogWarning($"[{Thread.CurrentThread.ManagedThreadId}] {text}");
+          return;
+        case LogKey.Error:
+          Debug.LogError($"[{Thread.CurrentThread.ManagedThreadId}] {text}");
+          return;
+      }
 #endif
     }
 
