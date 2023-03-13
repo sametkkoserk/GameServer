@@ -42,7 +42,7 @@ namespace Runtime.Contexts.Lobby.Config
             //commandBinder.Bind(ContextEvent.START).To<>();
             commandBinder.Bind(LobbyEvent.JoinedToLobby).To<JoinedToLobbyCommand>();
             commandBinder.Bind(LobbyEvent.SendLobbies).To<SendLobbiesCommand>();
-            commandBinder.Bind(LobbyEvent.QuitFromLobbyDone).To<OutFromLobbyDoneCommand>();
+            commandBinder.Bind(LobbyEvent.QuitFromLobbyDone).To<QuitFromLobbyDoneCommand>();
             commandBinder.Bind(LobbyEvent.PlayerReadyResponse).To<PlayerReadyResponseCommand>();
 
             

@@ -7,7 +7,7 @@ using strange.extensions.command.impl;
 
 namespace Runtime.Contexts.Lobby.Command
 {
-  public class OutFromLobbyDoneCommand : EventCommand
+  public class QuitFromLobbyDoneCommand : EventCommand
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }

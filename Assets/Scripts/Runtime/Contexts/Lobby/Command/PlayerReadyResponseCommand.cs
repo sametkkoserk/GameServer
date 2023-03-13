@@ -24,8 +24,8 @@ namespace Runtime.Contexts.Lobby.Command
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.PlayerReadyResponse);
       message = networkManager.SetData(message, playerReadyResponseVo);
 
-      message.AddUShort(playerReadyResponseVo.inLobbyId);
-      message.AddBool(playerReadyResponseVo.startGame);
+      // message.AddUShort(playerReadyResponseVo.inLobbyId);
+      // message.AddBool(playerReadyResponseVo.startGame);
 
       for (ushort i = 0; i < playerReadyResponseVo.lobbyVo.clients.Count; i++)
       {
