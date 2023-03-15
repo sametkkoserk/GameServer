@@ -6,6 +6,7 @@ namespace Editor.Tools.DebugX.Runtime
   public enum DebugKey
   {
     Server,
-    ScreenManager
+    ScreenManager,
+    JoinServer
   }
 }

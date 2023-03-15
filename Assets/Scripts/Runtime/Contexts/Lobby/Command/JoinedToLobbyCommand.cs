@@ -1,3 +1,4 @@
+using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
@@ -20,11 +21,11 @@ namespace Runtime.Contexts.Lobby.Command
       message = networkManager.SetData(message, vo);
       networkManager.Server.Send(message, vo.clientVo.id);
 
-      Debug.Log(vo.clientVo.id);
-      Debug.Log("Joined to Lobby Message sent");
-
       Message messageToOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.NewPlayerToLobby);
       messageToOthers = networkManager.SetData(messageToOthers, vo.clientVo);
+      
+      DebugX.Log(DebugKey.JoinServer, 
+        $"Player ID: {vo.clientVo.id}, Player's Lobby ID: {vo.clientVo.inLobbyId}, Lobby ID: {vo.lobby.lobbyId}");
       
       for (ushort i = 0; i < vo.lobby.playerCount; i++)
       {
