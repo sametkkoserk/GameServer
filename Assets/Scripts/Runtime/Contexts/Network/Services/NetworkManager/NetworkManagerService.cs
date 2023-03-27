@@ -1,7 +1,3 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.UnityConverters.Math;
 using Riptide;
 using Riptide.Utils;
 using Runtime.Contexts.Network.Enum;
@@ -16,16 +12,6 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
   {
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
     public IEventDispatcher crossDispatcher { get; set; }
-
-    private JsonSerializerSettings settings = new()
-    {
-      Converters = new JsonConverter[]
-      {
-        new Vector3Converter(),
-        new StringEnumConverter(),
-      },
-      ContractResolver = new DefaultContractResolver(),
-    };
 
     private int maxPacketSize = 1200;
 
@@ -88,14 +74,14 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
 
     public T GetData<T>(string message) where T : new()
     {
-      return message == null ? default(T) : JsonConvert.DeserializeObject<T>(message);
+      return message == null ? default(T) : JsonUtility.FromJson<T>(message);
     }
 
     public Message SetData(Message message, object obj)
     {
       if (obj == null)
         Debug.LogError("Set data object is null");
-      string objStr = JsonConvert.SerializeObject(obj, settings);
+      string objStr = JsonUtility.ToJson(obj);
 
       message.AddString(objStr);
       return message;
