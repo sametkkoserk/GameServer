@@ -26,11 +26,7 @@ namespace Runtime.Contexts.Lobby.Command
 
       // message.AddUShort(playerReadyResponseVo.inLobbyId);
       // message.AddBool(playerReadyResponseVo.startGame);
-
-      for (ushort i = 0; i < playerReadyResponseVo.lobbyVo.clients.Count; i++)
-      {
-        networkManager.Server.Send(message, playerReadyResponseVo.lobbyVo.clients[i].id);
-      }
+      networkManager.SendToLobby(message,playerReadyResponseVo.lobbyVo.clients);
 
       crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyResponseVo.lobbyVo);
     }

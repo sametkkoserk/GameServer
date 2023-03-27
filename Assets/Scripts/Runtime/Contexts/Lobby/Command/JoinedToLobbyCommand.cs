@@ -27,13 +27,7 @@ namespace Runtime.Contexts.Lobby.Command
       DebugX.Log(DebugKey.JoinServer, 
         $"Player ID: {vo.clientVo.id}, Player's Lobby ID: {vo.clientVo.inLobbyId}, Lobby ID: {vo.lobby.lobbyId}");
       
-      for (ushort i = 0; i < vo.lobby.playerCount; i++)
-      {
-        if (i != vo.clientVo.inLobbyId)
-        {
-          networkManager.Server.Send(messageToOthers, vo.lobby.clients[i].id);
-        }
-      }
+      networkManager.SendToLobbyExcept(messageToOthers,vo.clientVo.inLobbyId, vo.lobby.clients);
     }
   }
 }

@@ -19,10 +19,7 @@ namespace Runtime.Contexts.Lobby.Command
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.QuitFromLobbyDone);
       message = networkManager.SetData(message, quitFromLobbyVo.inLobbyId);
 
-      for (ushort i = 0; i < quitFromLobbyVo.clients.Count; i++)
-      {
-        networkManager.Server.Send(message, quitFromLobbyVo.clients.ElementAt(i).Value.id);
-      }
+      networkManager.SendToLobby(message,quitFromLobbyVo.clients);
 
       networkManager.Server.Send(message, quitFromLobbyVo.clientId);
     }

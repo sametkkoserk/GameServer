@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Riptide;
 using Riptide.Utils;
+using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Vo;
 using strange.extensions.context.api;
@@ -31,32 +33,24 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
 
       Server.MessageReceived += MessageHandler;
 
-
-      // TODO: Şafak: Silinecek. Bunlar deneme çalışmaları.
-      // LobbyVo y = new()
-      // {
-      //     lobbyId = 3
-      // };
-      //
-      // sl<LobbyVo>(y);
     }
 
-    //
-    // public void sl<T>(T fre)
-    // {
-    //   // TODO: Şafak: Silinecek. Bunlar deneme çalışmaları.
-    //   Type type = typeof(T);
-    //   MemberInfo[] privateMembers = type.GetMembers();
-    //   var z = privateMembers.ToList();
-    //
-    //   Debug.Log(z.Count);
-    //
-    //   for (int i = 0; i < z.Count; i++)
-    //   {
-    //     Debug.Log(z[i]);
-    //   }
-    // }
-    //
+    public void SendToLobby(Message message, Dictionary<ushort,ClientVo> clients)
+    {
+      for (ushort i = 0; i < clients.Count; i++)
+      {
+        Server.Send(message,clients[i].id);
+      }
+    }
+    public void SendToLobbyExcept(Message message,ushort exceptClient, Dictionary<ushort,ClientVo> clients)
+    {
+      for (ushort i = 0; i < clients.Count; i++)
+      {
+        if (i!=exceptClient)
+          Server.Send(message,clients[i].id);
+      }
+    }
+
     public void Ticker()
     {
       Server?.Update();
