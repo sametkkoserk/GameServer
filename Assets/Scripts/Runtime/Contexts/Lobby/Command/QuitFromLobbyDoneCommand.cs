@@ -1,4 +1,5 @@
 using System.Linq;
+using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
@@ -22,6 +23,10 @@ namespace Runtime.Contexts.Lobby.Command
       networkManager.SendToLobby(message,quitFromLobbyVo.clients);
 
       networkManager.Server.Send(message, quitFromLobbyVo.clientId);
+      
+      DebugX.Log(DebugKey.Request, 
+        $"Player ID: {quitFromLobbyVo.clientId} Player's Lobby ID: {quitFromLobbyVo.inLobbyId}, Lobby ID: {quitFromLobbyVo.lobbyId} Process: Quit from lobby");
+
     }
   }
 }

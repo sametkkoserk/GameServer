@@ -7,6 +7,8 @@ namespace Editor.Tools.DebugX.Runtime
   {
     Server,
     ScreenManager,
-    JoinServer
+    JoinServer,
+    Request,
+    Response
   }
 }

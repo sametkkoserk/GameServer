@@ -1,3 +1,4 @@
+using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Network.Enum;
@@ -20,6 +21,9 @@ namespace Runtime.Contexts.Lobby.Command
       message=networkManager.SetData(message,lobbyModel.lobbies);
 
       networkManager.Server.Send(message,clientId);
+      
+      DebugX.Log(DebugKey.Request, 
+        $"Player ID: {clientId} Process: Lobbies");
     }
   }
 }
