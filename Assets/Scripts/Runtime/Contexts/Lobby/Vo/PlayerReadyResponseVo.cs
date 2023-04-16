@@ -1,13 +1,16 @@
 using Newtonsoft.Json;
+using ProtoBuf;
 
 namespace Runtime.Contexts.Lobby.Vo
 {
+  [ProtoContract]
   public class PlayerReadyResponseVo
   {
-    public ushort lobbyId;
-    
+    [ProtoMember(1)]
     public ushort inLobbyId;
-    
+    [ProtoMember(2)]
+    public ushort lobbyId;
+    [ProtoMember(3)]
     public bool startGame;
 
     [JsonIgnore]

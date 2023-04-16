@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using ProtoBuf;
 using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Vo
 {
+  [ProtoContract]
   public class GameStartVo
   {
-    public ushort lobbyId;
-
+    [ProtoMember(1)]
     public bool gameStart;
+    [ProtoMember(2)]
+    public ushort lobbyId;
   }
 }

@@ -15,7 +15,7 @@ namespace Runtime.Contexts.Lobby.Processor
     {
       MessageReceivedVo vo = (MessageReceivedVo)evt.data;
       ushort fromId = vo.fromId;
-      string message = vo.message;
+      byte[] message = vo.message;
       ushort lobbyId = networkManager.GetData<ushort>(message);
 
       JoinLobbyVo joinLobbyVo = new()

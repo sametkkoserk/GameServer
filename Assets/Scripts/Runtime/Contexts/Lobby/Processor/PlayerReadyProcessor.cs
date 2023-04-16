@@ -16,7 +16,7 @@ namespace Runtime.Contexts.Lobby.Processor
       MessageReceivedVo vo = (MessageReceivedVo) evt.data;
       
       ushort fromId = vo.fromId;
-      string message = vo.message;
+      byte[] message = vo.message;
       PlayerReadyResponseVo playerReadyResponseVo = networkManager.GetData<PlayerReadyResponseVo>(message);
 
       dispatcher.Dispatch(LobbyEvent.PlayerReady,playerReadyResponseVo);

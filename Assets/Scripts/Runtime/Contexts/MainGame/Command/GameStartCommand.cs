@@ -14,8 +14,7 @@ namespace Runtime.Contexts.MainGame.Command
     {
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
       // ushort lobbyId = vo.fromId;
-      string message = messageReceivedVo.message;
-      GameStartVo gameStartVo = networkManager.GetData<GameStartVo>(message);
+      GameStartVo gameStartVo = networkManager.GetData<GameStartVo>(messageReceivedVo.message);
 
       GameStartVo vo = new()
       {

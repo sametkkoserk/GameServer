@@ -22,7 +22,7 @@ namespace Runtime.Contexts.Lobby.Processor
       MessageReceivedVo vo = (MessageReceivedVo) evt.data;
       
       ushort fromId = vo.fromId;
-      string message = vo.message;
+      byte[] message = vo.message;
       LobbySettingsVo lobbySettingsVo = networkManager.GetData<LobbySettingsVo>(message);
 
       Message newMessage = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.GameSettingsChanged);

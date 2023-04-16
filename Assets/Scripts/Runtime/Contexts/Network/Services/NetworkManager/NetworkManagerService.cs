@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using ProtoBuf;
 using Riptide;
 using Riptide.Utils;
 using Runtime.Contexts.Lobby.Vo;
@@ -61,24 +63,32 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       MessageReceivedVo vo = new()
       {
         fromId = messageArgs.FromConnection.Id,
-        message = messageArgs.Message.GetString()
+        message = messageArgs.Message.GetBytes()
       };
       crossDispatcher.Dispatch((ClientToServerId)messageArgs.MessageId, vo);
     }
 
-    public T GetData<T>(string message) where T : new()
+    public T GetData<T>(byte[] message) where T : new()
     {
-      return message == null ? default(T) : JsonUtility.FromJson<T>(message);
+      using MemoryStream stream = new MemoryStream(message);
+      return message == null ? default : Serializer.Deserialize<T>(stream);
     }
 
     public Message SetData(Message message, object obj)
     {
       if (obj == null)
         Debug.LogError("Set data object is null");
-      string objStr = JsonUtility.ToJson(obj);
+      byte[] objBytes = ProtoSerialize<object>(obj);
 
-      message.AddString(objStr);
+      message.AddBytes(objBytes);
       return message;
+    }
+
+    private byte[] ProtoSerialize<T>(T message) where T : new()
+    {
+      using var stream = new MemoryStream();
+      Serializer.Serialize(stream, message);
+      return stream.ToArray();
     }
 
 

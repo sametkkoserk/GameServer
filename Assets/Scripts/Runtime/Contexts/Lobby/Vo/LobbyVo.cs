@@ -1,25 +1,28 @@
 using System.Collections.Generic;
+using ProtoBuf;
 
 namespace Runtime.Contexts.Lobby.Vo
 {
+    [ProtoContract]
     public class LobbyVo
     {
-        public ushort lobbyId;
-        
-        public string lobbyName;
-        
-        public bool isPrivate;
-        
-        public ushort leaderId;
-        
-        public ushort maxPlayerCount;
-        
-        public ushort playerCount;
-        
-        public ushort readyCount;
-        
+        [ProtoMember(1)]
         public Dictionary<ushort, ClientVo> clients;
-
+        [ProtoMember(2)]
+        public bool isPrivate;
+        [ProtoMember(3)]
+        public ushort leaderId;
+        [ProtoMember(4)]
+        public ushort lobbyId;
+        [ProtoMember(5)]
+        public string lobbyName;
+        [ProtoMember(6)]
         public LobbySettingsVo lobbySettingsVo;
+        [ProtoMember(7)]
+        public ushort maxPlayerCount;
+        [ProtoMember(8)]
+        public ushort playerCount;
+        [ProtoMember(9)]
+        public ushort readyCount;
     }
 }
