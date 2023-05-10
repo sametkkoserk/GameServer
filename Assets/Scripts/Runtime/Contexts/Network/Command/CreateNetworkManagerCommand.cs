@@ -6,7 +6,6 @@ namespace Runtime.Contexts.Network.Command
 {
     public class CreateNetworkManagerCommand : EventCommand
     {
-
         public override void Execute()
         {
             Addressables.InstantiateAsync(NetworkKeys.NetworkManager);
