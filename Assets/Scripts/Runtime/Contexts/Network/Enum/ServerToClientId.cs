@@ -4,6 +4,7 @@ namespace Runtime.Contexts.Network.Enum
   {
     //Integer value automatically attached, there is no necessary manually set. Also, it must be same with file in the server.
     Response,
+    RegisterAccepted,
     JoinedToLobby,
     NewPlayerToLobby,
     SendLobbies,
