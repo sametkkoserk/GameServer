@@ -11,7 +11,7 @@ namespace Runtime.Contexts.Network.Enum
     QuitFromLobbyDone,
     PlayerReadyResponse,
     GameSettingsChanged,
-    SendMap,
+    GameStartPreparations,
     SendUserLobbyID,
     SendTurn
   }

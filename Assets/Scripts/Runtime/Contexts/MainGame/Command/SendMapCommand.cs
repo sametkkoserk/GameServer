@@ -15,7 +15,7 @@ namespace Runtime.Contexts.MainGame.Command
     {
       MapGeneratorVo mapGeneratorVo = (MapGeneratorVo)evt.data;
 
-      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendMap);
+      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.GameStartPreparations);
       message = networkManager.SetData(message, mapGeneratorVo);
 
       for (ushort i = 0; i < mapGeneratorVo.clients.Count; i++)

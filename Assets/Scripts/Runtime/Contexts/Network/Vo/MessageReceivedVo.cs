@@ -4,6 +4,5 @@ namespace Runtime.Contexts.Network.Vo
     {
         public ushort fromId { get; set; }
         public byte[] message { get; set; }
-        
     }
 }
