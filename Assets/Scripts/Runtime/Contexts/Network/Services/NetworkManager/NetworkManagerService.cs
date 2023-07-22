@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
+using ProtoBuf.Meta;
 using Riptide;
 using Riptide.Utils;
 using Runtime.Contexts.Lobby.Vo;
@@ -78,7 +79,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
     {
       if (obj == null)
         Debug.LogError("Set data object is null");
-      byte[] objBytes = ProtoSerialize<object>(obj);
+      byte[] objBytes = ProtoSerialize(obj);
 
       message.AddBytes(objBytes);
       return message;
@@ -86,7 +87,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
 
     private byte[] ProtoSerialize<T>(T message) where T : new()
     {
-      using var stream = new MemoryStream();
+      using MemoryStream stream = new();
       Serializer.Serialize(stream, message);
       return stream.ToArray();
     }

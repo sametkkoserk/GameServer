@@ -12,6 +12,6 @@ namespace Runtime.Contexts.MainGame.Vo
     public Dictionary<int, CityVo> cityVos;
 
     [JsonIgnore]
-    public Dictionary<ushort,ClientVo> clients; 
+    public Dictionary<ushort, ClientVo> clients; 
   }
 }
