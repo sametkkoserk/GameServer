@@ -35,7 +35,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     {
       PlayerReadyResponseVo playerReadyResponseVo = (PlayerReadyResponseVo)payload.data;
 
-      if (playerReadyResponseVo.lobbyId != view.lobbyId)
+      if (playerReadyResponseVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
 
       view.lobbyVo.clients[playerReadyResponseVo.inLobbyId].ready = true;
@@ -50,7 +50,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     private void OnJoinLobby(IEvent payload)
     {
       JoinLobbyVo joinLobbyVo = (JoinLobbyVo)payload.data;
-      if (joinLobbyVo.lobbyId != view.lobbyId)
+      if (joinLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
       OnJoin(joinLobbyVo.clientId);
     }
@@ -79,8 +79,10 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     private void OnQuitFromLobby(IEvent payload)
     {
       QuitFromLobbyVo quitFromLobbyVo = (QuitFromLobbyVo)payload.data;
-      if (quitFromLobbyVo.lobbyId != view.lobbyId)
+      
+      if (quitFromLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
+      
       Debug.Log(quitFromLobbyVo.inLobbyId);
 
       if (view.lobbyVo.clients[quitFromLobbyVo.inLobbyId].ready)

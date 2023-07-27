@@ -13,7 +13,7 @@ namespace Runtime.Contexts.Lobby.Vo
         [ProtoMember(3)]
         public ushort leaderId;
         [ProtoMember(4)]
-        public ushort lobbyId;
+        public string lobbyCode;
         [ProtoMember(5)]
         public string lobbyName;
         [ProtoMember(6)]

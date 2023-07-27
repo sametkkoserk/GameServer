@@ -12,7 +12,7 @@ namespace Runtime.Contexts.Lobby.Vo
     [ProtoMember(2)]
     public ushort inLobbyId;
     [ProtoMember(3)]
-    public ushort lobbyId;
+    public string lobbyCode;
     [JsonIgnore]
     public Dictionary<ushort, ClientVo> clients;
   }

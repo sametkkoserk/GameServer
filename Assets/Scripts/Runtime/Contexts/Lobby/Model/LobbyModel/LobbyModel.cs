@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Runtime.Contexts.Lobby.Vo;
 using UnityEngine;
 
@@ -6,22 +7,49 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
 {
     public class LobbyModel : ILobbyModel
     {
-        public ushort lobbyCount{ get; set; }
-        public Dictionary<ushort, LobbyVo> lobbies{ get; set; }
+        public ushort lobbyCount { get; set; }
+        public Dictionary<string, LobbyVo> lobbies{ get; set; }
         public LobbyVo createdLobbyVo{ get; set; }
         
         [PostConstruct]
         public void OnPostConstruct()
         {
-            lobbies = new Dictionary<ushort, LobbyVo>();
+            lobbies = new Dictionary<string, LobbyVo>();
         }
         public void NewLobbyCreated(LobbyVo vo)
         {
             createdLobbyVo = vo;
-            createdLobbyVo.lobbyId = lobbyCount;
-            lobbies[lobbyCount] = vo;
+            createdLobbyVo.lobbyCode = GenerateLobbyCode(2);
+            lobbies.Add(createdLobbyVo.lobbyCode, vo);
             lobbyCount += 1;
+            
             Debug.Log("model process completed");
+        }
+
+        public void DeleteLobby(LobbyVo vo)
+        {
+            for (ushort i = 0; i < lobbies.Count; i++)
+            {
+                if (lobbies.ElementAt(i).Key != vo.lobbyCode) continue;
+                lobbies.Remove(vo.lobbyCode);
+                lobbyCount--;
+            }
+        }
+        
+        private string GenerateLobbyCode(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            string randomString = "";
+
+            for (int i = 0; i < length; i++)
+            {
+                randomString += chars[Random.Range(0, chars.Length)];
+            }
+
+            if (lobbies.ContainsKey(randomString))
+                GenerateLobbyCode(length);
+            
+            return randomString;
         }
     }
 }

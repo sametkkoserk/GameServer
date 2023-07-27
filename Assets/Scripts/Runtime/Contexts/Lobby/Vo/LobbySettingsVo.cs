@@ -6,7 +6,7 @@ namespace Runtime.Contexts.Lobby.Vo
   public class LobbySettingsVo
   {
     [ProtoMember(1)]
-    public ushort lobbyId;
+    public string lobbyCode;
     [ProtoMember(2)]
     public float turnTime;
   }

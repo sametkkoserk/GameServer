@@ -18,7 +18,7 @@ namespace Runtime.Contexts.MainGame.Command
 
       GameStartVo vo = new()
       {
-        lobbyId = gameStartVo.lobbyId,
+        lobbyCode = gameStartVo.lobbyCode,
         gameStart = gameStartVo.gameStart
       };
       

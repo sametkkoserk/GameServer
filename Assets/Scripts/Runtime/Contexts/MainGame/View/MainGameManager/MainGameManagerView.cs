@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Runtime.Contexts.Lobby.Vo;
 using strange.extensions.mediation.impl;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Runtime.Contexts.MainGame.View.MainGameManager
 {
@@ -11,7 +10,6 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     [HideInInspector]
     public ushort readyCount;
 
-    [FormerlySerializedAs("randomNumbers")]
     [HideInInspector]
     public List<int> queueList;
 

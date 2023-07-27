@@ -10,6 +10,6 @@ namespace Runtime.Contexts.MainGame.Vo
     [ProtoMember(1)]
     public bool gameStart;
     [ProtoMember(2)]
-    public ushort lobbyId;
+    public string lobbyCode;
   }
 }

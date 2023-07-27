@@ -9,7 +9,7 @@ namespace Runtime.Contexts.Lobby.Vo
     [ProtoMember(1)]
     public ushort inLobbyId;
     [ProtoMember(2)]
-    public ushort lobbyId;
+    public string lobbyCode;
     [ProtoMember(3)]
     public bool startGame;
 

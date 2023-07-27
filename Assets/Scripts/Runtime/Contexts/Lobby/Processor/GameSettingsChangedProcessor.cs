@@ -28,8 +28,8 @@ namespace Runtime.Contexts.Lobby.Processor
       Message newMessage = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.GameSettingsChanged);
       newMessage = networkManager.SetData(newMessage, lobbySettingsVo);
 
-      LobbyVo lobbyVo = lobbyModel.lobbies[lobbySettingsVo.lobbyId];
-      lobbyModel.lobbies[lobbySettingsVo.lobbyId].lobbySettingsVo = lobbySettingsVo;
+      LobbyVo lobbyVo = lobbyModel.lobbies[lobbySettingsVo.lobbyCode];
+      lobbyModel.lobbies[lobbySettingsVo.lobbyCode].lobbySettingsVo = lobbySettingsVo;
 
       for (int i = 0; i < lobbyVo.clients.Count; i++)
         networkManager.Server.Send(newMessage, lobbyVo.clients.ElementAt(i).Value.id);

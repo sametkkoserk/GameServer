@@ -8,6 +8,6 @@ namespace Runtime.Contexts.Lobby.Vo
     [ProtoMember(1)]
     public ushort clientId;
     [ProtoMember(2)]
-    public ushort lobbyId;
+    public string lobbyCode;
   }
 }

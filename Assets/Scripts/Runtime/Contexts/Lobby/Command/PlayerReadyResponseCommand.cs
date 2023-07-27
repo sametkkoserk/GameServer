@@ -27,11 +27,11 @@ namespace Runtime.Contexts.Lobby.Command
 
       // message.AddUShort(playerReadyResponseVo.inLobbyId);
       // message.AddBool(playerReadyResponseVo.startGame);
-      networkManager.SendToLobby(message,playerReadyResponseVo.lobbyVo.clients);
+      networkManager.SendToLobby(message, playerReadyResponseVo.lobbyVo.clients);
 
       crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyResponseVo.lobbyVo);
       
-      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyResponseVo.inLobbyId}, Lobby ID: {playerReadyResponseVo.lobbyId}, Process: Player Ready");
+      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyResponseVo.inLobbyId}, Lobby ID: {playerReadyResponseVo.lobbyCode}, Process: Player Ready");
     }
   }
 }

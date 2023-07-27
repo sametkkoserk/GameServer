@@ -35,10 +35,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     {
       GameStartVo vo = (GameStartVo)payload.data;
 
-      if (view.lobbyVo == null)
-        for (int i = 0; i < lobbyModel.lobbies.Keys.Count; i++)
-          if (lobbyModel.lobbies[(ushort)i].lobbyId == vo.lobbyId)
-            view.lobbyVo = lobbyModel.lobbies[(ushort)i];
+      view.lobbyVo = lobbyModel.lobbies[vo.lobbyCode];
 
       view.readyCount++;
 
@@ -72,7 +69,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       }
     }
 
-    private void TurnEnded(IEvent pay)
+    private void TurnEnded()
     {
       NextTurn();
     }

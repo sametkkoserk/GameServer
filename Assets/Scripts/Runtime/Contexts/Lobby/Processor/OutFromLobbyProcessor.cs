@@ -13,11 +13,12 @@ namespace Runtime.Contexts.Lobby.Processor
     public override void Execute()
     {
       MessageReceivedVo vo = (MessageReceivedVo)evt.data;
-      ushort lobbyId = vo.fromId;
+      ushort clientId = vo.fromId;
       byte[] message = vo.message;
       
       QuitFromLobbyVo quitFromLobbyVo = networkManager.GetData<QuitFromLobbyVo>(message);
-      quitFromLobbyVo.clientId = lobbyId;
+      quitFromLobbyVo.clientId = clientId;
+      
       dispatcher.Dispatch(LobbyEvent.QuitFromLobby,quitFromLobbyVo);
     }
   }
