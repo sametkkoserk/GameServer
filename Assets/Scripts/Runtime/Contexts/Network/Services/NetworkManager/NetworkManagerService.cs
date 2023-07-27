@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
-using ProtoBuf.Meta;
 using Riptide;
 using Riptide.Utils;
 using Runtime.Contexts.Lobby.Vo;
@@ -18,7 +17,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
     public IEventDispatcher crossDispatcher { get; set; }
 
-    private int maxPacketSize = 1200;
+    private protected int maxPacketSize = 1200;
 
     public Server Server { get; private set; }
 
@@ -69,9 +68,9 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       crossDispatcher.Dispatch((ClientToServerId)messageArgs.MessageId, vo);
     }
 
-    public T GetData<T>(byte[] message) where T : new()
+    public T GetData<T>(byte[] message)
     {
-      using MemoryStream stream = new MemoryStream(message);
+      using MemoryStream stream = new(message);
       return message == null ? default : Serializer.Deserialize<T>(stream);
     }
 
