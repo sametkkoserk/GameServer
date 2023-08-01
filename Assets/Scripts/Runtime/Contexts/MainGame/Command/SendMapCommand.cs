@@ -1,3 +1,4 @@
+using System.Linq;
 using Riptide;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Enum;
@@ -26,7 +27,7 @@ namespace Runtime.Contexts.MainGame.Command
       for (ushort i = 0; i < mapGeneratorVo.clients.Count; i++)
       {
         Message userLobbyIDMessage = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendUserLobbyID);
-        userLobbyIDMessage = networkManager.SetData(userLobbyIDMessage, mapGeneratorVo.clients[i].inLobbyId);
+        userLobbyIDMessage = networkManager.SetData(userLobbyIDMessage, mapGeneratorVo.clients.ElementAt(i).Value.id);
         
         networkManager.Server.Send(userLobbyIDMessage, mapGeneratorVo.clients[i].id);
       }

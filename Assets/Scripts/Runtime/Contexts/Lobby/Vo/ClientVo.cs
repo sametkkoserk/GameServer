@@ -8,17 +8,14 @@ namespace Runtime.Contexts.Lobby.Vo
   {
     [ProtoMember(1)]
     public ushort id;
-    
+
     [ProtoMember(2)]
-    public ushort inLobbyId;
-    
-    [ProtoMember(3)]
     public string userName;
 
-    [ProtoMember(4)]
+    [ProtoMember(3)]
     public PlayerColorVo playerColor;
     
-    [ProtoMember(5)]
+    [ProtoMember(4)]
     public bool ready;
   }
 }

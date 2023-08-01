@@ -18,12 +18,12 @@ namespace Runtime.Contexts.Lobby.Processor
       byte[] message = vo.message;
       
       QuitFromLobbyVo quitFromLobbyVo = networkManager.GetData<QuitFromLobbyVo>(message);
-      quitFromLobbyVo.clientId = clientId;
+      quitFromLobbyVo.id = clientId;
       
       dispatcher.Dispatch(LobbyEvent.QuitFromLobby,quitFromLobbyVo);
       
       DebugX.Log(DebugKey.Request, 
-        $"Player ID: {quitFromLobbyVo.clientId} Player's Lobby ID: {quitFromLobbyVo.inLobbyId}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit Request Handled.");
+        $"Player ID: {quitFromLobbyVo.id}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit Request Handled.");
     }
   }
 }

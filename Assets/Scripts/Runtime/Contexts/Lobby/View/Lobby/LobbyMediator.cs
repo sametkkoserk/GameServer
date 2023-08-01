@@ -43,7 +43,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       if (playerReadyResponseVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
 
-      view.lobbyVo.clients[playerReadyResponseVo.inLobbyId].ready = true;
+      view.lobbyVo.clients[playerReadyResponseVo.id].ready = true;
       view.lobbyVo.readyCount += 1;
       playerReadyResponseVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
       playerReadyResponseVo.lobbyVo = view.lobbyVo;
@@ -67,15 +67,13 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       ClientVo clientVo = new()
       {
         id = id,
-        inLobbyId = view.lobbyVo.inLobbyIdCounter,
         playerColor = new PlayerColorVo(ColorGenerator()),
         userName = playerModel.userList[id].username
       };
 
       view.lobbyVo.playerCount++;
-      view.lobbyVo.inLobbyIdCounter++;
       
-      view.lobbyVo.clients[clientVo.inLobbyId] = clientVo;
+      view.lobbyVo.clients[clientVo.id] = clientVo;
 
       JoinedToLobbyVo joinedToLobbyVo = new()
       {
@@ -93,17 +91,17 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       if (quitFromLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
       
-      Debug.Log(quitFromLobbyVo.inLobbyId);
+      Debug.Log(quitFromLobbyVo.id);
 
-      if (view.lobbyVo.clients[quitFromLobbyVo.inLobbyId].ready)
+      if (view.lobbyVo.clients[quitFromLobbyVo.id].ready)
       {
         view.lobbyVo.readyCount -= 1;
       }
 
       view.lobbyVo.playerCount -= 1;
 
-      view.lobbyVo.clients.Remove(quitFromLobbyVo.inLobbyId);
-
+      view.lobbyVo.clients.Remove(quitFromLobbyVo.id);
+      
       quitFromLobbyVo.clients = view.lobbyVo.clients;
       
       dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);

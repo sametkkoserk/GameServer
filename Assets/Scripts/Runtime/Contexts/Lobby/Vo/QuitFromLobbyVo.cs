@@ -8,15 +8,12 @@ namespace Runtime.Contexts.Lobby.Vo
   public class QuitFromLobbyVo
   {
     [ProtoMember(1)]
-    public ushort clientId;
-    
+    public ushort id;
+
     [ProtoMember(2)]
-    public ushort inLobbyId;
-    
-    [ProtoMember(3)]
     public string lobbyCode;
     
-    [JsonIgnore]
+    [ProtoMember(3)]
     public Dictionary<ushort, ClientVo> clients;
   }
 }

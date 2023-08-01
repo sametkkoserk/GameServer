@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ProtoBuf;
 using Riptide;
 using Riptide.Utils;
@@ -41,15 +42,15 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
     {
       for (ushort i = 0; i < clients.Count; i++)
       {
-        Server.Send(message,clients[i].id);
+        Server.Send(message,clients.ElementAt(i).Value.id);
       }
     }
     public void SendToLobbyExcept(Message message,ushort exceptClient, Dictionary<ushort,ClientVo> clients)
     {
       for (ushort i = 0; i < clients.Count; i++)
       {
-        if (i!=exceptClient)
-          Server.Send(message,clients[i].id);
+        if (clients.ElementAt(i).Value.id!=exceptClient)
+          Server.Send(message,clients.ElementAt(i).Value.id);
       }
     }
 

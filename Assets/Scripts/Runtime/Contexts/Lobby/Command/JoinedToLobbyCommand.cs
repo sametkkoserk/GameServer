@@ -25,9 +25,9 @@ namespace Runtime.Contexts.Lobby.Command
       messageToOthers = networkManager.SetData(messageToOthers, vo);
       
       DebugX.Log(DebugKey.JoinServer, 
-        $"Player ID: {vo.clientVo.id}, Player's Lobby ID: {vo.clientVo.inLobbyId}, Lobby Code: {vo.lobbyVo.lobbyCode}");
+        $"Player ID: {vo.clientVo.id}, Lobby Code: {vo.lobbyVo.lobbyCode}");
       
-      networkManager.SendToLobbyExcept(messageToOthers,vo.clientVo.inLobbyId, vo.lobbyVo.clients);
+      networkManager.SendToLobbyExcept(messageToOthers,vo.clientVo.id, vo.lobbyVo.clients);
     }
   }
 }

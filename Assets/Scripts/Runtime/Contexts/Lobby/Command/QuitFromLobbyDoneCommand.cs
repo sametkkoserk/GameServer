@@ -17,14 +17,14 @@ namespace Runtime.Contexts.Lobby.Command
       QuitFromLobbyVo quitFromLobbyVo = (QuitFromLobbyVo)evt.data;
       
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.QuitFromLobbyDone);
-      message = networkManager.SetData(message, quitFromLobbyVo.inLobbyId);
+      message = networkManager.SetData(message, quitFromLobbyVo);
 
       networkManager.SendToLobby(message, quitFromLobbyVo.clients);
-
-      networkManager.Server.Send(message, quitFromLobbyVo.clientId);
       
+      networkManager.Server.Send(message, quitFromLobbyVo.id);
+
       DebugX.Log(DebugKey.Request, 
-        $"Player ID: {quitFromLobbyVo.clientId} Player's Lobby ID: {quitFromLobbyVo.inLobbyId}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit from lobby");
+        $"Player ID: {quitFromLobbyVo.id}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit from lobby");
     }
   }
 }

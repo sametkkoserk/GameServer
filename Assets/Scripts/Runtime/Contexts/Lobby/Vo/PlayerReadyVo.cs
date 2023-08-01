@@ -6,7 +6,7 @@ namespace Runtime.Contexts.Lobby.Vo
   public class PlayerReadyVo
   {
     [ProtoMember(1)]
-    public ushort inLobbyId;
+    public ushort id;
     [ProtoMember(2)]
     public ushort lobbyId;
   }

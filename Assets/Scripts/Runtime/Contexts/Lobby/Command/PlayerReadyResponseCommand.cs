@@ -31,7 +31,7 @@ namespace Runtime.Contexts.Lobby.Command
 
       crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyResponseVo.lobbyVo);
       
-      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyResponseVo.inLobbyId}, Lobby ID: {playerReadyResponseVo.lobbyCode}, Process: Player Ready");
+      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyResponseVo.id}, Lobby ID: {playerReadyResponseVo.lobbyCode}, Process: Player Ready");
     }
   }
 }

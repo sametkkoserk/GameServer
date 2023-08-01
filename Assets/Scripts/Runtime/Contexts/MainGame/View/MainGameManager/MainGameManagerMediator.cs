@@ -50,22 +50,23 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private void NextTurn()
     {
+      //TODO Şafak
       // In the future connection information must be checked. If player is AFK, it will be the next player's turn.
       for (int i = 0; i < view.lobbyVo.clients.Count; i++)
       {
-        if (view.lobbyVo.clients[(ushort)i].inLobbyId != view.queueList[view.queue]) continue;
+        //if (view.lobbyVo.clients.ElementAt(i).Value.inLobbyId != view.queueList[view.queue])) continue;
         
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendTurn);
-        message = networkManager.SetData(message, view.lobbyVo.clients[(ushort)i].inLobbyId);
-        
-        networkManager.Server.Send(message, view.lobbyVo.clients[(ushort)i].id);
-
-        view.queue++;
-        if (view.queue >= view.queueList.Count)
-        {
-          view.queue = 0;
-        }
-        return;
+        // Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendTurn);
+        // message = networkManager.SetData(message, view.lobbyVo.clients.ElementAt(i).Value.inLobbyId);
+        //
+        // networkManager.Server.Send(message, view.lobbyVo.clients.ElementAt(i).Value.id);
+        //
+        // view.queue++;
+        // if (view.queue >= view.queueList.Count)
+        // {
+        //   view.queue = 0;
+        // }
+        // return;
       }
     }
 
