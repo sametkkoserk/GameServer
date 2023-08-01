@@ -1,6 +1,8 @@
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.Main.Model.PlayerModel;
+using Runtime.Contexts.Network.Vo;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
@@ -14,6 +16,9 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
     [Inject]
     public ILobbyModel lobbyModel { get; set; }
+    
+    [Inject]
+    public IPlayerModel playerModel { get; set; }
 
     public override void OnRegister()
     {
@@ -50,8 +55,10 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     private void OnJoinLobby(IEvent payload)
     {
       JoinLobbyVo joinLobbyVo = (JoinLobbyVo)payload.data;
+      
       if (joinLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
+      
       OnJoin(joinLobbyVo.clientId);
     }
 
@@ -60,21 +67,24 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       ClientVo clientVo = new()
       {
         id = id,
-        inLobbyId = view.lobbyVo.playerCount,
-        colorId = view.lobbyVo.playerCount
+        inLobbyId = view.lobbyVo.inLobbyIdCounter,
+        playerColor = new PlayerColorVo(ColorGenerator()),
+        userName = playerModel.userList[id].username
       };
 
-      view.lobbyVo.playerCount += 1;
+      view.lobbyVo.playerCount++;
+      view.lobbyVo.inLobbyIdCounter++;
+      
       view.lobbyVo.clients[clientVo.inLobbyId] = clientVo;
 
       JoinedToLobbyVo joinedToLobbyVo = new()
       {
-        lobby = view.lobbyVo,
+        lobbyVo = view.lobbyVo,
         clientVo = clientVo
       };
+      
       dispatcher.Dispatch(LobbyEvent.JoinedToLobby, joinedToLobbyVo);
     }
-
 
     private void OnQuitFromLobby(IEvent payload)
     {
@@ -103,6 +113,16 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       quitFromLobbyVo.clients = view.lobbyVo.clients;
       
       dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
+    }
+
+    private Color ColorGenerator()
+    {
+      float r = Random.Range(0, 1f);
+      float g = Random.Range(0, 1f);
+      float b = Random.Range(0, 1f);
+
+      Color color = new(r, g, b);
+      return color;
     }
 
     public override void OnRemove()
