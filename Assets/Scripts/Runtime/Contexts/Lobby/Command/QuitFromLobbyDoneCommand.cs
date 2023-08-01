@@ -1,4 +1,3 @@
-using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
@@ -20,13 +19,12 @@ namespace Runtime.Contexts.Lobby.Command
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.QuitFromLobbyDone);
       message = networkManager.SetData(message, quitFromLobbyVo.inLobbyId);
 
-      networkManager.SendToLobby(message,quitFromLobbyVo.clients);
+      networkManager.SendToLobby(message, quitFromLobbyVo.clients);
 
       networkManager.Server.Send(message, quitFromLobbyVo.clientId);
       
       DebugX.Log(DebugKey.Request, 
         $"Player ID: {quitFromLobbyVo.clientId} Player's Lobby ID: {quitFromLobbyVo.inLobbyId}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit from lobby");
-
     }
   }
 }

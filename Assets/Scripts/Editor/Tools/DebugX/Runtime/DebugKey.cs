@@ -9,6 +9,7 @@ namespace Editor.Tools.DebugX.Runtime
     ScreenManager,
     JoinServer,
     Request,
-    Response
+    Response,
+    Handle
   }
 }

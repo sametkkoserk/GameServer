@@ -102,13 +102,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       view.lobbyVo.playerCount -= 1;
 
-      for (ushort i = quitFromLobbyVo.inLobbyId; i < view.lobbyVo.playerCount; i++)
-      {
-        view.lobbyVo.clients[i] = view.lobbyVo.clients[(ushort)(i + 1)];
-        view.lobbyVo.clients[i].inLobbyId = i;
-      }
-
-      view.lobbyVo.clients.Remove(view.lobbyVo.playerCount);
+      view.lobbyVo.clients.Remove(quitFromLobbyVo.inLobbyId);
 
       quitFromLobbyVo.clients = view.lobbyVo.clients;
       

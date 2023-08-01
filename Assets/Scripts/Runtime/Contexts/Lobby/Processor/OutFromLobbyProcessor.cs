@@ -1,3 +1,4 @@
+using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -20,6 +21,9 @@ namespace Runtime.Contexts.Lobby.Processor
       quitFromLobbyVo.clientId = clientId;
       
       dispatcher.Dispatch(LobbyEvent.QuitFromLobby,quitFromLobbyVo);
+      
+      DebugX.Log(DebugKey.Request, 
+        $"Player ID: {quitFromLobbyVo.clientId} Player's Lobby ID: {quitFromLobbyVo.inLobbyId}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit Request Handled.");
     }
   }
 }
