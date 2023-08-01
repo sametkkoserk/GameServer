@@ -24,6 +24,7 @@ namespace Runtime.Contexts.Lobby.Config
         
         protected override void mapBindings()
         {
+            base.mapBindings();
             //Injection binding.
             //Map a mock model and a mock service, both as Singletons
             injectionBinder.Bind<ILobbyModel>().To<LobbyModel>().ToSingleton().CrossContext();

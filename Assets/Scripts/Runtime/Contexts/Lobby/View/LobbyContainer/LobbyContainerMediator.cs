@@ -11,17 +11,17 @@ namespace Runtime.Contexts.Lobby.View.LobbyContainer
 
     public override void OnRegister()
     {
-      dispatcher.AddListener(LobbyEvent.CreateLobby,OnCreate);
+      dispatcher.AddListener(LobbyEvent.CreateLobby, OnCreate);
     }
 
     private void OnCreate()
     {
-      Addressables.InstantiateAsync(LobbyKey.Lobby,gameObject.transform);
+      Addressables.InstantiateAsync(LobbyKey.Lobby, gameObject.transform);
     }
 
     public override void OnRemove()
     {
-      dispatcher.RemoveListener(LobbyEvent.CreateLobby,OnCreate);
+      dispatcher.RemoveListener(LobbyEvent.CreateLobby, OnCreate);
     }
   }
 }

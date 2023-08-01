@@ -8,6 +8,7 @@ using Runtime.Modules.Core.Discord.Enum;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using UnityEngine;
 
 namespace Runtime.Contexts.Main.Command
 {
@@ -29,7 +30,7 @@ namespace Runtime.Contexts.Main.Command
       // There will be checking system in the future.
 
       playerModel.userList.Add(registerInfoVo.userId, registerInfoVo);
-      
+
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.RegisterAccepted);
 
       message = networkManager.SetData(message, registerInfoVo);
@@ -37,7 +38,7 @@ namespace Runtime.Contexts.Main.Command
       networkManager.Server.Send(message, registerInfoVo.userId);
       
       crossDispatcher.Dispatch(DiscordEvent.NewPlayerJoined, registerInfoVo.username);
-      DebugX.Log(DebugKey.Request, "Register accepted. New player joined!");
+      DebugX.Log(DebugKey.Request, "Register request accepted. New player joined!");
     }
   }
 }

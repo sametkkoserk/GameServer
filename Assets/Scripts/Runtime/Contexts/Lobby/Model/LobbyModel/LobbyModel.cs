@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Vo;
 using UnityEngine;
 
@@ -9,13 +10,16 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
     {
         public ushort lobbyCount { get; set; }
         public Dictionary<string, LobbyVo> lobbies{ get; set; }
+        
         public LobbyVo createdLobbyVo{ get; set; }
+        
         
         [PostConstruct]
         public void OnPostConstruct()
         {
             lobbies = new Dictionary<string, LobbyVo>();
         }
+        
         public void NewLobbyCreated(LobbyVo vo)
         {
             createdLobbyVo = vo;
@@ -23,7 +27,7 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
             lobbies.Add(createdLobbyVo.lobbyCode, vo);
             lobbyCount += 1;
             
-            Debug.Log("model process completed");
+            DebugX.Log(DebugKey.Server, "New lobby is created.");
         }
 
         public void DeleteLobby(LobbyVo vo)

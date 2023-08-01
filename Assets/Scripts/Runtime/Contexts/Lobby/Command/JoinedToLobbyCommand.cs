@@ -22,12 +22,12 @@ namespace Runtime.Contexts.Lobby.Command
       networkManager.Server.Send(message, vo.clientVo.id);
 
       Message messageToOthers = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.NewPlayerToLobby);
-      messageToOthers = networkManager.SetData(messageToOthers, vo.clientVo);
+      messageToOthers = networkManager.SetData(messageToOthers, vo);
       
       DebugX.Log(DebugKey.JoinServer, 
-        $"Player ID: {vo.clientVo.id}, Player's Lobby ID: {vo.clientVo.inLobbyId}, Lobby Code: {vo.lobby.lobbyCode}");
+        $"Player ID: {vo.clientVo.id}, Player's Lobby ID: {vo.clientVo.inLobbyId}, Lobby Code: {vo.lobbyVo.lobbyCode}");
       
-      networkManager.SendToLobbyExcept(messageToOthers,vo.clientVo.inLobbyId, vo.lobby.clients);
+      networkManager.SendToLobbyExcept(messageToOthers,vo.clientVo.inLobbyId, vo.lobbyVo.clients);
     }
   }
 }
