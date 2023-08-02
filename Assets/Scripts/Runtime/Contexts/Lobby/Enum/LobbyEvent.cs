@@ -2,12 +2,17 @@ namespace Runtime.Contexts.Lobby.Enum
 {
     public enum LobbyEvent
     {
-        CreateLobby,
-        JoinedToLobby,
         SendLobbies,
+
+        CreateLobby,
+        
+        JoinedToLobby,
         JoinLobby,
+        LobbyIsClosed,
+        
         QuitFromLobby,
         QuitFromLobbyDone,
+
         PlayerReady,
         PlayerReadyResponse
     }

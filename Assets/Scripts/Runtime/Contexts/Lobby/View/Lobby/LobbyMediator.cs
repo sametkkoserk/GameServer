@@ -1,3 +1,4 @@
+using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
@@ -122,8 +123,13 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       view.lobbyVo.clients.Remove(quitFromLobbyVo.id);
       
       quitFromLobbyVo.clients = view.lobbyVo.clients;
-      
+
       dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
+
+      if (view.lobbyVo.playerCount != 0) return;
+      lobbyModel.DeleteLobby(view.lobbyVo.lobbyCode);
+      DebugX.Log(DebugKey.Server, "The lobby was closed because there was no one left in the lobby. Lobby Code: " + view.lobbyVo.lobbyCode);
+      Destroy(gameObject);
     }
 
     private Color ColorGenerator()
