@@ -24,7 +24,7 @@ namespace Runtime.Contexts.Lobby.Command
       networkManager.Server.Send(message, quitFromLobbyVo.id);
 
       DebugX.Log(DebugKey.Request, 
-        $"Player ID: {quitFromLobbyVo.id}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit from lobby");
+        $"Player ID: {quitFromLobbyVo.id}, Lobby Code: {quitFromLobbyVo.lobbyCode}, Process: Quit from lobby");
     }
   }
 }

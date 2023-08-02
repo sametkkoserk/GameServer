@@ -30,14 +30,10 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
             DebugX.Log(DebugKey.Server, "New lobby is created.");
         }
 
-        public void DeleteLobby(LobbyVo vo)
+        public void DeleteLobby(string lobbyCode)
         {
-            for (ushort i = 0; i < lobbies.Count; i++)
-            {
-                if (lobbies.ElementAt(i).Key != vo.lobbyCode) continue;
-                lobbies.Remove(vo.lobbyCode);
-                lobbyCount--;
-            }
+            lobbies.Remove(lobbyCode);
+            lobbyCount--;
         }
         
         private string GenerateLobbyCode(int length)

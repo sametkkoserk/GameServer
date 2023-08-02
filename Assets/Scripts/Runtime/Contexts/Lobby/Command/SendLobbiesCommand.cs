@@ -18,9 +18,9 @@ namespace Runtime.Contexts.Lobby.Command
     public override void Execute()
     {
       ushort clientId = (ushort)evt.data;
+      
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendLobbies);
       message = networkManager.SetData(message, lobbyModel.lobbies);
-
       networkManager.Server.Send(message, clientId);
 
       DebugX.Log(DebugKey.Request,
