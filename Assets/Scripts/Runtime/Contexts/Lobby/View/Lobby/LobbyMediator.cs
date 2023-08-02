@@ -2,6 +2,7 @@ using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Main.Model.PlayerModel;
+using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Vo;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
@@ -25,6 +26,20 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       dispatcher.AddListener(LobbyEvent.JoinLobby, OnJoinLobby);
       dispatcher.AddListener(LobbyEvent.QuitFromLobby, OnQuitFromLobby);
       dispatcher.AddListener(LobbyEvent.PlayerReady, OnReady);
+      dispatcher.AddListener(NetworkEvent.ClientDisconnected,OnClientDisconnected);
+    }
+
+    private void OnClientDisconnected(IEvent payload)
+    {
+      ushort id = (ushort)payload.data;
+      if (!view.lobbyVo.clients.ContainsKey(id))
+        return;
+      QuitFromLobbyVo quitFromLobbyVo = new QuitFromLobbyVo()
+      {
+        id = id,
+        clients = view.lobbyVo.clients,
+      };
+      OnQuit(quitFromLobbyVo);
     }
 
     private void Start()
@@ -90,7 +105,11 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       
       if (quitFromLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
-      
+      OnQuit(quitFromLobbyVo);
+    }
+
+    public void OnQuit(QuitFromLobbyVo quitFromLobbyVo)
+    {
       Debug.Log(quitFromLobbyVo.id);
 
       if (view.lobbyVo.clients[quitFromLobbyVo.id].ready)
@@ -122,6 +141,8 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       dispatcher.RemoveListener(LobbyEvent.JoinLobby, OnJoinLobby);
       dispatcher.RemoveListener(LobbyEvent.QuitFromLobby, OnQuitFromLobby);
       dispatcher.RemoveListener(LobbyEvent.PlayerReady, OnReady);
+      dispatcher.RemoveListener(NetworkEvent.ClientDisconnected,OnClientDisconnected);
+
     }
   }
 }
