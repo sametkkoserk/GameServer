@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
+using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using strange.extensions.command.impl;
@@ -20,7 +23,8 @@ namespace Runtime.Contexts.Lobby.Command
       ushort clientId = (ushort)evt.data;
       
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendLobbies);
-      message = networkManager.SetData(message, lobbyModel.lobbies);
+      Dictionary<string,LobbyVo> lobbies=lobbyModel.lobbies.Where(lobby=>!lobby.Value.isStarted && !lobby.Value.isPrivate).ToDictionary(lobby => lobby.Key, lobby => lobby.Value);;
+      message = networkManager.SetData(message, lobbies);
       networkManager.Server.Send(message, clientId);
 
       DebugX.Log(DebugKey.Request,

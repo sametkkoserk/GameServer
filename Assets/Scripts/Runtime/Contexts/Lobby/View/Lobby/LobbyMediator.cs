@@ -58,12 +58,15 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       if (playerReadyResponseVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
-
+      if (view.lobbyVo.clients[playerReadyResponseVo.id].ready)
+        return;
+      
       view.lobbyVo.clients[playerReadyResponseVo.id].ready = true;
       view.lobbyVo.readyCount += 1;
       playerReadyResponseVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
+      view.lobbyVo.isStarted = playerReadyResponseVo.startGame;
       playerReadyResponseVo.lobbyVo = view.lobbyVo;
-
+      
       dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse, playerReadyResponseVo);
       Debug.Log("player is ready confirmed");
     }

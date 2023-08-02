@@ -13,24 +13,27 @@ namespace Runtime.Contexts.Lobby.Vo
         public bool isPrivate;
         
         [ProtoMember(3)]
-        public ushort leaderId;
+        public bool isStarted;
         
         [ProtoMember(4)]
-        public string lobbyCode;
+        public ushort leaderId;
         
         [ProtoMember(5)]
-        public string lobbyName;
+        public string lobbyCode;
         
         [ProtoMember(6)]
-        public LobbySettingsVo lobbySettingsVo;
+        public string lobbyName;
         
         [ProtoMember(7)]
-        public ushort maxPlayerCount;
+        public LobbySettingsVo lobbySettingsVo;
         
         [ProtoMember(8)]
-        public ushort playerCount;
+        public ushort maxPlayerCount;
         
         [ProtoMember(9)]
+        public ushort playerCount;
+        
+        [ProtoMember(10)]
         public ushort readyCount;
 
         [ProtoIgnore]
