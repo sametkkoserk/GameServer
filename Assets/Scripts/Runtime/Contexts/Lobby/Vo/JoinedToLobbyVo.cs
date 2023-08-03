@@ -7,6 +7,7 @@ namespace Runtime.Contexts.Lobby.Vo
   {
     [ProtoMember(1)]
     public ClientVo clientVo;
+    
     [ProtoMember(2)]
     public LobbyVo lobbyVo;
   }

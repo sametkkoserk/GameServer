@@ -35,6 +35,11 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
             lobbies.Remove(lobbyCode);
             lobbyCount--;
         }
+
+        public void UpdateLobby(LobbyVo lobbyVo)
+        {
+            lobbies[lobbyVo.lobbyCode] = lobbyVo;
+        }
         
         private string GenerateLobbyCode(int length)
         {

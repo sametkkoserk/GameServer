@@ -12,5 +12,7 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         void NewLobbyCreated(LobbyVo vo);
 
         void DeleteLobby(string lobbyCode);
+
+        void UpdateLobby(LobbyVo lobbyVo);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
@@ -28,19 +29,23 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       dispatcher.AddListener(LobbyEvent.JoinLobby, OnJoinLobby);
       dispatcher.AddListener(LobbyEvent.QuitFromLobby, OnQuitFromLobby);
       dispatcher.AddListener(LobbyEvent.PlayerReady, OnReady);
+      
       dispatcher.AddListener(NetworkEvent.ClientDisconnected,OnClientDisconnected);
     }
 
     private void OnClientDisconnected(IEvent payload)
     {
       ushort id = (ushort)payload.data;
+      
       if (!view.lobbyVo.clients.ContainsKey(id))
         return;
-      QuitFromLobbyVo quitFromLobbyVo = new QuitFromLobbyVo()
+      
+      QuitFromLobbyVo quitFromLobbyVo = new ()
       {
         id = id,
         clients = view.lobbyVo.clients,
       };
+      
       OnQuit(quitFromLobbyVo);
     }
 
@@ -59,6 +64,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       if (playerReadyResponseVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
+      
       if (view.lobbyVo.clients[playerReadyResponseVo.id].ready)
         return;
       
@@ -66,6 +72,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       view.lobbyVo.readyCount += 1;
       playerReadyResponseVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
       view.lobbyVo.isStarted = playerReadyResponseVo.startGame;
+      
       playerReadyResponseVo.lobbyVo = view.lobbyVo;
       
       dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse, playerReadyResponseVo);
@@ -93,7 +100,16 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       view.lobbyVo.playerCount++;
       
-      view.lobbyVo.clients[clientVo.id] = clientVo;
+      KeyValuePair<ushort, ClientVo> newClient = new(clientVo.id, clientVo);
+      
+      view.lobbyVo.clients.Add(newClient.Key, newClient.Value);
+      
+      lobbyModel.UpdateLobby(view.lobbyVo);
+
+      foreach (var VARIABLE in view.lobbyVo.clients)
+      {
+        Debug.Log(VARIABLE.Value.userName);
+      }
 
       JoinedToLobbyVo joinedToLobbyVo = new()
       {
@@ -137,8 +153,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
         }
 
         lobbyModel.lobbies[quitFromLobbyVo.lobbyCode].clients = quitFromLobbyVo.clients;
-        lobbyModel.lobbies[quitFromLobbyVo.lobbyCode].hostId = quitFromLobbyVo.hostId;
-        
+
         dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
         return;
       }
@@ -164,8 +179,8 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       dispatcher.RemoveListener(LobbyEvent.JoinLobby, OnJoinLobby);
       dispatcher.RemoveListener(LobbyEvent.QuitFromLobby, OnQuitFromLobby);
       dispatcher.RemoveListener(LobbyEvent.PlayerReady, OnReady);
+      
       dispatcher.RemoveListener(NetworkEvent.ClientDisconnected,OnClientDisconnected);
-
     }
   }
 }
