@@ -35,14 +35,13 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       Server.Start(port, maxClientCount);
 
       Server.MessageReceived += MessageHandler;
-      Server.ClientConnected += OnClientDisconnected;
+      Server.ClientDisconnected += OnClientDisconnected;
 
     }
-
-    private void OnClientDisconnected(object sender, ServerConnectedEventArgs eventArgs)
+    
+    private void OnClientDisconnected(object sender, ServerDisconnectedEventArgs eventArgs)
     {
-      //Todo Samet
-      //eventArgs.Client.Id
+      crossDispatcher.Dispatch(NetworkEvent.ClientDisconnected,eventArgs.Client.Id);
     }
 
     public void SendToLobby(Message message, Dictionary<ushort,ClientVo> clients)
