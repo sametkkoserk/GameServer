@@ -110,9 +110,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       
       if (quitFromLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
-<<<<<<< HEAD
-      
-=======
+
       OnQuit(quitFromLobbyVo);
     }
 
