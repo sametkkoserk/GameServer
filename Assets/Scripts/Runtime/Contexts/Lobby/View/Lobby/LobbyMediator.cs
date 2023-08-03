@@ -99,17 +99,9 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       };
 
       view.lobbyVo.playerCount++;
-      
-      KeyValuePair<ushort, ClientVo> newClient = new(clientVo.id, clientVo);
-      
-      view.lobbyVo.clients.Add(newClient.Key, newClient.Value);
+      view.lobbyVo.clients.Add(clientVo.id, clientVo);
       
       lobbyModel.UpdateLobby(view.lobbyVo);
-
-      foreach (var VARIABLE in view.lobbyVo.clients)
-      {
-        Debug.Log(VARIABLE.Value.userName);
-      }
 
       JoinedToLobbyVo joinedToLobbyVo = new()
       {
