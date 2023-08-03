@@ -1,3 +1,4 @@
+using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
@@ -34,7 +35,7 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       Debug.Log("lobby Inited");
 
-      OnJoin(view.lobbyVo.leaderId);
+      OnJoin(view.lobbyVo.hostId);
     }
     
     private void OnReady(IEvent payload)
@@ -92,24 +93,34 @@ namespace Runtime.Contexts.Lobby.View.Lobby
       if (quitFromLobbyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
       
-      Debug.Log(quitFromLobbyVo.id);
-
       if (view.lobbyVo.clients[quitFromLobbyVo.id].ready)
       {
         view.lobbyVo.readyCount -= 1;
       }
 
       view.lobbyVo.playerCount -= 1;
-
       view.lobbyVo.clients.Remove(quitFromLobbyVo.id);
       
       quitFromLobbyVo.clients = view.lobbyVo.clients;
 
-      dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
+      if (view.lobbyVo.playerCount > 0)
+      {
+        if (quitFromLobbyVo.id == view.lobbyVo.hostId)
+        {
+          view.lobbyVo.hostId = view.lobbyVo.clients.ElementAt(0).Value.id;
+          quitFromLobbyVo.hostId = view.lobbyVo.hostId;
+        }
 
-      if (view.lobbyVo.playerCount != 0) return;
-      lobbyModel.DeleteLobby(view.lobbyVo.lobbyCode);
+        lobbyModel.lobbies[quitFromLobbyVo.lobbyCode].clients = quitFromLobbyVo.clients;
+        lobbyModel.lobbies[quitFromLobbyVo.lobbyCode].hostId = quitFromLobbyVo.hostId;
+        
+        dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
+        return;
+      }
+      
       DebugX.Log(DebugKey.Server, "The lobby was closed because there was no one left in the lobby. Lobby Code: " + view.lobbyVo.lobbyCode);
+
+      lobbyModel.DeleteLobby(view.lobbyVo.lobbyCode);
       Destroy(gameObject);
     }
 

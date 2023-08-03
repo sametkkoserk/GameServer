@@ -13,7 +13,7 @@ namespace Runtime.Contexts.Lobby.Vo
         public bool isPrivate;
         
         [ProtoMember(3)]
-        public ushort leaderId;
+        public ushort hostId;
         
         [ProtoMember(4)]
         public string lobbyCode;

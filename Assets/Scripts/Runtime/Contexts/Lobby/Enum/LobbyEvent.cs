@@ -12,6 +12,7 @@ namespace Runtime.Contexts.Lobby.Enum
         
         QuitFromLobby,
         QuitFromLobbyDone,
+        HostQuitFromLobbyDone,
 
         PlayerReady,
         PlayerReadyResponse

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using ProtoBuf;
 
 namespace Runtime.Contexts.Lobby.Vo
@@ -15,5 +14,8 @@ namespace Runtime.Contexts.Lobby.Vo
     
     [ProtoMember(3)]
     public Dictionary<ushort, ClientVo> clients;
+
+    [ProtoMember(4)]
+    public ushort hostId;
   }
 }

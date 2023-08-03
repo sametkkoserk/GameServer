@@ -24,7 +24,7 @@ namespace Runtime.Contexts.Lobby.Processor
             byte[] message = vo.message;
             
             LobbyVo lobbyVo = networkManager.GetData<LobbyVo>(message);
-            lobbyVo.leaderId = fromId;
+            lobbyVo.hostId = fromId;
             lobbyVo.clients = new Dictionary<ushort, ClientVo>();
             DebugX.Log(DebugKey.Response, "Create Lobby message received.");
             
