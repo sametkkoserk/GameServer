@@ -60,22 +60,23 @@ namespace Runtime.Contexts.Lobby.View.Lobby
     
     private void OnReady(IEvent payload)
     {
-      PlayerReadyResponseVo playerReadyResponseVo = (PlayerReadyResponseVo)payload.data;
+      PlayerReadyVo playerReadyVo = (PlayerReadyVo)payload.data;
 
-      if (playerReadyResponseVo.lobbyCode != view.lobbyVo.lobbyCode)
+      if (playerReadyVo.lobbyCode != view.lobbyVo.lobbyCode)
         return;
       
-      if (view.lobbyVo.clients[playerReadyResponseVo.id].ready)
+      if (view.lobbyVo.clients[playerReadyVo.id].ready)
         return;
       
-      view.lobbyVo.clients[playerReadyResponseVo.id].ready = true;
+      view.lobbyVo.clients[playerReadyVo.id].ready = true;
       view.lobbyVo.readyCount += 1;
-      playerReadyResponseVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
-      view.lobbyVo.isStarted = playerReadyResponseVo.startGame;
+      playerReadyVo.startGame = view.lobbyVo.readyCount == view.lobbyVo.playerCount;
+      view.lobbyVo.isStarted = playerReadyVo.startGame;
+
+      playerReadyVo.clients = view.lobbyVo.clients;
+      playerReadyVo.readyCount = view.lobbyVo.readyCount;
       
-      playerReadyResponseVo.lobbyVo = view.lobbyVo;
-      
-      dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse, playerReadyResponseVo);
+      dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse, playerReadyVo);
       Debug.Log("player is ready confirmed");
     }
 

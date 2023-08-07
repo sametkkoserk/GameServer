@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ProtoBuf;
 
 namespace Runtime.Contexts.Lobby.Vo
@@ -6,8 +7,15 @@ namespace Runtime.Contexts.Lobby.Vo
   public class PlayerReadyVo
   {
     [ProtoMember(1)]
-    public ushort id;
+    public Dictionary<ushort,ClientVo> clients;
     [ProtoMember(2)]
-    public ushort lobbyId;
+    public string lobbyCode;
+    [ProtoMember(3)]
+    public bool startGame;
+    [ProtoMember(4)]
+    public ushort readyCount;
+    
+    [ProtoIgnore]
+    public ushort id;
   }
 }

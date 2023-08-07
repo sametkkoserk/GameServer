@@ -20,18 +20,22 @@ namespace Runtime.Contexts.Lobby.Command
 
     public override void Execute()
     {
-      PlayerReadyResponseVo playerReadyResponseVo = (PlayerReadyResponseVo)evt.data;
+      PlayerReadyVo playerReadyVo = (PlayerReadyVo)evt.data;
 
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.PlayerReadyResponse);
-      message = networkManager.SetData(message, playerReadyResponseVo);
+      message = networkManager.SetData(message, playerReadyVo);
 
       // message.AddUShort(playerReadyResponseVo.inLobbyId);
       // message.AddBool(playerReadyResponseVo.startGame);
-      networkManager.SendToLobby(message, playerReadyResponseVo.lobbyVo.clients);
+      networkManager.SendToLobby(message, playerReadyVo.clients);
 
-      crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyResponseVo.lobbyVo);
+      if (playerReadyVo.startGame)
+      {
+        crossDispatcher.Dispatch(MainGameEvent.CreateMap);
+
+      }
       
-      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyResponseVo.id}, Lobby ID: {playerReadyResponseVo.lobbyCode}, Process: Player Ready");
+      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyVo.id}, Lobby ID: {playerReadyVo.lobbyCode}, Process: Player Ready");
     }
   }
 }

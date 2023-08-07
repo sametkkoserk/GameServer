@@ -21,12 +21,7 @@ namespace Runtime.Contexts.MainGame.View.MainMapContainer
 
     public void OnCreateMap(IEvent payload)
     {
-      mainGameModel.createdLobbyVo = (LobbyVo)payload.data;
-
-      if (mainGameModel.createdLobbyVo.readyCount == mainGameModel.createdLobbyVo.playerCount)
-      {
-        Addressables.InstantiateAsync(MainGameKeys.MainMap, gameObject.transform);
-      }
+      Addressables.InstantiateAsync(MainGameKeys.MainMap, gameObject.transform);
     }
 
     public override void OnRemove()
