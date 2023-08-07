@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using ProtoBuf;
 
 namespace Runtime.Contexts.Lobby.Vo
@@ -13,7 +12,7 @@ namespace Runtime.Contexts.Lobby.Vo
     [ProtoMember(3)]
     public bool startGame;
 
-    [JsonIgnore]
+    [ProtoIgnoreAttribute]
     public LobbyVo lobbyVo;
   }
 }
