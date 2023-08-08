@@ -125,8 +125,6 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
     public void OnQuit(QuitFromLobbyVo quitFromLobbyVo)
     {
-      Debug.Log(quitFromLobbyVo.id);
-
       if (view.lobbyVo.clients[quitFromLobbyVo.id].ready)
       {
         view.lobbyVo.readyCount -= 1;
