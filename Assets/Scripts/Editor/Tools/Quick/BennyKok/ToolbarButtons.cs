@@ -6,10 +6,11 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace Editor.Tools.Quick.BennyKok
 {
-    [Conditional("UNITY_EDITOR"), AttributeUsage(System.AttributeTargets.Method)]
+    [Conditional("UNITY_EDITOR"), AttributeUsage(AttributeTargets.Method)]
     public class ToolbarButtonAttribute : Attribute
     {
         public string tooltip;
@@ -47,7 +48,7 @@ namespace Editor.Tools.Quick.BennyKok
         {
             if (m_currentToolbar == null)
             {
-                var toolbars = Resources.FindObjectsOfTypeAll(m_toolbarType);
+                Object[] toolbars = Resources.FindObjectsOfTypeAll(m_toolbarType);
                 m_currentToolbar = toolbars.Length > 0 ? (ScriptableObject)toolbars[0] : null;
                 // UnityEngine.Debug.Log(m_currentToolbar != null);
             }
@@ -65,20 +66,20 @@ namespace Editor.Tools.Quick.BennyKok
                 // foreach (var item in m_currentToolbar.GetType().GetRuntimeFields())
                 //     UnityEngine.Debug.Log(item.Name + " " + item.FieldType + " " + item.IsPublic);
 
-                var root = m_currentToolbar.GetType().GetField("m_Root", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo root = m_currentToolbar.GetType().GetField("m_Root", BindingFlags.NonPublic | BindingFlags.Instance);
                 // UnityEngine.Debug.Log(root);
                 if (root != null)
                 {
-                    var rawRoot = root.GetValue(m_currentToolbar);
+                    object rawRoot = root.GetValue(m_currentToolbar);
                     // UnityEngine.Debug.Log(rawRoot != null);
                     if (rawRoot != null)
                     {
                         // UnityEngine.Debug.Log("Attaching");
                         // UnityEngine.Debug.Log(rawRoot.GetType());
-                        var mRoot = rawRoot as VisualElement;
+                        VisualElement mRoot = rawRoot as VisualElement;
                         // UnityEngine.Debug.Log(mRoot.name);
 
-                        var toolbarZoneLeftAlign = mRoot.Q("ToolbarZoneLeftAlign");
+                        VisualElement toolbarZoneLeftAlign = mRoot.Q("ToolbarZoneLeftAlign");
 
                         if (parent != null)
                             parent.RemoveFromHierarchy();
@@ -110,16 +111,16 @@ namespace Editor.Tools.Quick.BennyKok
             // #if !UNITY_2021_1_OR_NEWER
             //             parent.Add(CreateToolbarButton("Search On Icon", ShowQuickSearch));
             // #endif
-            var methods = TypeCache.GetMethodsWithAttribute<ToolbarButtonAttribute>();
-            var allAttributes = new Dictionary<MethodInfo, ToolbarButtonAttribute>();
-            foreach (var method in methods)
+            TypeCache.MethodCollection methods = TypeCache.GetMethodsWithAttribute<ToolbarButtonAttribute>();
+            Dictionary<MethodInfo, ToolbarButtonAttribute> allAttributes = new Dictionary<MethodInfo, ToolbarButtonAttribute>();
+            foreach (MethodInfo method in methods)
             {
-                var attribute = (ToolbarButtonAttribute)method.GetCustomAttributes(typeof(ToolbarButtonAttribute), false).First();
+                ToolbarButtonAttribute attribute = (ToolbarButtonAttribute)method.GetCustomAttributes(typeof(ToolbarButtonAttribute), false).First();
                 if (attribute != null)
                     allAttributes.Add(method, attribute);
             }
 
-            foreach (var attr in allAttributes.OrderByDescending(x => x.Value.order))
+            foreach (KeyValuePair<MethodInfo, ToolbarButtonAttribute> attr in allAttributes.OrderByDescending(x => x.Value.order))
             {
                 parent.Add(CreateToolbarButton(attr.Value.iconName, () => attr.Key.Invoke(null, null)));
             }
@@ -127,7 +128,7 @@ namespace Editor.Tools.Quick.BennyKok
 
         static VisualElement CreateToolbarButton(string icon, Action onClick, string tooltip = null)
         {
-            Button buttonVE = new Button(onClick);
+            Button buttonVE = new(onClick);
             buttonVE.tooltip = tooltip;
             FitChildrenStyle(buttonVE);
 

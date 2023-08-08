@@ -69,14 +69,14 @@ namespace Editor.Tools.Quick.BennyKok
         {
             this.title = title;
 
-            var allItems = menuItemsField.GetValue(menu) as IEnumerable;
-            foreach (var item in allItems)
+            IEnumerable allItems = menuItemsField.GetValue(menu) as IEnumerable;
+            foreach (object item in allItems)
             {
-                var content = menuItemContentField.GetValue(item) as GUIContent;
-                var function = menuItemMenuFunctionField.GetValue(item) as GenericMenu.MenuFunction;
-                var function2 = menuItemMenuFunction2Field.GetValue(item) as GenericMenu.MenuFunction2;
-                var userData = menuItemUserDataField.GetValue(item);
-                var separator = menuItemSeparatorField.GetValue(item) as bool?;
+                GUIContent content = menuItemContentField.GetValue(item) as GUIContent;
+                GenericMenu.MenuFunction function = menuItemMenuFunctionField.GetValue(item) as GenericMenu.MenuFunction;
+                GenericMenu.MenuFunction2 function2 = menuItemMenuFunction2Field.GetValue(item) as GenericMenu.MenuFunction2;
+                object userData = menuItemUserDataField.GetValue(item);
+                bool? separator = menuItemSeparatorField.GetValue(item) as bool?;
 
                 // Debug.Log(menuItemMenuFunctionField.GetValue(item).GetType());
                 // Debug.Log(menuItemMenuFunction2Field.GetValue(item).GetType());
@@ -95,7 +95,7 @@ namespace Editor.Tools.Quick.BennyKok
 
         public void Dropdown(Rect rect, int minLineCount = -1)
         {
-            var originalHeight = rect.height;
+            float originalHeight = rect.height;
             Vector2 size = new Vector2(rect.width, 100);
 
             if (minLineCount > 0)
@@ -104,7 +104,7 @@ namespace Editor.Tools.Quick.BennyKok
             }
             this.minimumSize = size;
 
-            var r = new Rect(rect.position - new Vector2(0, size.y - originalHeight), size);
+            Rect r = new Rect(rect.position - new Vector2(0, size.y - originalHeight), size);
             Show(r);
         }
 
@@ -117,8 +117,8 @@ namespace Editor.Tools.Quick.BennyKok
                 size.y = minLineCount * EditorGUIUtility.singleLineHeight;
             }
             this.minimumSize = size;
-            var p = GUIUtility.ScreenToGUIPoint(Event.current.mousePosition) - new Vector2(size.x / 2, size.y);
-            var r = new Rect(GUIUtility.GUIToScreenPoint(p), size);
+            Vector2 p = GUIUtility.ScreenToGUIPoint(Event.current.mousePosition) - new Vector2(size.x / 2, size.y);
+            Rect r = new Rect(GUIUtility.GUIToScreenPoint(p), size);
             Show(r);
         }
 
@@ -129,17 +129,17 @@ namespace Editor.Tools.Quick.BennyKok
 
         protected override AdvancedDropdownItem BuildRoot()
         {
-            var root = new AdvancedDropdownItem(title);
+            AdvancedDropdownItem root = new AdvancedDropdownItem(title);
 
-            foreach (var item in pathToActionMap)
+            foreach (KeyValuePair<string, Action> item in pathToActionMap)
             {
-                var splitStrings = item.Key.Split('/');
-                var parent = root;
+                string[] splitStrings = item.Key.Split('/');
+                AdvancedDropdownItem parent = root;
                 AdvancedDropdownItem lastItem = null;
 
-                foreach (var str in splitStrings)
+                foreach (string str in splitStrings)
                 {
-                    var foundChildItem = parent.children.FirstOrDefault(item => item.name == str);
+                    AdvancedDropdownItem foundChildItem = parent.children.FirstOrDefault(item => item.name == str);
 
                     if (foundChildItem != null)
                     {
@@ -148,7 +148,7 @@ namespace Editor.Tools.Quick.BennyKok
                         continue;
                     }
 
-                    var child = new AdvancedDropdownItem(str);
+                    AdvancedDropdownItem child = new AdvancedDropdownItem(str);
                     parent.AddChild(child);
 
                     parent = child;
@@ -168,7 +168,7 @@ namespace Editor.Tools.Quick.BennyKok
         {
             base.ItemSelected(item);
 
-            if (idToActionMap.TryGetValue(item.id, out var action))
+            if (idToActionMap.TryGetValue(item.id, out Action action))
             {
                 action();
             }
