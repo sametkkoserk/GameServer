@@ -149,6 +149,8 @@ namespace Runtime.Contexts.Lobby.View.Lobby
         return;
       }
       
+      dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
+
       DebugX.Log(DebugKey.Server, "The lobby was closed because there was no one left in the lobby. Lobby Code: " + view.lobbyVo.lobbyCode);
 
       lobbyModel.DeleteLobby(view.lobbyVo.lobbyCode);
