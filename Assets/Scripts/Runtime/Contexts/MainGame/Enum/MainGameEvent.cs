@@ -4,6 +4,9 @@ namespace Runtime.Contexts.MainGame.Enum
   {
     CreateMap,
     SendMap,
-    GameStart
+    GameStart,
+    SetQueue,
+    NextTurn,
+    SendRemainingTime,
   }
 }

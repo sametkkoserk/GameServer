@@ -2,6 +2,7 @@ using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.MainGame.Command;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
+using Runtime.Contexts.MainGame.Processor;
 using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.MainGame.View.MainMapContainer;
@@ -25,28 +26,17 @@ namespace Runtime.Contexts.MainGame.Config
         
         protected override void mapBindings()
         {
-            injectionBinder.Bind<IMainGameModel>().To<MainGameModel>().ToSingleton();
-            //Injection binding.
-            //Map a mock model and a mock service, both as Singletons
-            //injectionBinder.Bind<INetworkManagerService>().To<NetworkManagerService>().ToSingleton();
-            //View/Mediator binding
-            //This Binding instantiates a new ExampleMediator whenever as ExampleView
-            //Fires its Awake method. The Mediator communicates to/from the View
-            //and to/from the App. This keeps dependencies between the view and the app
-            //separated.
+            injectionBinder.Bind<IMainGameModel>().To<MainGameModel>().ToSingleton().CrossContext();
+            
             mediationBinder.Bind<MainMapView>().To<MainMapMediator>();
             mediationBinder.Bind<MainMapContainerView>().To<MainMapContainerMediator>();
             mediationBinder.Bind<MainGameManagerView>().To<MainGameManagerMediator>();
 
-
-            //Event/Command binding
-            //commandBinder.Bind(ExampleEvent.REQUEST_WEB_SERVICE).To<CallWebServiceCommand>();
-            //The START event is fired as soon as mappings are complete.
-            //Note how we've bound it "Once". This means that the mapping goes away as soon as the command fires.
-            // commandBinder.Bind(ContextEvent.START).To<CreateMapCommand>();
             commandBinder.Bind(MainGameEvent.SendMap).To<SendMapCommand>();
+            commandBinder.Bind(MainGameEvent.NextTurn).To<NextTurnCommand>();
+            commandBinder.Bind(MainGameEvent.SendRemainingTime).To<SendRemainingTimeCommand>();
             
-            commandBinder.Bind(ClientToServerId.GameStart).To<GameStartCommand>();
+            commandBinder.Bind(ClientToServerId.GameStart).To<GameStartProcessor>();
         }
     }
 }

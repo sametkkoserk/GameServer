@@ -2,6 +2,7 @@ using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
+using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using strange.extensions.command.impl;
@@ -17,6 +18,9 @@ namespace Runtime.Contexts.Lobby.Command
 
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
     public IEventDispatcher crossDispatcher { get; set; }
+    
+    [Inject]
+    public IMainGameModel mainGameModel { get; set; }
 
     public override void Execute()
     {
@@ -25,17 +29,16 @@ namespace Runtime.Contexts.Lobby.Command
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.PlayerReadyResponse);
       message = networkManager.SetData(message, playerReadyVo);
 
-      // message.AddUShort(playerReadyResponseVo.inLobbyId);
-      // message.AddBool(playerReadyResponseVo.startGame);
       networkManager.SendToLobby(message, playerReadyVo.clients);
 
       if (playerReadyVo.startGame)
       {
+        mainGameModel.lobbyVos.Add(playerReadyVo.lobbyVo);
+        
         crossDispatcher.Dispatch(MainGameEvent.CreateMap);
-
       }
       
-      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyVo.id}, Lobby ID: {playerReadyVo.lobbyCode}, Process: Player Ready");
+      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyVo.id}, Lobby Code: {playerReadyVo.lobbyCode}, Process: Player Ready");
     }
   }
 }

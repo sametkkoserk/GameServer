@@ -44,13 +44,14 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       crossDispatcher.Dispatch(NetworkEvent.ClientDisconnected,eventArgs.Client.Id);
     }
 
-    public void SendToLobby(Message message, Dictionary<ushort,ClientVo> clients)
+    public void SendToLobby(Message message, Dictionary<ushort, ClientVo> clients)
     {
       for (ushort i = 0; i < clients.Count; i++)
       {
         Server.Send(message,clients.ElementAt(i).Value.id);
       }
     }
+    
     public void SendToLobbyExcept(Message message,ushort exceptClient, Dictionary<ushort,ClientVo> clients)
     {
       for (ushort i = 0; i < clients.Count; i++)

@@ -8,16 +8,17 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 {
     public class MainGameModel : IMainGameModel
     {
-        public LobbyVo createdLobbyVo { get; set; }
+        public List<LobbyVo> lobbyVos { get; set; }
 
         [PostConstruct]
         public void OnPostConstruct()
         {
+            lobbyVos = new List<LobbyVo>();
         }
 
-        public Dictionary<int, CityVo> RandomMapGenerator()
+        public Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo)
         {
-            int totalCity = 57;
+            int totalCity = vo.playerCount * 5;
             int xPos = 0;
             int zPos = 0;
             

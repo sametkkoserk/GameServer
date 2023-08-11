@@ -75,9 +75,11 @@ namespace Runtime.Contexts.Lobby.View.Lobby
 
       playerReadyVo.clients = view.lobbyVo.clients;
       playerReadyVo.readyCount = view.lobbyVo.readyCount;
+      playerReadyVo.lobbyVo = view.lobbyVo;
       
       dispatcher.Dispatch(LobbyEvent.PlayerReadyResponse, playerReadyVo);
-      Debug.Log("player is ready confirmed");
+      
+      DebugX.Log(DebugKey.Lobby, "Player is ready.");
     }
 
     private void OnJoinLobby(IEvent payload)

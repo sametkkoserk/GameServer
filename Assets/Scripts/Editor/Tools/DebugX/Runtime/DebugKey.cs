@@ -10,6 +10,7 @@ namespace Editor.Tools.DebugX.Runtime
     JoinServer,
     Request,
     Response,
-    Handle
+    Handle,
+    Lobby
   }
 }

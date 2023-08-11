@@ -17,6 +17,7 @@ namespace Runtime.Contexts.Lobby.Processor
       
       ushort fromId = vo.fromId;
       byte[] message = vo.message;
+      
       PlayerReadyVo playerReadyVo = networkManager.GetData<PlayerReadyVo>(message);
       playerReadyVo.id = fromId;
 

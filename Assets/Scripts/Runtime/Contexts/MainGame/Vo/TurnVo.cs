@@ -5,12 +5,15 @@ using Runtime.Contexts.Lobby.Vo;
 namespace Runtime.Contexts.MainGame.Vo
 {
   [ProtoContract]
-  public class MapGeneratorVo
+  public class TurnVo
   {
     [ProtoMember(1)]
-    public Dictionary<int, CityVo> cityVos;
+    public ushort id;
 
+    [ProtoMember(2)]
+    public int remainingTime;
+    
     [ProtoIgnore]
-    public Dictionary<ushort, ClientVo> clients; 
+    public Dictionary<ushort, ClientVo> clientVos;
   }
 }
