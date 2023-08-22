@@ -18,7 +18,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
         public Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo)
         {
-            int totalCity = vo.playerCount * 5;
+            int totalCity = vo.playerCount * 10;
             int xPos = 0;
             int zPos = 0;
             
@@ -31,15 +31,15 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
                     isPlayable = Random.Range(0, 100) >= 15,
                     position = new Vector3Vo(new Vector3(xPos, 0, zPos)),
                     ID = i,
-                    soldierCount = 0,
-                    ownerID = Random.Range(0, 4),
+                    soldierCount = Random.Range(0, 100),
+                    ownerID = -1,
                 };
                 
                 cities.Add(cityVo.ID, cityVo);
 
                 xPos++;
 
-                if (xPos != 3) continue;
+                if (xPos != 6) continue;
                 xPos = 0;
                 zPos++;
             }
