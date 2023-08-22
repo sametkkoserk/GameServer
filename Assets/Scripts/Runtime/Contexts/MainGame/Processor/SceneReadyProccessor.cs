@@ -7,7 +7,7 @@ using strange.extensions.command.impl;
 
 namespace Runtime.Contexts.MainGame.Processor
 {
-  public class GameStartProcessor : EventCommand
+  public class SceneReadyProccessor : EventCommand
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
@@ -17,13 +17,13 @@ namespace Runtime.Contexts.MainGame.Processor
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
       ushort id = messageReceivedVo.fromId;
       
-      GameStartVo gameStartVo = networkManager.GetData<GameStartVo>(messageReceivedVo.message);
+      SceneReadyVo vo = networkManager.GetData<SceneReadyVo>(messageReceivedVo.message);
 
-      gameStartVo.clientId = id;
+      vo.id = id;
+      
+      DebugX.Log(DebugKey.MainGame, $"Scene Ready processor");
 
-      DebugX.Log(DebugKey.MainGame, $"Game start processor");
-
-      dispatcher.Dispatch(MainGameEvent.GameStart, gameStartVo);
+      dispatcher.Dispatch(MainGameEvent.PlayerSceneReady, vo);
     }
   }
 }

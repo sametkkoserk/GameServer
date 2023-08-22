@@ -6,7 +6,8 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 {
     public interface IMainGameModel
     {
-      List<LobbyVo> lobbyVos { get; set; }
+      List<LobbyVo> mapLobbyVos { get; set; }
+      List<LobbyVo> managerLobbyVos { get; set; }
 
       Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo);
     }

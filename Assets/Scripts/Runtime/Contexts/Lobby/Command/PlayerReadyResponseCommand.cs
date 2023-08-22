@@ -1,3 +1,4 @@
+using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
@@ -33,7 +34,13 @@ namespace Runtime.Contexts.Lobby.Command
 
       if (playerReadyVo.startGame)
       {
-        mainGameModel.lobbyVos.Add(playerReadyVo.lobbyVo);
+        for (int i = 0; i < playerReadyVo.lobbyVo.playerCount; i++)
+        {
+          playerReadyVo.lobbyVo.clients.ElementAt(i).Value.ready = false;
+        }
+        playerReadyVo.lobbyVo.readyCount = 0;
+        
+        mainGameModel.mapLobbyVos.Add(playerReadyVo.lobbyVo);
         
         crossDispatcher.Dispatch(MainGameEvent.CreateMap);
       }

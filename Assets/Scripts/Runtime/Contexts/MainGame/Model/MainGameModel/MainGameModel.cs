@@ -8,12 +8,13 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 {
     public class MainGameModel : IMainGameModel
     {
-        public List<LobbyVo> lobbyVos { get; set; }
-
+        public List<LobbyVo> mapLobbyVos { get; set; }
+        public List<LobbyVo> managerLobbyVos { get; set; }
         [PostConstruct]
         public void OnPostConstruct()
         {
-            lobbyVos = new List<LobbyVo>();
+            mapLobbyVos = new List<LobbyVo>();
+            managerLobbyVos = new List<LobbyVo>();
         }
 
         public Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo)

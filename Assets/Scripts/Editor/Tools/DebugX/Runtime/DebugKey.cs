@@ -11,6 +11,7 @@ namespace Editor.Tools.DebugX.Runtime
     Request,
     Response,
     Handle,
-    Lobby
+    Lobby,
+    MainGame
   }
 }

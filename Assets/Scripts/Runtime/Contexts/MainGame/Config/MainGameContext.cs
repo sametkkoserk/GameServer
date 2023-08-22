@@ -36,6 +36,7 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(MainGameEvent.NextTurn).To<NextTurnCommand>();
             commandBinder.Bind(MainGameEvent.SendRemainingTime).To<SendRemainingTimeCommand>();
             
+            commandBinder.Bind(ClientToServerId.SceneReady).To<SceneReadyProccessor>();
             commandBinder.Bind(ClientToServerId.GameStart).To<GameStartProcessor>();
         }
     }

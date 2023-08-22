@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
-using Runtime.Contexts.MainGame.Vo;
+using Runtime.Contexts.MainGame.Model.MainGameModel;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
@@ -13,17 +13,20 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
   {
     [Inject]
     public MainGameManagerView view { get; set; }
+    
+    [Inject]
+    public IMainGameModel mainGameModel { get; set; }
 
     public override void OnRegister()
     {
-      dispatcher.AddListener(MainGameEvent.SetQueue, OnSetQueue);
     }
 
     /// <summary>It checks everyone see the main map and ready to start. If each player ready, method will determine queue of players.</summary>
     /// <param name="payload">GameStartVo.</param>
-    private void OnSetQueue(IEvent payload)
+    private void Start()
     {
-      view.lobbyVo = (LobbyVo)payload.data;
+      view.lobbyVo =mainGameModel.managerLobbyVos[0];
+      mainGameModel.managerLobbyVos.RemoveAt(0);
       
       // Random rnd = new();
       // view.queueList = Enumerable.Range(0, view.lobbyVo.playerCount).OrderBy(x => rnd.Next()).Take(view.lobbyVo.playerCount).ToList();
@@ -73,7 +76,6 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     public override void OnRemove()
     {
-      dispatcher.RemoveListener(MainGameEvent.SetQueue, OnSetQueue);
     }
   }
 }

@@ -5,6 +5,8 @@ using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Runtime.Contexts.MainGame.View.MainMap
 {
@@ -23,14 +25,35 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     public override void OnRegister()
     {
       dispatcher.AddListener(MainGameEvent.GameStart, OnGameStartCheck);
-
+      dispatcher.AddListener(MainGameEvent.PlayerSceneReady, OnPlayerSceneReady);
     }
 
     public void Start()
     {
-      view.lobbyVo = mainGameModel.lobbyVos[0];
-      mainGameModel.lobbyVos.Remove(view.lobbyVo);
+      view.lobbyVo = mainGameModel.mapLobbyVos[0];
+      mainGameModel.mapLobbyVos.Remove(view.lobbyVo);
 
+    }
+    
+    private void OnPlayerSceneReady(IEvent payload)
+    {
+      SceneReadyVo vo = (SceneReadyVo)payload.data;
+      if (view.lobbyVo.lobbyCode != vo.lobbyCode)
+        return;
+
+      if (view.lobbyVo.clients[vo.id].ready)
+        return;
+
+      view.lobbyVo.readyCount++;
+      view.lobbyVo.clients[vo.id].ready = true;
+      if (view.lobbyVo.readyCount < view.lobbyVo.playerCount)
+        return;
+      for (int i = 0; i < view.lobbyVo.clients.Count; i++)
+      {
+        view.lobbyVo.clients.ElementAt(i).Value.ready = false;
+      }
+      view.lobbyVo.readyCount = 0;
+      
       view.cities = mainGameModel.RandomMapGenerator(view.lobbyVo);
 
       MapGeneratorVo mapGeneratorVo = new()
@@ -39,14 +62,9 @@ namespace Runtime.Contexts.MainGame.View.MainMap
         clients = view.lobbyVo.clients
       };
 
-      for (int i = 0; i < view.lobbyVo.playerCount; i++)
-      {
-        view.lobbyVo.clients.ElementAt(i).Value.ready = false;
-      }
-      view.lobbyVo.readyCount = 0;
-      
       dispatcher.Dispatch(MainGameEvent.SendMap, mapGeneratorVo);
     }
+    
     
     private void OnGameStartCheck(IEvent payload)
     {
@@ -63,8 +81,9 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       
       if (view.lobbyVo.readyCount < view.lobbyVo.playerCount)
         return;
-      
-      dispatcher.Dispatch(MainGameEvent.SetQueue, view.lobbyVo);
+
+      mainGameModel.managerLobbyVos.Add(view.lobbyVo);
+      Addressables.InstantiateAsync(MainGameKeys.MainGameManager, transform);
     }
 
     public override void OnRemove()

@@ -1,3 +1,4 @@
+using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Enum;
@@ -17,7 +18,8 @@ namespace Runtime.Contexts.MainGame.Command
 
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.GameStartPreparations);
       message = networkManager.SetData(message, mapGeneratorVo);
-
+      DebugX.Log(DebugKey.MainGame,$"Send map command");
+      
       networkManager.SendToLobby(message, mapGeneratorVo.clients);
     }
   }

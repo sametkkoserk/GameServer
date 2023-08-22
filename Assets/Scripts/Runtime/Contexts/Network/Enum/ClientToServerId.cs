@@ -11,5 +11,6 @@ namespace Runtime.Contexts.Network.Enum
     PlayerReady,
     GameSettingsChanged,
     GameStart,
+    SceneReady
   }
 }

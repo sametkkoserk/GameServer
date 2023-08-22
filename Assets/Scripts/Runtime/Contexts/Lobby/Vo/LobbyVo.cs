@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using ProtoBuf;
 
 namespace Runtime.Contexts.Lobby.Vo
 {
+    [Serializable]
     [ProtoContract]
     public class LobbyVo
     {
