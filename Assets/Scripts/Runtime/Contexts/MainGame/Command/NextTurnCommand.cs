@@ -2,6 +2,7 @@ using Riptide;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
+using Runtime.Contexts.Network.Vo;
 using strange.extensions.command.impl;
 
 namespace Runtime.Contexts.MainGame.Command
@@ -13,12 +14,12 @@ namespace Runtime.Contexts.MainGame.Command
 
     public override void Execute()
     {
-      TurnVo turnVo = (TurnVo)evt.data;
+      SendPacketToLobbyVo<TurnVo> turnVo = (SendPacketToLobbyVo<TurnVo>)evt.data;
       
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.NextTurn);
-      message = networkManager.SetData(message, turnVo);
+      message = networkManager.SetData(message, turnVo.mainClass);
       
-      networkManager.SendToLobby(message, turnVo.clientVos);
+      networkManager.SendToLobby(message, turnVo.clients);
     }
   }
 }

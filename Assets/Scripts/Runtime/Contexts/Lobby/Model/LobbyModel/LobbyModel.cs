@@ -9,11 +9,11 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
     public class LobbyModel : ILobbyModel
     {
         public ushort lobbyCount { get; set; }
+        
         public Dictionary<string, LobbyVo> lobbies{ get; set; }
         
         public LobbyVo createdLobbyVo{ get; set; }
-        
-        
+
         [PostConstruct]
         public void OnPostConstruct()
         {
@@ -27,7 +27,7 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
             lobbies.Add(createdLobbyVo.lobbyCode, vo);
             lobbyCount += 1;
             
-            DebugX.Log(DebugKey.Server, "New lobby is created.");
+            DebugX.Log(DebugKey.Server, "New lobby is created. Lobby Code: " + createdLobbyVo.lobbyCode);
         }
 
         public void DeleteLobby(string lobbyCode)

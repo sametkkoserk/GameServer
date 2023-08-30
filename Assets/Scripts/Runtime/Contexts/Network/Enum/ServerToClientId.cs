@@ -4,17 +4,25 @@ namespace Runtime.Contexts.Network.Enum
   {
     //Integer value automatically attached, there is no necessary manually set. Also, it must be same with file in the client.
     RegisterAccepted,
+    
     JoinedToLobby,
     NewPlayerToLobby,
     SendLobbies,
+    
     QuitFromLobbyDone,
     PlayerReadyResponse,
     GameSettingsChanged,
+    LobbyIsClosed,
+    
     GameStartPreparations,
     
     NextTurn,
     RemainingTime,
     
-    LobbyIsClosed
+    GameStateChanged,
+    PlayerActionChanged,
+    SendPlayerActionReference,
+    
+    SendClaimedCity,
   }
 }

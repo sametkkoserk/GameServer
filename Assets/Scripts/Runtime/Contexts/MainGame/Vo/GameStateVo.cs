@@ -1,14 +1,12 @@
 using ProtoBuf;
+using Runtime.Contexts.MainGame.Enum;
 
 namespace Runtime.Contexts.MainGame.Vo
 {
   [ProtoContract]
-  public class TurnVo
+  public class GameStateVo
   {
     [ProtoMember(1)]
-    public ushort id;
-
-    [ProtoMember(2)]
-    public int remainingTime;
+    public GameStateKey gameStateKey;
   }
 }

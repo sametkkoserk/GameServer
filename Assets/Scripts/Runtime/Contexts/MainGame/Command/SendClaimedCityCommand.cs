@@ -7,19 +7,19 @@ using strange.extensions.command.impl;
 
 namespace Runtime.Contexts.MainGame.Command
 {
-  public class SendRemainingTimeCommand : EventCommand
+  public class SendClaimedCityCommand : EventCommand
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
 
     public override void Execute()
     {
-      SendPacketToLobbyVo<TurnVo> turnVo = (SendPacketToLobbyVo<TurnVo>)evt.data;
+      SendPacketToLobbyVo<CityVo> cityVo = (SendPacketToLobbyVo<CityVo>)evt.data;
       
-      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.RemainingTime);
-      message = networkManager.SetData(message, turnVo.mainClass);
+      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendClaimedCity);
+      message = networkManager.SetData(message, cityVo.mainClass);
       
-      networkManager.SendToLobby(message, turnVo.clients);
+      networkManager.SendToLobby(message, cityVo.clients);
     }
   }
 }

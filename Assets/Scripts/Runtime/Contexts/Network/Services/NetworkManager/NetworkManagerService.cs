@@ -36,28 +36,27 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
 
       Server.MessageReceived += MessageHandler;
       Server.ClientDisconnected += OnClientDisconnected;
-
     }
-    
+
     private void OnClientDisconnected(object sender, ServerDisconnectedEventArgs eventArgs)
     {
-      crossDispatcher.Dispatch(NetworkEvent.ClientDisconnected,eventArgs.Client.Id);
+      crossDispatcher.Dispatch(NetworkEvent.ClientDisconnected, eventArgs.Client.Id);
     }
 
     public void SendToLobby(Message message, Dictionary<ushort, ClientVo> clients)
     {
       for (ushort i = 0; i < clients.Count; i++)
       {
-        Server.Send(message,clients.ElementAt(i).Value.id);
+        Server.Send(message, clients.ElementAt(i).Value.id);
       }
     }
-    
-    public void SendToLobbyExcept(Message message,ushort exceptClient, Dictionary<ushort,ClientVo> clients)
+
+    public void SendToLobbyExcept(Message message, ushort exceptClient, Dictionary<ushort, ClientVo> clients)
     {
       for (ushort i = 0; i < clients.Count; i++)
       {
-        if (clients.ElementAt(i).Value.id!=exceptClient)
-          Server.Send(message,clients.ElementAt(i).Value.id);
+        if (clients.ElementAt(i).Value.id != exceptClient)
+          Server.Send(message, clients.ElementAt(i).Value.id);
       }
     }
 
@@ -99,10 +98,20 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
       return stream.ToArray();
     }
 
-
     public void OnQuit()
     {
       Server.Stop();
+    }
+    
+    public SendPacketToLobbyVo<T> SetSendPacketToLobbyVo<T>(T myObject, Dictionary<ushort,ClientVo> clients) where T : new()
+    {
+      SendPacketToLobbyVo<T> sendPacketToLobbyVo = new()
+      {
+        mainClass = myObject,
+        clients = clients
+      };
+      
+      return sendPacketToLobbyVo;
     }
   }
 }

@@ -3,10 +3,10 @@ using Runtime.Contexts.Main.Enum;
 using Runtime.Contexts.Main.Model.PlayerModel;
 using Runtime.Contexts.Main.Processor;
 using Runtime.Contexts.Network.Enum;
+using Runtime.Modules.Core.Bundle.Model.BundleModel;
 using Runtime.Modules.Core.Discord.View.Behaviour;
 using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
-using strange.extensions.context.impl;
 using UnityEngine;
 
 namespace Runtime.Contexts.Main.Config
@@ -25,6 +25,7 @@ namespace Runtime.Contexts.Main.Config
         {
             base.mapBindings();
             
+            injectionBinder.Bind<IBundleModel>().To<BundleModel>().ToSingleton().CrossContext();
             injectionBinder.Bind<IPlayerModel>().To<PlayerModel>().ToSingleton().CrossContext();
 
             mediationBinder.Bind<DiscordBehaviourView>().To<DiscordBehaviourMediator>();

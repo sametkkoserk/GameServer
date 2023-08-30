@@ -1,4 +1,3 @@
-using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.MainGame.Command;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
@@ -9,7 +8,6 @@ using Runtime.Contexts.MainGame.View.MainMapContainer;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
-using strange.extensions.context.impl;
 using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Config
@@ -35,9 +33,14 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(MainGameEvent.SendMap).To<SendMapCommand>();
             commandBinder.Bind(MainGameEvent.NextTurn).To<NextTurnCommand>();
             commandBinder.Bind(MainGameEvent.SendRemainingTime).To<SendRemainingTimeCommand>();
+            commandBinder.Bind(MainGameEvent.ChangeGameState).To<ChangeGameStateCommand>();
+            commandBinder.Bind(MainGameEvent.ChangePlayerAction).To<ChangePlayerActionCommand>();
+            commandBinder.Bind(MainGameEvent.SetAllPermissionPlayersAction).To<SetAllPlayersActionReferenceCommand>();
+            commandBinder.Bind(MainGameEvent.SendClaimedCity).To<SendClaimedCityCommand>();
             
             commandBinder.Bind(ClientToServerId.SceneReady).To<SceneReadyProccessor>();
             commandBinder.Bind(ClientToServerId.GameStart).To<GameStartProcessor>();
+            commandBinder.Bind(ClientToServerId.ClaimCity).To<ClaimCityProcessor>();
         }
     }
 }

@@ -1,7 +1,11 @@
 using System.Collections.Generic;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.MainGame.Enum;
+using Runtime.Contexts.MainGame.ScriptableObjects;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Vo;
+using Runtime.Modules.Core.Bundle.Model.BundleModel;
+using Runtime.Modules.Core.PromiseTool;
 using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Model.MainGameModel
@@ -10,11 +14,38 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
     {
         public List<LobbyVo> mapLobbyVos { get; set; }
         public List<LobbyVo> managerLobbyVos { get; set; }
+
+        public Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo> necessaryKeysForActions { get; set; }
+
+        public bool loaded { get; set; }
+        
+        [Inject]
+        public IBundleModel bundleModel { get; set; }
+
         [PostConstruct]
         public void OnPostConstruct()
         {
             mapLobbyVos = new List<LobbyVo>();
             managerLobbyVos = new List<LobbyVo>();
+            necessaryKeysForActions = new Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo>();
+        }
+        
+        public IPromise Init()
+        {
+            Promise promise = new();
+
+            bundleModel.LoadAssetAsync<PlayerActionData>("PlayerActionData").Then(data =>
+            {
+                necessaryKeysForActions = new Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo>();
+
+                foreach (PlayerActionPermissionReferenceVo playerActionVo in data.playerActionNecessaryVos)
+                    necessaryKeysForActions.Add(playerActionVo.playerActionKey, playerActionVo);
+
+                loaded = true;
+                promise.Resolve();
+            }).Catch(promise.Reject);
+
+            return promise;
         }
 
         public Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo)
@@ -32,8 +63,8 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
                     isPlayable = Random.Range(0, 100) >= 15,
                     position = new Vector3Vo(new Vector3(xPos, 0, zPos)),
                     ID = i,
-                    soldierCount = Random.Range(0, 100),
-                    ownerID = -1,
+                    soldierCount = 0,
+                    ownerID = 0,
                 };
                 
                 cities.Add(cityVo.ID, cityVo);

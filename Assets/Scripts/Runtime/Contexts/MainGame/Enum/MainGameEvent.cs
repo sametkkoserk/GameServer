@@ -6,7 +6,16 @@ namespace Runtime.Contexts.MainGame.Enum
     CreateMap,
     SendMap,
     GameStart,
+    
     NextTurn,
     SendRemainingTime,
+    
+    SetAllPermissionPlayersAction,
+    ChangeGameState,
+    ChangePlayerAction,
+    
+    ClaimCity,
+    SendClaimedCity,
+    PlayerActionEnded
   }
 }

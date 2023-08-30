@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.Network.Vo;
 
 namespace Runtime.Contexts.Network.Services.NetworkManager
 {
@@ -17,5 +18,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
         Message SetData(Message message, object obj);
         void Ticker();
         void OnQuit();
+
+        SendPacketToLobbyVo<T> SetSendPacketToLobbyVo<T>(T myObject, Dictionary<ushort, ClientVo> clients) where T : new();
     }
 }
