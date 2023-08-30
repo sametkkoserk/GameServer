@@ -17,11 +17,6 @@ namespace Runtime.Contexts.Lobby.Vo
     
     [ProtoMember(4)]
     public ushort readyCount;
-    
-    [ProtoIgnore]
-    public ushort id;
 
-    [ProtoIgnore]
-    public LobbyVo lobbyVo;
   }
 }

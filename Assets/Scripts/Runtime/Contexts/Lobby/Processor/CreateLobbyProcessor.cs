@@ -3,6 +3,7 @@ using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.Main.Model.PlayerModel;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
 using strange.extensions.command.impl;
@@ -13,7 +14,8 @@ namespace Runtime.Contexts.Lobby.Processor
     {
         [Inject] 
         public ILobbyModel lobbyModel { get; set; }
-        
+        [Inject] 
+        public IPlayerModel playerModel { get; set; }
         [Inject]
         public INetworkManagerService networkManager { get; set; }
 
@@ -29,7 +31,13 @@ namespace Runtime.Contexts.Lobby.Processor
             DebugX.Log(DebugKey.Response, "Create Lobby message received.");
             
             lobbyModel.NewLobbyCreated(lobbyVo);
-            dispatcher.Dispatch(LobbyEvent.CreateLobby);
+            ClientVo clientVo = new()
+            {
+                id = fromId,
+                playerColor = new PlayerColorVo(lobbyModel.ColorGenerator()),
+                userName = playerModel.userList[fromId].username
+            };
+            lobbyModel.OnJoin(lobbyVo.lobbyCode,clientVo);
         }
     }
 }

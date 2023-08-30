@@ -1,5 +1,6 @@
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
+using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
@@ -11,6 +12,8 @@ namespace Runtime.Contexts.Lobby.Processor
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
+    [Inject]
+    public ILobbyModel lobbyModel { get; set; }
     public override void Execute()
     {
       MessageReceivedVo vo = (MessageReceivedVo)evt.data;
@@ -18,9 +21,7 @@ namespace Runtime.Contexts.Lobby.Processor
       byte[] message = vo.message;
       
       QuitFromLobbyVo quitFromLobbyVo = networkManager.GetData<QuitFromLobbyVo>(message);
-      quitFromLobbyVo.id = clientId;
-      
-      dispatcher.Dispatch(LobbyEvent.QuitFromLobby,quitFromLobbyVo);
+      lobbyModel.OnQuit(quitFromLobbyVo.lobbyCode,clientId);
       
       DebugX.Log(DebugKey.Request, 
         $"Player ID: {quitFromLobbyVo.id}, Lobby ID: {quitFromLobbyVo.lobbyCode}, Process: Quit Request Handled.");

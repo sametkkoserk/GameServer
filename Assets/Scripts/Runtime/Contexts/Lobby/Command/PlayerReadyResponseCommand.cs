@@ -1,6 +1,7 @@
 using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Riptide;
+using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
@@ -22,6 +23,8 @@ namespace Runtime.Contexts.Lobby.Command
     
     [Inject]
     public IMainGameModel mainGameModel { get; set; }
+    [Inject]
+    public ILobbyModel lobbyModel { get; set; }
 
     public override void Execute()
     {
@@ -34,18 +37,19 @@ namespace Runtime.Contexts.Lobby.Command
 
       if (playerReadyVo.startGame)
       {
-        for (int i = 0; i < playerReadyVo.lobbyVo.playerCount; i++)
+        LobbyVo lobbyVo = lobbyModel.lobbies[playerReadyVo.lobbyCode];
+        for (int i = 0; i < lobbyVo.playerCount; i++)
         {
-          playerReadyVo.lobbyVo.clients.ElementAt(i).Value.ready = false;
+          lobbyVo.clients.ElementAt(i).Value.ready = false;
         }
-        playerReadyVo.lobbyVo.readyCount = 0;
+        lobbyVo.readyCount = 0;
         
-        mainGameModel.mapLobbyVos.Add(playerReadyVo.lobbyVo);
-        
+        mainGameModel.mapLobbyVos.Add(lobbyVo);
+        lobbyModel.lobbies.Remove(lobbyVo.lobbyCode);
         crossDispatcher.Dispatch(MainGameEvent.CreateMap);
       }
       
-      DebugX.Log(DebugKey.Request, $" Player's Lobby ID: {playerReadyVo.id}, Lobby Code: {playerReadyVo.lobbyCode}, Process: Player Ready");
+      DebugX.Log(DebugKey.Request, $" Lobby Code: {playerReadyVo.lobbyCode}, Process: Player Ready");
     }
   }
 }

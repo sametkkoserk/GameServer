@@ -1,6 +1,7 @@
 using Editor.Tools.DebugX.Runtime;
 using Riptide;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.Main.Model.PlayerModel;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using strange.extensions.command.impl;
@@ -11,10 +12,13 @@ namespace Runtime.Contexts.Lobby.Command
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
+    [Inject]
+    public IPlayerModel playerModel { get; set; }
 
     public override void Execute()
     {
       JoinedToLobbyVo vo = (JoinedToLobbyVo)evt.data;
+      playerModel.userList[vo.clientVo.id].lobbyCode = vo.lobbyVo.lobbyCode;
       
       Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.JoinedToLobby);
       message = networkManager.SetData(message, vo);

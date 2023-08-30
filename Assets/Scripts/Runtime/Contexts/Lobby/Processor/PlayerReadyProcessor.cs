@@ -1,4 +1,5 @@
 using Runtime.Contexts.Lobby.Enum;
+using Runtime.Contexts.Lobby.Model.LobbyModel;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
@@ -8,9 +9,11 @@ namespace Runtime.Contexts.Lobby.Processor
 {
   public class PlayerReadyProcessor : EventCommand
   {
-
     [Inject]
     public INetworkManagerService networkManager { get; set; }
+    [Inject]
+    public ILobbyModel lobbyModel { get; set; }
+    
     public override void Execute()
     {
       MessageReceivedVo vo = (MessageReceivedVo) evt.data;
@@ -19,9 +22,8 @@ namespace Runtime.Contexts.Lobby.Processor
       byte[] message = vo.message;
       
       PlayerReadyVo playerReadyVo = networkManager.GetData<PlayerReadyVo>(message);
-      playerReadyVo.id = fromId;
-
-      dispatcher.Dispatch(LobbyEvent.PlayerReady,playerReadyVo);
+      
+      lobbyModel.OnReady(playerReadyVo.lobbyCode, fromId);
     }
   }
 }

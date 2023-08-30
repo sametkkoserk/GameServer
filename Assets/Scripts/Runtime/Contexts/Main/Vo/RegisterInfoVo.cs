@@ -10,5 +10,8 @@ namespace Runtime.Contexts.Main.Vo
     
     [ProtoMember(2)]
     public string username;
+
+    [ProtoIgnore]
+    public string lobbyCode;
   }
 }
