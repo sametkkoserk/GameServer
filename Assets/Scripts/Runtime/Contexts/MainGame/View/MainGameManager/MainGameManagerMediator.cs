@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
+using Runtime.Contexts.MainGame.Model.GameControllerModel;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -20,11 +21,13 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     public IMainGameModel mainGameModel { get; set; }
     
     [Inject]
+    public IGameControllerModel gameControllerModel { get; set; }
+    
+    [Inject]
     public INetworkManagerService networkManager { get; set; }
 
     public override void OnRegister()
     {
-      dispatcher.AddListener(MainGameEvent.PlayerActionEnded, ChangeTurn);
     }
 
     /// <summary>It checks everyone see the main map and ready to start. If each player ready, method will determine queue of players.</summary>
@@ -34,7 +37,8 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       // view.queueList = Enumerable.Range(0, view.lobbyVo.playerCount).OrderBy(x => rnd.Next()).Take(view.lobbyVo.playerCount).ToList();
       
       view.lobbyVo = mainGameModel.managerLobbyVos[0];
-      mainGameModel.managerLobbyVos.RemoveAt(0);
+      mainGameModel.managerLobbyVos.Remove(view.lobbyVo);
+      gameControllerModel.mainGameMediators[view.lobbyVo.lobbyCode] = this;
 
       for (int i = 0; i < view.lobbyVo.playerCount; i++)
       {
@@ -46,7 +50,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       SendPacketToLobbyVo<GameStateVo> gameStateVo = networkManager.SetSendPacketToLobbyVo(view.gameManagerVo.gameStateVo, view.lobbyVo.clients);
       dispatcher.Dispatch(MainGameEvent.ChangeGameState, gameStateVo);
 
-      List<PlayerActionKey> playerActionKey = new() { PlayerActionKey.OpenDetailsPanel };
+      List<PlayerActionKey> playerActionKey = new() { PlayerActionKey.OpenDetailsPanel};
       for (int i = 0; i < view.lobbyVo.clients.Count; i++)
         view.gameManagerVo.playerActionVo.playerActionKeys.Add(view.lobbyVo.clients.ElementAt(i).Value.id, playerActionKey);
       dispatcher.Dispatch(MainGameEvent.ChangePlayerAction, view.gameManagerVo.playerActionVo);

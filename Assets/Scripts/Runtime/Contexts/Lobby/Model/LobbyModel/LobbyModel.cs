@@ -3,6 +3,8 @@ using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.MainGame.View.MainGameManager;
+using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.Network.Vo;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;

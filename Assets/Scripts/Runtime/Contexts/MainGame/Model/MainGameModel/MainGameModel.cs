@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.ScriptableObjects;
+using Runtime.Contexts.MainGame.View.MainGameManager;
+using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Vo;
 using Runtime.Modules.Core.Bundle.Model.BundleModel;
@@ -18,7 +20,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
         public Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo> necessaryKeysForActions { get; set; }
 
         public bool loaded { get; set; }
-        
+
         [Inject]
         public IBundleModel bundleModel { get; set; }
 
@@ -28,6 +30,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
             mapLobbyVos = new List<LobbyVo>();
             managerLobbyVos = new List<LobbyVo>();
             necessaryKeysForActions = new Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo>();
+
         }
         
         public IPromise Init()

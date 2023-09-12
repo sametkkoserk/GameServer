@@ -1,5 +1,6 @@
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.MainGame.Enum;
+using Runtime.Contexts.MainGame.Model.GameControllerModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
@@ -11,6 +12,9 @@ namespace Runtime.Contexts.MainGame.Processor
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
+    
+    [Inject]
+    public IGameControllerModel gameControllerModel { get; set; }
 
     public override void Execute()
     {
@@ -21,8 +25,8 @@ namespace Runtime.Contexts.MainGame.Processor
       cityVo.mainClass.clientId = clientId;
 
       DebugX.Log(DebugKey.MainGame, $"Claim City Processor. City ID: {cityVo.mainClass.ID}");
-      
-      dispatcher.Dispatch(MainGameEvent.ClaimCity, cityVo);
+
+      gameControllerModel.OnClaimCity(cityVo.lobbyCode, cityVo);
     }
   }
 }

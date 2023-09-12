@@ -2,10 +2,8 @@ namespace Runtime.Contexts.MainGame.Enum
 {
   public enum MainGameEvent
   {
-    PlayerSceneReady,
     CreateMap,
     SendMap,
-    GameStart,
     
     NextTurn,
     SendRemainingTime,
@@ -14,7 +12,6 @@ namespace Runtime.Contexts.MainGame.Enum
     ChangeGameState,
     ChangePlayerAction,
     
-    ClaimCity,
     SendClaimedCity,
     PlayerActionEnded
   }

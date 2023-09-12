@@ -1,5 +1,6 @@
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
+using Runtime.Contexts.MainGame.Model.GameControllerModel;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -23,29 +24,25 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     public IMainGameModel mainGameModel { get; set; }
     
     [Inject]
+    public IGameControllerModel gameControllerModel { get; set; }
+    
+    [Inject]
     public INetworkManagerService networkManager { get; set; }
 
     public override void OnRegister()
     {
-      dispatcher.AddListener(MainGameEvent.GameStart, OnGameStartCheck);
-      dispatcher.AddListener(MainGameEvent.PlayerSceneReady, OnPlayerSceneReady);
-      dispatcher.AddListener(MainGameEvent.ClaimCity, OnClaimCity);
     }
 
     public void Start()
     {
       view.lobbyVo = mainGameModel.mapLobbyVos[0];
-      
       mainGameModel.mapLobbyVos.Remove(view.lobbyVo);
+      gameControllerModel.mainMapMediators[view.lobbyVo.lobbyCode] = this;
+
     }
     
-    private void OnPlayerSceneReady(IEvent payload)
+    public void OnPlayerSceneReady(SceneReadyVo vo)
     {
-      SceneReadyVo vo = (SceneReadyVo)payload.data;
-      
-      if (view.lobbyVo.lobbyCode != vo.lobbyCode)
-        return;
-
       if (view.lobbyVo.clients[vo.id].ready)
         return;
 
@@ -74,13 +71,8 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       dispatcher.Dispatch(MainGameEvent.SendMap, mapGeneratorVo);
     }
     
-    private void OnGameStartCheck(IEvent payload)
+    public void OnGameStartCheck(GameStartVo vo)
     {
-      GameStartVo vo = (GameStartVo)payload.data;
-
-      if (view.lobbyVo.lobbyCode != vo.lobbyCode)
-        return;
-
       if (view.lobbyVo.clients[vo.clientId].ready)
         return;
 
@@ -94,13 +86,8 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       Addressables.InstantiateAsync(MainGameKeys.MainGameManager, transform);
     }
     
-    public void OnClaimCity(IEvent payload)
+    public void OnClaimCity(SendPacketWithLobbyCode<CityVo> cityVo)
     {
-      SendPacketWithLobbyCode<CityVo> cityVo = (SendPacketWithLobbyCode<CityVo>) payload.data;
-
-      if (view.lobbyVo.lobbyCode != cityVo.lobbyCode)
-        return;
-
       if (cityVo.mainClass.ownerID != 0)
         return;
 
@@ -139,9 +126,6 @@ namespace Runtime.Contexts.MainGame.View.MainMap
 
     public override void OnRemove()
     {
-      dispatcher.RemoveListener(MainGameEvent.GameStart, OnGameStartCheck);
-      dispatcher.RemoveListener(MainGameEvent.PlayerSceneReady, OnPlayerSceneReady);
-      dispatcher.RemoveListener(MainGameEvent.ClaimCity, OnClaimCity);
     }
   }
 }

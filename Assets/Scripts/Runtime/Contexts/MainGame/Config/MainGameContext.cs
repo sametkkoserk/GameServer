@@ -1,5 +1,6 @@
 using Runtime.Contexts.MainGame.Command;
 using Runtime.Contexts.MainGame.Enum;
+using Runtime.Contexts.MainGame.Model.GameControllerModel;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Processor;
 using Runtime.Contexts.MainGame.View.MainGameManager;
@@ -25,6 +26,7 @@ namespace Runtime.Contexts.MainGame.Config
         protected override void mapBindings()
         {
             injectionBinder.Bind<IMainGameModel>().To<MainGameModel>().ToSingleton().CrossContext();
+            injectionBinder.Bind<IGameControllerModel>().To<GameControllerModel>().ToSingleton();
             
             mediationBinder.Bind<MainMapView>().To<MainMapMediator>();
             mediationBinder.Bind<MainMapContainerView>().To<MainMapContainerMediator>();
