@@ -19,6 +19,9 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
         public Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo> necessaryKeysForActions { get; set; }
 
+        public Dictionary<string, MainMapMediator> mainMapMediators{ get; set; }
+        public Dictionary<string, MainGameManagerMediator> mainGameMediators{ get; set; }
+        
         public bool loaded { get; set; }
 
         [Inject]
@@ -30,7 +33,8 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
             mapLobbyVos = new List<LobbyVo>();
             managerLobbyVos = new List<LobbyVo>();
             necessaryKeysForActions = new Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo>();
-
+            mainGameMediators = new Dictionary<string, MainGameManagerMediator>();
+            mainMapMediators = new Dictionary<string, MainMapMediator>();
         }
         
         public IPromise Init()

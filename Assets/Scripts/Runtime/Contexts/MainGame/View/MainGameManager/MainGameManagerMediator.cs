@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
-using Runtime.Contexts.MainGame.Model.GameControllerModel;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -20,8 +19,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     [Inject]
     public IMainGameModel mainGameModel { get; set; }
     
-    [Inject]
-    public IGameControllerModel gameControllerModel { get; set; }
+
     
     [Inject]
     public INetworkManagerService networkManager { get; set; }
@@ -38,7 +36,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       
       view.lobbyVo = mainGameModel.managerLobbyVos[0];
       mainGameModel.managerLobbyVos.Remove(view.lobbyVo);
-      gameControllerModel.mainGameMediators[view.lobbyVo.lobbyCode] = this;
+      mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode] = this;
 
       for (int i = 0; i < view.lobbyVo.playerCount; i++)
       {

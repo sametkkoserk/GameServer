@@ -16,6 +16,8 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
       
       Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo> necessaryKeysForActions { get; }
 
+      Dictionary<string, MainMapMediator> mainMapMediators { get; set; }
+      Dictionary<string, MainGameManagerMediator> mainGameMediators { get; set; }
       
       bool loaded { get; }
 

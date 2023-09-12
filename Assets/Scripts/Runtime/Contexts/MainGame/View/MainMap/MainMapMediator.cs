@@ -1,6 +1,5 @@
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
-using Runtime.Contexts.MainGame.Model.GameControllerModel;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -22,10 +21,7 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     
     [Inject]
     public IMainGameModel mainGameModel { get; set; }
-    
-    [Inject]
-    public IGameControllerModel gameControllerModel { get; set; }
-    
+
     [Inject]
     public INetworkManagerService networkManager { get; set; }
 
@@ -37,7 +33,7 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     {
       view.lobbyVo = mainGameModel.mapLobbyVos[0];
       mainGameModel.mapLobbyVos.Remove(view.lobbyVo);
-      gameControllerModel.mainMapMediators[view.lobbyVo.lobbyCode] = this;
+      mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode] = this;
 
     }
     
@@ -99,7 +95,7 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       SendPacketToLobbyVo<CityVo> vo = networkManager.SetSendPacketToLobbyVo(cityVo.mainClass, view.lobbyVo.clients);
       
       dispatcher.Dispatch(MainGameEvent.SendClaimedCity, vo);
-      dispatcher.Dispatch(MainGameEvent.PlayerActionEnded);
+      mainGameModel.mainGameMediators[cityVo.lobbyCode].ChangeTurn();
     }
     
     private void LoadingPlayerActions()

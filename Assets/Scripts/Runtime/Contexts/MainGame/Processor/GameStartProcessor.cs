@@ -1,6 +1,6 @@
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.MainGame.Enum;
-using Runtime.Contexts.MainGame.Model.GameControllerModel;
+using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
@@ -14,7 +14,7 @@ namespace Runtime.Contexts.MainGame.Processor
     public INetworkManagerService networkManager { get; set; }
     
     [Inject]
-    public IGameControllerModel gameControllerModel { get; set; }
+    public IMainGameModel mainGameModel { get; set; }
     public override void Execute()
     {
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
@@ -25,7 +25,7 @@ namespace Runtime.Contexts.MainGame.Processor
       gameStartVo.clientId = id;
 
       DebugX.Log(DebugKey.MainGame, $"Game start processor");
-      gameControllerModel.OnGameStart(gameStartVo.lobbyCode, gameStartVo);
+      mainGameModel.mainMapMediators[gameStartVo.lobbyCode].OnGameStartCheck( gameStartVo);
     }
   }
 }
