@@ -13,6 +13,5 @@ namespace Runtime.Contexts.MainGame.Enum
     ChangePlayerAction,
     
     SendClaimedCity,
-    PlayerActionEnded
   }
 }

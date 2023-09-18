@@ -19,8 +19,6 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     [Inject]
     public IMainGameModel mainGameModel { get; set; }
     
-
-    
     [Inject]
     public INetworkManagerService networkManager { get; set; }
 
@@ -81,21 +79,27 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       UpdatePlayerActionKeys(nextId, PlayerActionKey.ClaimCity, true);
 
       if (setTimer)
-        StartCoroutine(SetTimer());
+        StartCoroutine(WaitCloseNotificationPanel());
     }
 
     public void ChangeTurn()
     {
       NextTurn(false);
     }
-    
+
+    private IEnumerator WaitCloseNotificationPanel()
+    {
+      yield return new WaitForSeconds(1f);
+
+      StartCoroutine(SetTimer());
+    }
     private IEnumerator SetTimer()
     {
       yield return new WaitForSeconds(1f);
       
       if (view.gameManagerVo.turnVo.remainingTime <= 0f)
       {
-        NextTurn(true);
+        AfterTurnTimeOver();
         yield break;
       }
       
@@ -105,6 +109,17 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       dispatcher.Dispatch(MainGameEvent.SendRemainingTime, vo);
 
       StartCoroutine(SetTimer());
+    }
+
+    private void AfterTurnTimeOver()
+    {
+      if (view.gameManagerVo.gameStateVo.gameStateKey == GameStateKey.ClaimCity)
+      {
+        ushort queueId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
+        mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode].AssignCityRandomly(queueId);
+      }
+      
+      NextTurn(true);
     }
     
     #endregion
@@ -133,7 +148,6 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     public override void OnRemove()
     {
-      dispatcher.RemoveListener(MainGameEvent.PlayerActionEnded, ChangeTurn);
     }
   }
 }

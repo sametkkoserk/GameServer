@@ -8,10 +8,10 @@ namespace Runtime.Contexts.MainGame.Vo
   {
     [ProtoMember(2)]
     public int queue;
-    
+
     [ProtoMember(1)]
     public List<ushort> queueList = new();
-    
+
     [ProtoMember(3)]
     public TurnVo turnVo = new();
 

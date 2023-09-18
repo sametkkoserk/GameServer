@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Runtime.Contexts.MainGame.View.MainMap
@@ -34,7 +35,6 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       view.lobbyVo = mainGameModel.mapLobbyVos[0];
       mainGameModel.mapLobbyVos.Remove(view.lobbyVo);
       mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode] = this;
-
     }
     
     public void OnPlayerSceneReady(SceneReadyVo vo)
@@ -82,20 +82,42 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       Addressables.InstantiateAsync(MainGameKeys.MainGameManager, transform);
     }
     
-    public void OnClaimCity(SendPacketWithLobbyCode<CityVo> cityVo)
+    public void OnClaimCity(CityVo cityVo, bool changeTurn = true)
     {
-      if (cityVo.mainClass.ownerID != 0)
+      if (cityVo.ownerID != 0)
         return;
 
-      cityVo.mainClass.ownerID = cityVo.mainClass.clientId;
-      cityVo.mainClass.soldierCount = 1;
+      cityVo.ownerID = cityVo.clientId;
+      cityVo.soldierCount = 1;
 
-      view.cities[cityVo.mainClass.ID] = cityVo.mainClass;
+      view.cities[cityVo.ID] = cityVo;
 
-      SendPacketToLobbyVo<CityVo> vo = networkManager.SetSendPacketToLobbyVo(cityVo.mainClass, view.lobbyVo.clients);
+      SendPacketToLobbyVo<CityVo> vo = networkManager.SetSendPacketToLobbyVo(cityVo, view.lobbyVo.clients);
       
       dispatcher.Dispatch(MainGameEvent.SendClaimedCity, vo);
-      mainGameModel.mainGameMediators[cityVo.lobbyCode].ChangeTurn();
+
+      if (changeTurn)
+        mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode].ChangeTurn();
+    }
+
+    public void AssignCityRandomly(ushort queueId)
+    {
+      List<int> emptyCities = new();
+      
+      for (int i = 0; i < view.cities.Count; i++)
+      {
+        CityVo city = view.cities.ElementAt(i).Value;
+        
+        if (city.ownerID == 0 && city.isPlayable)
+          emptyCities.Add(city.ID);
+      }
+
+      int randomEmptyCityId = emptyCities[Random.Range(0, emptyCities.Count)];
+
+      CityVo cityVo = view.cities[randomEmptyCityId];
+      cityVo.clientId = queueId;
+      
+      OnClaimCity(cityVo, false);
     }
     
     private void LoadingPlayerActions()

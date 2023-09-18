@@ -1,5 +1,4 @@
 using Editor.Tools.DebugX.Runtime;
-using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -26,7 +25,7 @@ namespace Runtime.Contexts.MainGame.Processor
 
       DebugX.Log(DebugKey.MainGame, $"Claim City Processor. City ID: {cityVo.mainClass.ID}");
 
-      mainGameModel.mainMapMediators[cityVo.lobbyCode].OnClaimCity(cityVo);
+      mainGameModel.mainMapMediators[cityVo.lobbyCode].OnClaimCity(cityVo.mainClass);
     }
   }
 }
