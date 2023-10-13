@@ -23,6 +23,9 @@ namespace Runtime.Contexts.Network.Enum
     PlayerActionChanged,
     SendPlayerActionReference,
     
-    SendClaimedCity,
+    UpdateCity,
+    SendArmingCity,
+    
+    MiniGameRewards,
   }
 }

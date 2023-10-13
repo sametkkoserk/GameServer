@@ -3,6 +3,7 @@ namespace Runtime.Contexts.MainGame.Enum
   public enum PlayerActionKey
   {
     OpenDetailsPanel,
-    ClaimCity
+    ClaimCity,
+    Arming,
   }
 }

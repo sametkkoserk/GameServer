@@ -15,9 +15,13 @@ MonoBehaviour:
   playerActionNecessaryVos:
   - name: OpenDetailsPanel
     playerActionKey: 0
-    gameStateKeys: 00000000
+    gameStateKeys: 0000000002000000
     playerActionNecessaryKeys: 00000000
   - name: ClaimCity
     playerActionKey: 1
     gameStateKeys: 00000000
     playerActionNecessaryKeys: 0000000001000000
+  - name: Arming
+    playerActionKey: 2
+    gameStateKeys: 02000000
+    playerActionNecessaryKeys: 0000000002000000

@@ -12,6 +12,9 @@ namespace Runtime.Contexts.MainGame.Enum
     ChangeGameState,
     ChangePlayerAction,
     
-    SendClaimedCity,
+    UpdateCity,
+    ArmingCity,
+    
+    MiniGameRewards
   }
 }

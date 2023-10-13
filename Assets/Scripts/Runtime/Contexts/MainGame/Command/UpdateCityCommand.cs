@@ -7,7 +7,7 @@ using strange.extensions.command.impl;
 
 namespace Runtime.Contexts.MainGame.Command
 {
-  public class SendClaimedCityCommand : EventCommand
+  public class UpdateCityCommand : EventCommand
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
@@ -16,7 +16,7 @@ namespace Runtime.Contexts.MainGame.Command
     {
       SendPacketToLobbyVo<CityVo> cityVo = (SendPacketToLobbyVo<CityVo>)evt.data;
       
-      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.SendClaimedCity);
+      Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.UpdateCity);
       message = networkManager.SetData(message, cityVo.mainClass);
       
       networkManager.SendToLobby(message, cityVo.clients);

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
+using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
@@ -84,7 +85,11 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     
     public void OnClaimCity(CityVo cityVo, bool changeTurn = true)
     {
+      MainGameManagerMediator mainGameMediator = mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode];
       if (cityVo.ownerID != 0)
+        return;
+
+      if (mainGameMediator.view.gameManagerVo.queueList.ElementAt(mainGameMediator.view.gameManagerVo.queue) != cityVo.clientId)
         return;
 
       cityVo.ownerID = cityVo.clientId;
@@ -94,13 +99,48 @@ namespace Runtime.Contexts.MainGame.View.MainMap
 
       SendPacketToLobbyVo<CityVo> vo = networkManager.SetSendPacketToLobbyVo(cityVo, view.lobbyVo.clients);
       
-      dispatcher.Dispatch(MainGameEvent.SendClaimedCity, vo);
+      dispatcher.Dispatch(MainGameEvent.UpdateCity, vo);
 
       if (changeTurn)
         mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode].ChangeTurn();
     }
 
     public void AssignCityRandomly(ushort queueId)
+    {
+      List<int> emptyCities = GetEmptyCities(); 
+
+      int randomEmptyCityId = emptyCities[Random.Range(0, emptyCities.Count)];
+
+      CityVo cityVo = view.cities[randomEmptyCityId];
+      cityVo.clientId = queueId;
+      
+      OnClaimCity(cityVo, false);
+    }
+
+    public void OnArmingToCity(ArmingVo armingVo)
+    {
+      MainGameManagerMediator mainGameMediator = mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode];
+
+      if (armingVo.cityVo.ownerID != armingVo.clientId)
+        return;
+
+      if (mainGameMediator.view.gameManagerVo.queueList.ElementAt(mainGameMediator.view.gameManagerVo.queue) != armingVo.clientId)
+        return;
+
+      CityVo cityVo = view.cities[armingVo.cityVo.ID];
+      if (cityVo.ownerID != armingVo.clientId)
+        return;
+
+      cityVo.soldierCount += armingVo.soldierCount;
+      view.cities[cityVo.ID] = cityVo;
+      
+      mainGameMediator.ArmingToCity(armingVo);
+
+      SendPacketToLobbyVo<CityVo> vo = networkManager.SetSendPacketToLobbyVo(cityVo, view.lobbyVo.clients);
+      dispatcher.Dispatch(MainGameEvent.UpdateCity, vo);
+    }
+
+    public List<int> GetEmptyCities()
     {
       List<int> emptyCities = new();
       
@@ -111,13 +151,8 @@ namespace Runtime.Contexts.MainGame.View.MainMap
         if (city.ownerID == 0 && city.isPlayable)
           emptyCities.Add(city.ID);
       }
-
-      int randomEmptyCityId = emptyCities[Random.Range(0, emptyCities.Count)];
-
-      CityVo cityVo = view.cities[randomEmptyCityId];
-      cityVo.clientId = queueId;
       
-      OnClaimCity(cityVo, false);
+      return emptyCities;
     }
     
     private void LoadingPlayerActions()
