@@ -59,8 +59,6 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       
       view.cities = mainGameModel.RandomMapGenerator(view.lobbyVo);
 
-      LoadingPlayerActions();
-
       for (int i = 0; i < view.cities.Count; i++)
       {
         int value = i;
@@ -96,6 +94,8 @@ namespace Runtime.Contexts.MainGame.View.MainMap
         clients = view.lobbyVo.clients
       };
       
+      LoadingPlayerActions();
+
       dispatcher.Dispatch(MainGameEvent.SendMap, mapGeneratorVo);
     }
     
