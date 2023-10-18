@@ -2,9 +2,10 @@ using Runtime.Contexts.MainGame.Command;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Processor;
+using Runtime.Contexts.MainGame.View.City;
+using Runtime.Contexts.MainGame.View.MainGameContainer;
 using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.View.MainMap;
-using Runtime.Contexts.MainGame.View.MainMapContainer;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Modules.Core.GeneralContext;
 using strange.extensions.context.api;
@@ -27,8 +28,9 @@ namespace Runtime.Contexts.MainGame.Config
             injectionBinder.Bind<IMainGameModel>().To<MainGameModel>().ToSingleton().CrossContext();
             
             mediationBinder.Bind<MainMapView>().To<MainMapMediator>();
-            mediationBinder.Bind<MainMapContainerView>().To<MainMapContainerMediator>();
+            mediationBinder.Bind<MainGameContainerView>().To<MainGameContainerMediator>();
             mediationBinder.Bind<MainGameManagerView>().To<MainGameManagerMediator>();
+            mediationBinder.Bind<CityView>().To<CityMediator>();
 
             commandBinder.Bind(MainGameEvent.SendMap).To<SendMapCommand>();
             commandBinder.Bind(MainGameEvent.NextTurn).To<NextTurnCommand>();

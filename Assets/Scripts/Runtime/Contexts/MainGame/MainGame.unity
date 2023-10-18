@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 961131565}
   - component: {fileID: 961131566}
   m_Layer: 0
-  m_Name: MainMapContainer
+  m_Name: MainGameContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

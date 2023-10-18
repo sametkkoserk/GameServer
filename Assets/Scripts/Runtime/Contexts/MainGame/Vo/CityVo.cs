@@ -17,7 +17,7 @@ namespace Runtime.Contexts.MainGame.Vo
     public bool isPlayable;
     
     [ProtoMember(3)]
-    public List<ushort> neighbors;
+    public List<int> neighbors = new();
     
     [ProtoMember(4)]
     public ushort ownerID;

@@ -46,7 +46,7 @@ namespace Runtime.Contexts.Lobby.Command
         
         mainGameModel.mapLobbyVos.Add(lobbyVo);
         lobbyModel.lobbies.Remove(lobbyVo.lobbyCode);
-        crossDispatcher.Dispatch(MainGameEvent.CreateMap);
+        crossDispatcher.Dispatch(MainGameEvent.CreateMap, playerReadyVo.lobbyCode);
       }
       
       DebugX.Log(DebugKey.Request, $" Lobby Code: {playerReadyVo.lobbyCode}, Process: Player Ready");

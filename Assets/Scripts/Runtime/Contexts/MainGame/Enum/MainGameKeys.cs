@@ -4,5 +4,6 @@ namespace Runtime.Contexts.MainGame.Enum
   {
     public const string MainMap = "MainMap";
     public const string MainGameManager = "MainGameManager";
+    public const string City = "City";
   }
 }
