@@ -10,5 +10,32 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     public Dictionary<int, CityVo> cities;
     
     public LobbyVo lobbyVo;
+
+    private List<int> readyCities = new();
+
+    public void SetCities(Dictionary<int, CityVo> cityVos)
+    {
+      cities = cityVos;
+    }
+
+    public Dictionary<int, CityVo> GetCities()
+    {
+      return cities;
+    }
+
+    public CityVo GetSpecificCity(int id)
+    {
+      return cities[id];
+    }
+
+    public void SetSpecificCity(CityVo cityVo)
+    {
+      cities[cityVo.ID] = cityVo;
+    }
+
+    public List<int> GetReadyCities()
+    {
+      return readyCities;
+    }
   }
 }

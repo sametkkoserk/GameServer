@@ -1,8 +1,8 @@
 using strange.extensions.mediation.impl;
 
-namespace Runtime.Contexts.MainGame.View.MainMapContainer
+namespace Runtime.Contexts.MainGame.View.MainGameContainer
 {
-  public class MainMapContainerView : EventView
+  public class MainGameContainerView : EventView
   {
   }
 }

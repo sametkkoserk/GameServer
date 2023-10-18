@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
+using Runtime.Contexts.MainGame.View.City;
 using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -9,6 +10,7 @@ using Runtime.Contexts.Network.Vo;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Runtime.Contexts.MainGame.View.MainMap
 {
@@ -57,14 +59,43 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       
       view.cities = mainGameModel.RandomMapGenerator(view.lobbyVo);
 
+      LoadingPlayerActions();
+
+      for (int i = 0; i < view.cities.Count; i++)
+      {
+        int value = i;
+        
+        AsyncOperationHandle<GameObject> mainGameManager = Addressables.InstantiateAsync(MainGameKeys.City, gameObject.transform);
+        mainGameManager.Completed += handle =>
+        {
+          if (handle.Status != AsyncOperationStatus.Succeeded) return;
+          GameObject loadedObject = handle.Result;
+
+          KeyValuePair<int, CityVo> city = view.cities.ElementAt(value);
+          loadedObject.name = city.Key.ToString();
+          loadedObject.transform.localPosition = city.Value.position.ToVector3();
+          
+          CityView cityView = loadedObject.GetComponent<CityView>();
+          cityView.Init(city.Key, view.lobbyVo.lobbyCode);
+        };
+      }
+    }
+    public void SendMap(int cityId, int neighborId)
+    {
+      view.GetSpecificCity(cityId).neighbors.Add(neighborId);
+
+      if (!view.GetReadyCities().Contains(cityId))
+        view.GetReadyCities().Add(cityId);
+
+      if (view.GetReadyCities().Count != view.cities.Count)
+        return;
+
       MapGeneratorVo mapGeneratorVo = new()
       {
         cityVos = view.cities,
         clients = view.lobbyVo.clients
       };
       
-      LoadingPlayerActions();
-
       dispatcher.Dispatch(MainGameEvent.SendMap, mapGeneratorVo);
     }
     
@@ -80,7 +111,16 @@ namespace Runtime.Contexts.MainGame.View.MainMap
         return;
 
       mainGameModel.managerLobbyVos.Add(view.lobbyVo);
-      Addressables.InstantiateAsync(MainGameKeys.MainGameManager, transform);
+      
+      AsyncOperationHandle<GameObject> mainGameManager = Addressables.InstantiateAsync(MainGameKeys.MainGameManager, transform.parent.transform);
+      mainGameManager.Completed += handle =>
+      {
+        if (handle.Status != AsyncOperationStatus.Succeeded) return;
+        GameObject loadedObject = handle.Result;
+
+        loadedObject.name = "Main Game Manager";
+        loadedObject.transform.localPosition = new Vector3(0, 0, 0);
+      };
     }
     
     public void OnClaimCity(CityVo cityVo, bool changeTurn = true)
