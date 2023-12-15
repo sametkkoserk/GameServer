@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Runtime.Contexts.Lobby.Vo;
+using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.Vo;
 using strange.extensions.mediation.impl;
 
@@ -11,6 +12,8 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     
     public LobbyVo lobbyVo;
 
+    public MainGameManagerMediator mainGameManagerMediator = new();
+    
     private List<int> readyCities = new();
 
     public void SetCities(Dictionary<int, CityVo> cityVos)

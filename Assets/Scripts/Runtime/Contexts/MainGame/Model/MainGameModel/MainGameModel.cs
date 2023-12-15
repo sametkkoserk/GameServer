@@ -59,7 +59,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
         public Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo)
         {
-            int totalCity = vo.playerCount * 3;
+            int totalCity = vo.playerCount * 5;
             int xPos = 0;
             int zPos = 0;
             

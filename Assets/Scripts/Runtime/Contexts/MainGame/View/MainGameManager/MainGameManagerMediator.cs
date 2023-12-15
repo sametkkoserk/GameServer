@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
@@ -40,6 +40,8 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       view.lobbyVo = mainGameModel.managerLobbyVos[0];
       mainGameModel.managerLobbyVos.Remove(view.lobbyVo);
       mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode] = this;
+      view.mainMapMediator = mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode];
+      view.mainMapMediator.SetMainGameManager();
 
       for (int i = 0; i < view.lobbyVo.clients.Count; i++)
       {
@@ -85,8 +87,8 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
       SendPacketToLobbyVo<TurnVo> vo = networkManager.SetSendPacketToLobbyVo(view.gameManagerVo.turnVo, view.lobbyVo.clients);
       dispatcher.Dispatch(MainGameEvent.NextTurn, vo);
-
       await WaitAsyncOperations(PanelClosingTimes.nextTurn);
+
       StartCoroutine(SetTimer());
     }
 
@@ -117,10 +119,10 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     {
       if (view.gameManagerVo.queue <= 0)
         return;
-      
+
       ushort id = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
       List<ushort> ids = new() { id };
-      
+
       switch (view.gameManagerVo.gameStateVo.gameStateKey)
       {
         case GameStateKey.ClaimCity:
@@ -128,6 +130,12 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
           break;
         case GameStateKey.Arming:
           UpdatePlayerActionKeys(ids, PlayerActionKey.Arming, false);
+          break;
+        case GameStateKey.Attack:
+          UpdatePlayerActionKeys(ids, PlayerActionKey.Attack, false);
+          break;
+        case GameStateKey.Fortify:
+          UpdatePlayerActionKeys(ids, PlayerActionKey.Fortify, false);
           break;
         default:
           return;
@@ -137,17 +145,23 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     private async Task CheckingSystemsAfterTurn()
     {
       GameStateKey gameStateKey = view.gameManagerVo.gameStateVo.gameStateKey;
-      
+
       switch (gameStateKey)
       {
         case GameStateKey.ClaimCity:
-          await ClaimCitySystems();
+          await ClaimCitySystem();
           break;
         case GameStateKey.MiniGame:
-          await MiniGameSystems();
+          await MiniGameSystem();
           break;
         case GameStateKey.Arming:
-          await ArmingSystems();
+          await ArmingSystem();
+          break;
+        case GameStateKey.Attack:
+          await AttackSystem();
+          break;
+        case GameStateKey.Fortify:
+          await FortifySystem();
           break;
         default:
           view.gameManagerVo.startTimer = false;
@@ -155,9 +169,9 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       }
     }
 
-    private async Task ClaimCitySystems()
+    private async Task ClaimCitySystem()
     {
-      if (mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode].GetEmptyCities().Count == 0)
+      if (view.mainMapMediator.GetEmptyCities().Count == 0)
       {
         ChangeGameState(GameStateKey.MiniGame);
         view.gameManagerVo.startTimer = false;
@@ -172,22 +186,23 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       }
     }
 
-    private async Task MiniGameSystems()
+    private async Task MiniGameSystem()
     {
       SetRandomQueue();
       SetRewards();
-      
-      view.gameManagerVo.queueList.Reverse();
+
+      // view.gameManagerVo.queueList.Reverse();
       view.gameManagerVo.queue = -1;
       view.gameManagerVo.startTimer = false;
-      
-      ChangeGameState(GameStateKey.Arming);
+      view.gameManagerVo.armingFinished = false;
 
       await WaitAsyncOperations(PanelClosingTimes.miniGameResults);
-      
+
+      ChangeGameState(GameStateKey.Arming);
+
       ClearAllPlayerActions();
       UpdateAllPlayerActions(new List<PlayerActionKey> { PlayerActionKey.OpenDetailsPanel }, true);
-      
+
       StartCoroutine(Breath());
     }
 
@@ -230,22 +245,187 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       dispatcher.Dispatch(MainGameEvent.MiniGameRewards, miniGameStatsVos);
     }
 
-    private async Task ArmingSystems()
+    private async Task ArmingSystem()
     {
-      ushort nextId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
-      List<ushort> ids = new() { nextId };
-      UpdatePlayerActionKeys(ids, PlayerActionKey.Arming, true);
-      view.gameManagerVo.startTimer = true;
+      if (view.gameManagerVo.armingFinished)
+      {
+        view.gameManagerVo.startTimer = false;
+        view.gameManagerVo.attackFinished = false;
+        view.gameManagerVo.queue = 0;
+
+        ChangeGameState(GameStateKey.Attack);
+
+        ClearAllPlayerActions();
+        UpdateAllPlayerActions(new List<PlayerActionKey> { PlayerActionKey.OpenDetailsPanel }, true);
+
+        await CheckingSystemsAfterTurn();
+      }
+      else
+      {
+        ushort nextId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
+        List<ushort> ids = new() { nextId };
+        UpdatePlayerActionKeys(ids, PlayerActionKey.Arming, true);
+        view.gameManagerVo.startTimer = true;
+
+        if (nextId == view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queueList.Count - 1))
+          view.gameManagerVo.armingFinished = true;
+      }
     }
 
     public void ArmingToCity(ArmingVo armingVo)
     {
       view.gameManagerVo.playerFeaturesVos[armingVo.clientId].freeSoldierCount -= armingVo.soldierCount;
-      
+
       PlayerFeaturesVo playerFeaturesVo = view.gameManagerVo.playerFeaturesVos[armingVo.clientId];
       playerFeaturesVo.clientId = armingVo.clientId;
-      
+
       dispatcher.Dispatch(MainGameEvent.ArmingCity, playerFeaturesVo);
+    }
+
+    /// <summary>
+    /// The Method that sets the turn of the game and user action keys. Additionally, it adjusts the state of the game.
+    /// It's not the attack action taken by the player!
+    /// </summary>
+    private async Task AttackSystem()
+    {
+      if (view.gameManagerVo.attackFinished)
+      {
+        view.gameManagerVo.startTimer = false;
+        view.gameManagerVo.fortifyFinished = false;
+        view.gameManagerVo.queue = 0;
+
+        ChangeGameState(GameStateKey.Fortify);
+
+        ClearAllPlayerActions();
+        UpdateAllPlayerActions(new List<PlayerActionKey> { PlayerActionKey.OpenDetailsPanel }, true);
+
+        await CheckingSystemsAfterTurn();
+      }
+      else
+      {
+        ushort nextId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
+        List<ushort> ids = new() { nextId };
+        UpdatePlayerActionKeys(ids, PlayerActionKey.Attack, true);
+
+        view.gameManagerVo.startTimer = true;
+
+        if (nextId == view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queueList.Count - 1))
+          view.gameManagerVo.attackFinished = true;
+      }
+    }
+
+    /// <summary>
+    /// 1. Check queue.
+    /// 2. Check data which are come from client.
+    /// 3. Check data in Server.
+    /// </summary>
+    /// <param name="attackVo">It contains Attacker and Defender city vos.</param>
+    public void OnAttack(AttackVo attackVo)
+    {
+      if (view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue) != attackVo.clientId)
+        return;
+
+      if (attackVo.attackerCityVo.ownerID != attackVo.clientId)
+        return;
+
+      CityVo attackerCityVo = view.mainMapMediator.view.cities[attackVo.attackerCityVo.ID];
+      if (attackerCityVo.ownerID != attackVo.clientId)
+        return;
+
+      CityVo defenderCityVo = view.mainMapMediator.view.cities[attackVo.defenderCityVo.ID];
+
+      if (attackerCityVo.soldierCount > defenderCityVo.soldierCount)
+      {
+        AttackerWin(attackerCityVo, defenderCityVo);
+      }
+      else if (attackerCityVo.soldierCount < defenderCityVo.soldierCount)
+      {
+        DefenderWin(attackerCityVo, defenderCityVo);
+      }
+      else
+      {
+        int randomNumber = RandomNumberGenerator.GetInt32(1, 3);
+
+        switch (randomNumber)
+        {
+          case 1:
+            AttackerWin(attackerCityVo, defenderCityVo);
+            break;
+          case 2:
+            DefenderWin(attackerCityVo, defenderCityVo);
+            break;
+        }
+      }
+    }
+
+    private void AttackerWin(CityVo attacker, CityVo defender)
+    {
+      CityVo attackerCity = view.mainMapMediator.view.GetSpecificCity(attacker.ID);
+      CityVo defenderCity = view.mainMapMediator.view.GetSpecificCity(defender.ID);
+
+      defenderCity.soldierCount = 1;
+      defenderCity.ownerID = attackerCity.ownerID;
+      view.mainMapMediator.view.SetSpecificCity(defenderCity);
+
+      attackerCity.soldierCount -= defenderCity.soldierCount;
+      if (attackerCity.soldierCount == 0)
+        attackerCity.soldierCount = 1;
+      view.mainMapMediator.view.SetSpecificCity(attackerCity);
+
+      AttackResultVo resultVo = new()
+      {
+        winnerCity = attackerCity,
+        loserCity = defenderCity
+      };
+      SendPacketToLobbyVo<AttackResultVo> vo = networkManager.SetSendPacketToLobbyVo(resultVo, view.lobbyVo.clients);
+
+      dispatcher.Dispatch(MainGameEvent.AttackResult, vo);
+    }
+
+    private void DefenderWin(CityVo attacker, CityVo defender)
+    {
+      CityVo attackerCity = view.mainMapMediator.view.GetSpecificCity(attacker.ID);
+      CityVo defenderCity = view.mainMapMediator.view.GetSpecificCity(defender.ID);
+      
+      attackerCity.soldierCount = 1;
+      attackerCity.ownerID = defenderCity.ownerID;
+      view.mainMapMediator.view.SetSpecificCity(attackerCity);
+
+      defenderCity.soldierCount -= attackerCity.soldierCount;
+      if (defenderCity.soldierCount == 0)
+        defenderCity.soldierCount = 1;
+      view.mainMapMediator.view.SetSpecificCity(defenderCity);
+      
+      AttackResultVo resultVo = new()
+      {
+        winnerCity = defenderCity,
+        loserCity = attackerCity
+      };
+      
+      SendPacketToLobbyVo<AttackResultVo> vo = networkManager.SetSendPacketToLobbyVo(resultVo, view.lobbyVo.clients);
+
+      dispatcher.Dispatch(MainGameEvent.AttackResult, vo);
+    }
+
+    private async Task FortifySystem()
+    {
+      if (view.gameManagerVo.fortifyFinished)
+      {
+        ChangeGameState(GameStateKey.MiniGame);
+        view.gameManagerVo.startTimer = false;
+        await CheckingSystemsAfterTurn();
+      }
+      else
+      {
+        ushort nextId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
+        List<ushort> ids = new() { nextId };
+        UpdatePlayerActionKeys(ids, PlayerActionKey.Fortify, true);
+      
+        view.gameManagerVo.startTimer = true;
+        
+        if (nextId == view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queueList.Count - 1))
+          view.gameManagerVo.fortifyFinished = true;
+      }
     }
 
     private async Task AfterTurnTimeOver()
@@ -253,7 +433,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       if (view.gameManagerVo.gameStateVo.gameStateKey == GameStateKey.ClaimCity)
       {
         ushort queueId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
-        mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode].AssignCityRandomly(queueId);
+        view.mainMapMediator.AssignCityRandomly(queueId);
       }
 
       await NextTurn();
@@ -293,7 +473,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       for (int i = 0; i < view.gameManagerVo.playerActionVo.playerActionKeys.Count; i++)
       {
         ushort id = view.gameManagerVo.playerActionVo.playerActionKeys.ElementAt(i).Key;
-        view.gameManagerVo.playerActionVo.playerActionKeys[id] = new List<PlayerActionKey> {};
+        view.gameManagerVo.playerActionVo.playerActionKeys[id] = new List<PlayerActionKey>();
       }
     }
 

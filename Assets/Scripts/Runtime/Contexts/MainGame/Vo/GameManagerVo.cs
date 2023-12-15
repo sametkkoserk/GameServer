@@ -26,5 +26,14 @@ namespace Runtime.Contexts.MainGame.Vo
 
     [ProtoIgnore]
     public bool startTimer;
+
+    [ProtoIgnore]
+    public bool armingFinished;
+
+    [ProtoIgnore]
+    public bool attackFinished;
+    
+    [ProtoIgnore]
+    public bool fortifyFinished;
   }
 }

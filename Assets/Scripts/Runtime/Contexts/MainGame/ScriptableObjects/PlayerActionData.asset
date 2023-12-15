@@ -15,7 +15,7 @@ MonoBehaviour:
   playerActionNecessaryVos:
   - name: OpenDetailsPanel
     playerActionKey: 0
-    gameStateKeys: 0000000002000000
+    gameStateKeys: 00000000020000000300000004000000
     playerActionNecessaryKeys: 00000000
   - name: ClaimCity
     playerActionKey: 1
@@ -25,3 +25,11 @@ MonoBehaviour:
     playerActionKey: 2
     gameStateKeys: 02000000
     playerActionNecessaryKeys: 0000000002000000
+  - name: Attack
+    playerActionKey: 3
+    gameStateKeys: 03000000
+    playerActionNecessaryKeys: 0000000003000000
+  - name: Fortify
+    playerActionKey: 4
+    gameStateKeys: 04000000
+    playerActionNecessaryKeys: 0000000004000000

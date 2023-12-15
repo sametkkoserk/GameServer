@@ -5,5 +5,7 @@ namespace Runtime.Contexts.MainGame.Enum
     OpenDetailsPanel,
     ClaimCity,
     Arming,
+    Attack,
+    Fortify
   }
 }

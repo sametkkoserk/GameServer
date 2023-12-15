@@ -41,11 +41,13 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(MainGameEvent.UpdateCity).To<UpdateCityCommand>();
             commandBinder.Bind(MainGameEvent.MiniGameRewards).To<MiniGameRewardsCommand>();
             commandBinder.Bind(MainGameEvent.ArmingCity).To<SendArmingToCityInfoCommand>();
+            commandBinder.Bind(MainGameEvent.AttackResult).To<AttackResultCommand>();
             
             commandBinder.Bind(ClientToServerId.SceneReady).To<SceneReadyProccessor>();
             commandBinder.Bind(ClientToServerId.GameStart).To<GameStartProcessor>();
             commandBinder.Bind(ClientToServerId.ClaimCity).To<ClaimCityProcessor>();
             commandBinder.Bind(ClientToServerId.ArmingToCity).To<ArmingToCityProcessor>();
+            commandBinder.Bind(ClientToServerId.Attack).To<AttackProcessor>();
         }
     }
 }

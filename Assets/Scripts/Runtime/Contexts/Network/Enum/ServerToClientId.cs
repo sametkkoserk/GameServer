@@ -27,5 +27,8 @@ namespace Runtime.Contexts.Network.Enum
     SendArmingCity,
     
     MiniGameRewards,
+    OpenMainGamePanel,
+    
+    Attack
   }
 }

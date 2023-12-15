@@ -5,5 +5,7 @@ namespace Runtime.Contexts.MainGame.Enum
     ClaimCity,
     MiniGame,
     Arming,
+    Attack,
+    Fortify
   }
 }
