@@ -15,6 +15,7 @@ namespace Runtime.Contexts.MainGame.Enum
     UpdateCity,
     ArmingCity,
     AttackResult,
+    FortifyResult,
     
     MiniGameRewards,
   }

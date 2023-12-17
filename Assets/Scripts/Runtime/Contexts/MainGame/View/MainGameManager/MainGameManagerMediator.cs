@@ -428,6 +428,47 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       }
     }
 
+    /// <summary>
+    /// 1. Check queue.
+    /// 2. Check data which are come from client. Source and Target must be same owner.
+    /// 3. Check data in Server.
+    /// </summary>
+    /// <param name="fortifyVo">It contains Source and Target city vos.</param>
+    public void OnFortify(FortifyVo fortifyVo)
+    {
+      if (view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue) != fortifyVo.clientId)
+        return;
+
+      if (fortifyVo.sourceCityVo.ownerID != fortifyVo.clientId)
+        return;
+
+      if (fortifyVo.targetCityVo.ownerID != fortifyVo.clientId)
+        return;
+
+      CityVo sourceCityVo = view.mainMapMediator.view.cities[fortifyVo.sourceCityVo.ID];
+      if (sourceCityVo.ownerID != fortifyVo.clientId)
+        return;
+
+      CityVo targetCityVo = view.mainMapMediator.view.cities[fortifyVo.targetCityVo.ID];
+      if (targetCityVo.ownerID != fortifyVo.clientId)
+        return;
+
+      // TODO: Safak Degisecek
+
+      targetCityVo.soldierCount += sourceCityVo.soldierCount - 1;
+      sourceCityVo.soldierCount = 1;
+      
+      FortifyResultVo resultVo = new()
+      {
+        targetCity = targetCityVo,
+        sourceCity = sourceCityVo
+      };
+      SendPacketToLobbyVo<FortifyResultVo> vo = networkManager.SetSendPacketToLobbyVo(resultVo, view.lobbyVo.clients);
+
+      dispatcher.Dispatch(MainGameEvent.FortifyResult, vo);
+    }
+
+
     private async Task AfterTurnTimeOver()
     {
       if (view.gameManagerVo.gameStateVo.gameStateKey == GameStateKey.ClaimCity)

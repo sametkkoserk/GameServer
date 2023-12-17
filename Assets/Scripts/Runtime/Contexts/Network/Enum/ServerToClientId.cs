@@ -29,6 +29,7 @@ namespace Runtime.Contexts.Network.Enum
     MiniGameRewards,
     OpenMainGamePanel,
     
-    Attack
+    Attack,
+    Fortify
   }
 }
