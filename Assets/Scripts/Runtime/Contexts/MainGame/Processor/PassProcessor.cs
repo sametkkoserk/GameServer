@@ -1,31 +1,29 @@
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
-using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
 using strange.extensions.command.impl;
 
 namespace Runtime.Contexts.MainGame.Processor
 {
-  public class AttackProcessor : EventCommand
+  public class PassProcessor : EventCommand
   {
     [Inject]
     public INetworkManagerService networkManager { get; set; }
     
     [Inject]
-    public IMainGameModel mainGameModel{ get; set; }
-
+    public IMainGameModel mainGameModel { get; set; }
     public override void Execute()
     {
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
       ushort clientId = messageReceivedVo.fromId;
       
-      SendPacketWithLobbyCode<AttackVo> vo = networkManager.GetData<SendPacketWithLobbyCode<AttackVo>>(messageReceivedVo.message);
-      vo.mainClass.clientId = clientId;
+      SendPacketWithLobbyCode<int> vo = networkManager.GetData<SendPacketWithLobbyCode<int>>(messageReceivedVo.message);
 
-      DebugX.Log(DebugKey.MainGame, $"Attack Processor. Attacker ID: {vo.mainClass.attackerCityVo.ID} ==> Defender ID: {vo.mainClass.defenderCityVo.ID}");
+      mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnPass();
 
-      mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnAttack(vo.mainClass);
+      DebugX.Log(DebugKey.MainGame, "Pass Processor.");
+
     }
   }
 }

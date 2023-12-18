@@ -29,7 +29,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameContainer
         transform =
         {
           parent = gameObject.transform,
-          localPosition = new Vector3(mainGameModel.mainGameMediators.Count * 20, 0, 0)
+          localPosition = new Vector3(mainGameModel.mainGameManagerMediators.Count * 20, 0, 0)
         }
       };
 

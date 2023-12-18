@@ -25,7 +25,7 @@ namespace Runtime.Contexts.MainGame.Processor
 
       DebugX.Log(DebugKey.MainGame, $"Fortify Processor. Fortifier City ID: {vo.mainClass.sourceCityVo.ID} ==> Target City ID: {vo.mainClass.targetCityVo.ID}");
 
-      mainGameModel.mainGameMediators[vo.lobbyCode].OnFortify(vo.mainClass);
+      mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnFortify(vo.mainClass);
     }
   }
 }

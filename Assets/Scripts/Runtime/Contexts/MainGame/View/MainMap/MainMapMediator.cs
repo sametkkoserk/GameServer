@@ -41,7 +41,7 @@ namespace Runtime.Contexts.MainGame.View.MainMap
 
     public void SetMainGameManager()
     {
-      view.mainGameManagerMediator = mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode];
+      view.mainGameManagerMediator = mainGameModel.mainGameManagerMediators[view.lobbyVo.lobbyCode];
     }
     
     public void OnPlayerSceneReady(SceneReadyVo vo)

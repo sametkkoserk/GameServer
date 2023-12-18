@@ -39,7 +39,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     {
       view.lobbyVo = mainGameModel.managerLobbyVos[0];
       mainGameModel.managerLobbyVos.Remove(view.lobbyVo);
-      mainGameModel.mainGameMediators[view.lobbyVo.lobbyCode] = this;
+      mainGameModel.mainGameManagerMediators[view.lobbyVo.lobbyCode] = this;
       view.mainMapMediator = mainGameModel.mainMapMediators[view.lobbyVo.lobbyCode];
       view.mainMapMediator.SetMainGameManager();
 
@@ -478,6 +478,11 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       }
 
       await NextTurn();
+    }
+
+    public async Task OnPass()
+    {
+      await AfterTurnTimeOver();
     }
 
     #endregion

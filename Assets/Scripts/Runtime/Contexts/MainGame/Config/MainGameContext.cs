@@ -50,6 +50,7 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(ClientToServerId.ArmingToCity).To<ArmingToCityProcessor>();
             commandBinder.Bind(ClientToServerId.Attack).To<AttackProcessor>();
             commandBinder.Bind(ClientToServerId.Fortify).To<FortifyProcessor>();
+            commandBinder.Bind(ClientToServerId.Pass).To<PassProcessor>();
         }
     }
 }
