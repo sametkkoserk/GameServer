@@ -20,7 +20,7 @@ namespace Runtime.Contexts.MainGame.Processor
       
       SendPacketWithLobbyCode<int> vo = networkManager.GetData<SendPacketWithLobbyCode<int>>(messageReceivedVo.message);
 
-      mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnPass();
+      mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnPass(clientId);
 
       DebugX.Log(DebugKey.MainGame, "Pass Processor.");
 

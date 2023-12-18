@@ -480,8 +480,11 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       await NextTurn();
     }
 
-    public async Task OnPass()
+    public async Task OnPass(ushort clientId)
     {
+      if (clientId != view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue))
+        return;
+      
       await AfterTurnTimeOver();
     }
 
