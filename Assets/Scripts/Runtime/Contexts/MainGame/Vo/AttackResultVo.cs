@@ -10,5 +10,8 @@ namespace Runtime.Contexts.MainGame.Vo
 
     [ProtoMember(2)]
     public CityVo loserCity;
+
+    [ProtoMember(3)]
+    public bool isConquered;
   }
 }

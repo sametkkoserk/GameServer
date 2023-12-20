@@ -9,9 +9,12 @@ namespace Runtime.Contexts.MainGame.Vo
     public ushort clientId;
     
     [ProtoMember(1)]
-    public CityVo sourceCityVo;
+    public int sourceCityId;
     
     [ProtoMember(2)]
-    public CityVo targetCityVo;
+    public int targetCityId;
+
+    [ProtoMember(3)]
+    public int soldierCount;
   }
 }

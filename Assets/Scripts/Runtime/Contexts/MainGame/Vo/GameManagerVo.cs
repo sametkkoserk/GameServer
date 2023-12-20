@@ -35,5 +35,11 @@ namespace Runtime.Contexts.MainGame.Vo
     
     [ProtoIgnore]
     public bool fortifyFinished;
+
+    [ProtoIgnore]
+    public Dictionary<int, int> uncompletedAttackCityVos = new();
+
+    [ProtoIgnore]
+    public ushort clientId;
   }
 }

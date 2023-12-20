@@ -344,18 +344,12 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       }
       else
       {
-        int randomNumber = RandomNumberGenerator.GetInt32(1, 3);
-
-        switch (randomNumber)
-        {
-          case 1:
-            AttackerWin(attackerCityVo, defenderCityVo);
-            break;
-          case 2:
-            DefenderWin(attackerCityVo, defenderCityVo);
-            break;
-        }
+        return;
       }
+      
+      view.gameManagerVo.uncompletedAttackCityVos.Clear();
+      view.gameManagerVo.uncompletedAttackCityVos.Add(attackerCityVo.ID, defenderCityVo.ID);
+      view.gameManagerVo.clientId = attackerCityVo.clientId;
     }
 
     private void AttackerWin(CityVo attacker, CityVo defender)
@@ -363,19 +357,20 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       CityVo attackerCity = view.mainMapMediator.view.GetSpecificCity(attacker.ID);
       CityVo defenderCity = view.mainMapMediator.view.GetSpecificCity(defender.ID);
 
-      defenderCity.soldierCount = 1;
-      defenderCity.ownerID = attackerCity.ownerID;
-      view.mainMapMediator.view.SetSpecificCity(defenderCity);
-
       attackerCity.soldierCount -= defenderCity.soldierCount;
       if (attackerCity.soldierCount == 0)
         attackerCity.soldierCount = 1;
       view.mainMapMediator.view.SetSpecificCity(attackerCity);
+      
+      defenderCity.soldierCount = 1;
+      defenderCity.ownerID = attackerCity.ownerID;
+      view.mainMapMediator.view.SetSpecificCity(defenderCity);
 
       AttackResultVo resultVo = new()
       {
         winnerCity = attackerCity,
-        loserCity = defenderCity
+        loserCity = defenderCity,
+        isConquered = true
       };
       SendPacketToLobbyVo<AttackResultVo> vo = networkManager.SetSendPacketToLobbyVo(resultVo, view.lobbyVo.clients);
 
@@ -386,22 +381,22 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     {
       CityVo attackerCity = view.mainMapMediator.view.GetSpecificCity(attacker.ID);
       CityVo defenderCity = view.mainMapMediator.view.GetSpecificCity(defender.ID);
-      
-      attackerCity.soldierCount = 1;
-      attackerCity.ownerID = defenderCity.ownerID;
-      view.mainMapMediator.view.SetSpecificCity(attackerCity);
 
       defenderCity.soldierCount -= attackerCity.soldierCount;
       if (defenderCity.soldierCount == 0)
         defenderCity.soldierCount = 1;
       view.mainMapMediator.view.SetSpecificCity(defenderCity);
       
+      attackerCity.soldierCount = 1;
+      view.mainMapMediator.view.SetSpecificCity(attackerCity);
+
       AttackResultVo resultVo = new()
       {
         winnerCity = defenderCity,
-        loserCity = attackerCity
+        loserCity = attackerCity,
+        isConquered = false
       };
-      
+
       SendPacketToLobbyVo<AttackResultVo> vo = networkManager.SetSendPacketToLobbyVo(resultVo, view.lobbyVo.clients);
 
       dispatcher.Dispatch(MainGameEvent.AttackResult, vo);
@@ -420,9 +415,9 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
         ushort nextId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
         List<ushort> ids = new() { nextId };
         UpdatePlayerActionKeys(ids, PlayerActionKey.Fortify, true);
-      
+
         view.gameManagerVo.startTimer = true;
-        
+
         if (nextId == view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queueList.Count - 1))
           view.gameManagerVo.fortifyFinished = true;
       }
@@ -439,25 +434,30 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       if (view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue) != fortifyVo.clientId)
         return;
 
-      if (fortifyVo.sourceCityVo.ownerID != fortifyVo.clientId)
-        return;
+      CityVo sourceCityVo = view.mainMapMediator.view.cities[fortifyVo.sourceCityId];
+      CityVo targetCityVo = view.mainMapMediator.view.cities[fortifyVo.targetCityId];
 
-      if (fortifyVo.targetCityVo.ownerID != fortifyVo.clientId)
-        return;
-
-      CityVo sourceCityVo = view.mainMapMediator.view.cities[fortifyVo.sourceCityVo.ID];
       if (sourceCityVo.ownerID != fortifyVo.clientId)
         return;
 
-      CityVo targetCityVo = view.mainMapMediator.view.cities[fortifyVo.targetCityVo.ID];
       if (targetCityVo.ownerID != fortifyVo.clientId)
         return;
 
-      // TODO: Safak Degisecek
+      if (view.gameManagerVo.uncompletedAttackCityVos.Count != 0)
+      {
+        KeyValuePair<int, int> element = view.gameManagerVo.uncompletedAttackCityVos.ElementAt(0);
+        if (fortifyVo.sourceCityId != element.Key || fortifyVo.targetCityId != element.Value)
+          return;
 
-      targetCityVo.soldierCount += sourceCityVo.soldierCount - 1;
-      sourceCityVo.soldierCount = 1;
-      
+        view.gameManagerVo.uncompletedAttackCityVos.Clear();
+      }
+
+      if (sourceCityVo.soldierCount - fortifyVo.soldierCount <= 0)
+        return;
+
+      targetCityVo.soldierCount += fortifyVo.soldierCount;
+      sourceCityVo.soldierCount -= fortifyVo.soldierCount;
+
       FortifyResultVo resultVo = new()
       {
         targetCity = targetCityVo,
@@ -468,13 +468,28 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       dispatcher.Dispatch(MainGameEvent.FortifyResult, vo);
     }
 
-
     private async Task AfterTurnTimeOver()
     {
       if (view.gameManagerVo.gameStateVo.gameStateKey == GameStateKey.ClaimCity)
       {
         ushort queueId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
         view.mainMapMediator.AssignCityRandomly(queueId);
+      }
+      else if (view.gameManagerVo.gameStateVo.gameStateKey == GameStateKey.Attack)
+      {
+        if (view.gameManagerVo.uncompletedAttackCityVos.Count != 0)
+        {
+          KeyValuePair<int, int> element = view.gameManagerVo.uncompletedAttackCityVos.ElementAt(0);
+          FortifyVo fortifyVo = new()
+          {
+            sourceCityId = element.Key,
+            targetCityId = element.Value,
+            soldierCount = 1,
+            clientId = view.gameManagerVo.clientId
+          };
+        
+          OnFortify(fortifyVo);
+        }
       }
 
       await NextTurn();
@@ -484,7 +499,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     {
       if (clientId != view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue))
         return;
-      
+
       await AfterTurnTimeOver();
     }
 
@@ -513,7 +528,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
         KeyValuePair<ushort, List<PlayerActionKey>> userActionKeys = view.gameManagerVo.playerActionVo.playerActionKeys.ElementAt(i);
         idList.Add(userActionKeys.Key);
       }
-      
+
       UpdatePlayerActionsMain(idList, playerActionKeys, add);
     }
 

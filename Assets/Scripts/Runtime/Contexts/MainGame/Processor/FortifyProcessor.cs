@@ -23,7 +23,7 @@ namespace Runtime.Contexts.MainGame.Processor
       SendPacketWithLobbyCode<FortifyVo> vo = networkManager.GetData<SendPacketWithLobbyCode<FortifyVo>>(messageReceivedVo.message);
       vo.mainClass.clientId = clientId;
 
-      DebugX.Log(DebugKey.MainGame, $"Fortify Processor. Fortifier City ID: {vo.mainClass.sourceCityVo.ID} ==> Target City ID: {vo.mainClass.targetCityVo.ID}");
+      DebugX.Log(DebugKey.MainGame, $"Fortify Processor. Fortifier City ID: {vo.mainClass.sourceCityId} ==> Target City ID: {vo.mainClass.targetCityId}");
 
       mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnFortify(vo.mainClass);
     }
