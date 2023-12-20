@@ -9,9 +9,9 @@ namespace Runtime.Contexts.MainGame.Vo
     public ushort clientId;
     
     [ProtoMember(1)]
-    public CityVo attackerCityVo;
+    public int attackerCityID;
     
     [ProtoMember(2)]
-    public CityVo defenderCityVo;
+    public int defenderCityID;
   }
 }

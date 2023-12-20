@@ -9,7 +9,7 @@ namespace Runtime.Contexts.MainGame.Vo
     public ushort clientId;
     
     [ProtoMember(1)]
-    public CityVo cityVo;
+    public int cityID;
 
     [ProtoMember(2)]
     public int soldierCount;

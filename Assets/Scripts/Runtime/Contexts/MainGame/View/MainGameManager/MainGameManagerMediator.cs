@@ -325,14 +325,11 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       if (view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue) != attackVo.clientId)
         return;
 
-      if (attackVo.attackerCityVo.ownerID != attackVo.clientId)
-        return;
+      CityVo attackerCityVo = view.mainMapMediator.view.cities[attackVo.attackerCityID];
+      CityVo defenderCityVo = view.mainMapMediator.view.cities[attackVo.defenderCityID];
 
-      CityVo attackerCityVo = view.mainMapMediator.view.cities[attackVo.attackerCityVo.ID];
       if (attackerCityVo.ownerID != attackVo.clientId)
         return;
-
-      CityVo defenderCityVo = view.mainMapMediator.view.cities[attackVo.defenderCityVo.ID];
 
       if (attackerCityVo.soldierCount > defenderCityVo.soldierCount)
       {

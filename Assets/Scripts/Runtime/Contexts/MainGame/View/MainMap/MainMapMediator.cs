@@ -162,15 +162,11 @@ namespace Runtime.Contexts.MainGame.View.MainMap
 
     public void OnArmingToCity(ArmingVo armingVo)
     {
-      // Checking Client.
-      if (armingVo.cityVo.ownerID != armingVo.clientId)
-        return;
-
+      CityVo cityVo = view.cities[armingVo.cityID];
+      
       if (view.mainGameManagerMediator.view.gameManagerVo.queueList.ElementAt(view.mainGameManagerMediator.view.gameManagerVo.queue) != armingVo.clientId)
         return;
 
-      // Checking in Server.
-      CityVo cityVo = view.cities[armingVo.cityVo.ID];
       if (cityVo.ownerID != armingVo.clientId)
         return;
 

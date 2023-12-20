@@ -23,7 +23,7 @@ namespace Runtime.Contexts.MainGame.Processor
       SendPacketWithLobbyCode<ArmingVo> vo = networkManager.GetData<SendPacketWithLobbyCode<ArmingVo>>(messageReceivedVo.message);
       vo.mainClass.clientId = clientId;
 
-      DebugX.Log(DebugKey.MainGame, $"Arming to City Processor. City ID: {vo.mainClass.cityVo.ID}");
+      DebugX.Log(DebugKey.MainGame, $"Arming to City Processor. City ID: {vo.mainClass.cityID}");
 
       mainGameModel.mainMapMediators[vo.lobbyCode].OnArmingToCity(vo.mainClass);
     }

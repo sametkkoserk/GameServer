@@ -23,7 +23,7 @@ namespace Runtime.Contexts.MainGame.Processor
       SendPacketWithLobbyCode<AttackVo> vo = networkManager.GetData<SendPacketWithLobbyCode<AttackVo>>(messageReceivedVo.message);
       vo.mainClass.clientId = clientId;
 
-      DebugX.Log(DebugKey.MainGame, $"Attack Processor. Attacker ID: {vo.mainClass.attackerCityVo.ID} ==> Defender ID: {vo.mainClass.defenderCityVo.ID}");
+      DebugX.Log(DebugKey.MainGame, $"Attack Processor. Attacker ID: {vo.mainClass.attackerCityID} ==> Defender ID: {vo.mainClass.defenderCityID}");
 
       mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnAttack(vo.mainClass);
     }
