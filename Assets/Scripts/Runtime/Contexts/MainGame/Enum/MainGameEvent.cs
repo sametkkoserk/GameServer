@@ -18,5 +18,7 @@ namespace Runtime.Contexts.MainGame.Enum
     FortifyResult,
     
     MiniGameRewards,
+
+    SendCreateMiniGameScene
   }
 }

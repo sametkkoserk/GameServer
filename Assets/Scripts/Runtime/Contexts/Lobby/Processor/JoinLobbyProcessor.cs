@@ -41,7 +41,7 @@ namespace Runtime.Contexts.Lobby.Processor
       };
       lobbyModel.OnJoin(lobbyCode,clientVo);
       
-      DebugX.Log(DebugKey.Handle, "Join Lobby Processor Handle. Lobby Code: ");
+      DebugX.Log(DebugKey.Processor, "Join Lobby Processor Handle. Lobby Code: ");
     }
   }
 }

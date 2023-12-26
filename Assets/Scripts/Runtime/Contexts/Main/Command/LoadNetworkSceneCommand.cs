@@ -11,9 +11,12 @@ namespace Runtime.Contexts.Main.Command
         {
             Addressables.LoadSceneAsync(SceneKeys.NetworkScene, LoadSceneMode.Additive).Completed += handle =>
             {
-                Addressables.LoadSceneAsync(SceneKeys.LobbyScene, LoadSceneMode.Additive).Completed += handle =>
+                Addressables.LoadSceneAsync(SceneKeys.LobbyScene, LoadSceneMode.Additive).Completed += handle2 =>
                 {
-                    Addressables.LoadSceneAsync(SceneKeys.MainGameScene, LoadSceneMode.Additive);
+                    Addressables.LoadSceneAsync(SceneKeys.MainGameScene, LoadSceneMode.Additive).Completed += handle3 =>
+                    {
+                        Addressables.LoadSceneAsync(SceneKeys.MiniGamesScene, LoadSceneMode.Additive);
+                    };
                 };
             };
         }

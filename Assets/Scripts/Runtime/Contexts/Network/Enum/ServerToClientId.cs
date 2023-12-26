@@ -32,6 +32,10 @@ namespace Runtime.Contexts.Network.Enum
     OpenMainGamePanel,
     
     Attack,
-    Fortify
+    Fortify,
+    CreateMiniGameScene,
+    MiniGameCreated,
+    SendMiniGameState,
+    MiniGaneEnded
   }
 }

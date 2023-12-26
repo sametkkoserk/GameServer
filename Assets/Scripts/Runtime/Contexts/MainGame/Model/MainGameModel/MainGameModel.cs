@@ -87,5 +87,10 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
             return cities;
         }
+
+        public void MiniGameEnded(string lobbyCode, List<ushort> leaderBoard)
+        {
+            mainGameManagerMediators[lobbyCode].OnMiniGameEnded(leaderBoard);
+        }
     }
 }

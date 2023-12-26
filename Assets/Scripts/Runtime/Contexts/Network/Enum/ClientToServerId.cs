@@ -21,6 +21,7 @@ namespace Runtime.Contexts.Network.Enum
     ClaimCity,
     ArmingToCity,
     Attack,
-    Fortify
+    Fortify,
+    ButtonClicked
   }
 }

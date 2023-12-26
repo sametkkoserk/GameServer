@@ -24,8 +24,8 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
       IPromise Init();
 
       Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo);
-      
-      
 
+
+      void MiniGameEnded(string LobbyCode, List<ushort> leaderBoard);
     }
 }

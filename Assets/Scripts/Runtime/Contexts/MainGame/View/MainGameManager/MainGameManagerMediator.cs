@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
+using Runtime.Contexts.MiniGames.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
+using strange.extensions.context.api;
+using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using Random = System.Random;
@@ -16,6 +20,9 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 {
   public class MainGameManagerMediator : EventMediator
   {
+    [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
+    public IEventDispatcher crossDispatcher{ get; set;}
+    
     [Inject]
     public MainGameManagerView view { get; set; }
 
@@ -188,14 +195,38 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private async Task MiniGameSystem()
     {
+      PassMiniGames();
+      return;
+      
+      
+      
+      SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
+      {
+        clients = view.lobbyVo.clients,
+        mainClass = view.lobbyVo
+      };
+      dispatcher.Dispatch(MainGameEvent.SendCreateMiniGameScene,vo);
+      crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
+    }
+
+    public void PassMiniGames()
+    {
       SetRandomQueue();
+      OnMiniGameEnded(view.gameManagerVo.queueList);
+    }
+    
+    public async void OnMiniGameEnded(List<ushort> queue)
+    {
+      view.gameManagerVo.queueList = queue;
       SetRewards();
 
       // view.gameManagerVo.queueList.Reverse();
       view.gameManagerVo.queue = -1;
       view.gameManagerVo.startTimer = false;
       view.gameManagerVo.armingFinished = false;
-
+      
+      ChangeGameState(GameStateKey.Arming);
+      
       await WaitAsyncOperations(PanelClosingTimes.miniGameResults);
 
       ChangeGameState(GameStateKey.Arming);
@@ -205,7 +236,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
       StartCoroutine(Breath());
     }
-
+    
     private IEnumerator Breath()
     {
       yield return new WaitForSeconds(0.5f);
@@ -579,6 +610,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     }
 
     #endregion
+
 
     private void SetRandomQueue()
     {
