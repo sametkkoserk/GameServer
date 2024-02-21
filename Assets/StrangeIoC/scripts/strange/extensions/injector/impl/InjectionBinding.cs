@@ -23,11 +23,11 @@
  */
 
 using System;
-using strange.framework.api;
-using strange.framework.impl;
-using strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.framework.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.injector.impl
+namespace StrangeIoC.scripts.strange.extensions.injector.impl
 {
 	public class InjectionBinding : Binding, IInjectionBinding
 	{

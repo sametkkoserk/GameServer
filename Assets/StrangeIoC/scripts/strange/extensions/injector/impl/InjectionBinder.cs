@@ -25,12 +25,12 @@
 
 using System;
 using System.Collections.Generic;
-using strange.framework.api;
-using strange.extensions.injector.api;
-using strange.extensions.reflector.impl;
-using strange.framework.impl;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.reflector.impl;
+using StrangeIoC.scripts.strange.framework.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.injector.impl
+namespace StrangeIoC.scripts.strange.extensions.injector.impl
 {
 	public class InjectionBinder : Binder, IInjectionBinder
 	{

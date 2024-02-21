@@ -24,15 +24,15 @@
  * - Methods (the ICrossContextCapable API) for adding and removing the hooks between Contexts.
  */
 
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.dispatcher.eventdispatcher.impl;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.api;
-using strange.extensions.injector.api;
-using strange.extensions.injector.impl;
-using strange.framework.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.impl;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.injector.impl;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.extensions.context.impl
+namespace StrangeIoC.scripts.strange.extensions.context.impl
 {
 	public class CrossContext : Context, ICrossContextCapable
 	{

@@ -22,9 +22,9 @@
 /// Models (maintaining state) or Services (reaching out for data).
 
 using System;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
-using strange.extensions.dispatcher.eventdispatcher.impl;
-using strange.extensions.mediation.impl;
 
 namespace strange.examples.multiplecontexts.game
 {

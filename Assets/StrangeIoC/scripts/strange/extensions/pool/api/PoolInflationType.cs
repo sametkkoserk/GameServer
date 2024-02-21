@@ -14,9 +14,7 @@
  *		limitations under the License.
  */
 
-using System;
-
-namespace strange.extensions.pool.api
+namespace StrangeIoC.scripts.strange.extensions.pool.api
 {
 	public enum PoolInflationType
 	{

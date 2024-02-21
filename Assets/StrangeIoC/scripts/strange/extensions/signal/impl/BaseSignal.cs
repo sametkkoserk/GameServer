@@ -24,10 +24,10 @@
  */
 
 using System;
-using strange.extensions.signal.api;
 using System.Collections.Generic;
+using StrangeIoC.scripts.strange.extensions.signal.api;
 
-namespace strange.extensions.signal.impl
+namespace StrangeIoC.scripts.strange.extensions.signal.impl
 {
 	public class BaseSignal : IBaseSignal
 	{

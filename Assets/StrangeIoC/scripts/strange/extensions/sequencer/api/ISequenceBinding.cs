@@ -20,12 +20,9 @@
  * @deprecated
  */
 
-using System;
-using strange.extensions.command.api;
-using strange.extensions.sequencer.api;
-using strange.framework.api;
+using StrangeIoC.scripts.strange.extensions.command.api;
 
-namespace strange.extensions.sequencer.api
+namespace StrangeIoC.scripts.strange.extensions.sequencer.api
 {
 	public interface ISequenceBinding : ICommandBinding
 	{

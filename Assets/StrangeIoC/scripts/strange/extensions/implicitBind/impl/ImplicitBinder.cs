@@ -18,13 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using strange.extensions.implicitBind.api;
-using strange.extensions.injector.api;
-using strange.extensions.injector.impl;
-using strange.extensions.mediation.api;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.implicitBind.api;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.injector.impl;
+using StrangeIoC.scripts.strange.extensions.mediation.api;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 
-namespace strange.extensions.implicitBind.impl
+namespace StrangeIoC.scripts.strange.extensions.implicitBind.impl
 {
 	public class ImplicitBinder : IImplicitBinder
 	{

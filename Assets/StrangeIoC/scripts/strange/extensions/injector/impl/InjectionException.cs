@@ -21,9 +21,9 @@
  */
 
 using System;
-using strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.injector.api;
 
-namespace strange.extensions.injector.impl
+namespace StrangeIoC.scripts.strange.extensions.injector.impl
 {
 	public class InjectionException : Exception
 	{

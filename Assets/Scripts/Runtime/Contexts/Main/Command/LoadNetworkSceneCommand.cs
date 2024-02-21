@@ -1,5 +1,5 @@
 using Runtime.Contexts.Main.Enum;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 

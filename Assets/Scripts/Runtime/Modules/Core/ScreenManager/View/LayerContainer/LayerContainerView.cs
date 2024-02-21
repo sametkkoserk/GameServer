@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Runtime.Modules.Core.ScreenManager.Vo;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace Runtime.Modules.Core.ScreenManager.View.LayerContainer

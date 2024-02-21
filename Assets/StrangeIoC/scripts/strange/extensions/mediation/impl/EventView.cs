@@ -25,10 +25,10 @@
  * dispatcher into a View.
  */
 
-using System;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
 
-namespace strange.extensions.mediation.impl
+namespace StrangeIoC.scripts.strange.extensions.mediation.impl
 {
 	public class EventView : View
 	{

@@ -1,6 +1,6 @@
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
 
 namespace Runtime.Contexts.Lobby.Processor
 {

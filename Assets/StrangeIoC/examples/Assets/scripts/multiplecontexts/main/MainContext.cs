@@ -21,11 +21,9 @@
 
 using System;
 using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.dispatcher.eventdispatcher.impl;
 using strange.examples.multiplecontexts.game;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.impl;
 
 namespace strange.examples.multiplecontexts.main
 {

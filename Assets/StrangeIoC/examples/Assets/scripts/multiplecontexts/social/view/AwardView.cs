@@ -20,9 +20,8 @@
 
 using System;
 using System.Collections;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
 
 namespace strange.examples.multiplecontexts.social
 {

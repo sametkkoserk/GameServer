@@ -23,10 +23,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using strange.framework.api;
-using strange.extensions.pool.api;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.pool.api;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.extensions.pool.impl
+namespace StrangeIoC.scripts.strange.extensions.pool.impl
 {
 	public class Pool<T> : Pool, IPool<T>
 	{

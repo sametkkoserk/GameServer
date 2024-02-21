@@ -6,8 +6,9 @@ using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
 
 namespace Runtime.Contexts.Lobby.Model.LobbyModel

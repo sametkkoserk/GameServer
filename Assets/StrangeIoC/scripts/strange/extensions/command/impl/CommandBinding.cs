@@ -24,11 +24,10 @@
  * should be destroyed immediately after a single use.
  */
 
-using System;
-using strange.extensions.command.api;
-using strange.framework.impl;
+using StrangeIoC.scripts.strange.extensions.command.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.command.impl
+namespace StrangeIoC.scripts.strange.extensions.command.impl
 {
 	public class CommandBinding : Binding, ICommandBinding
 	{

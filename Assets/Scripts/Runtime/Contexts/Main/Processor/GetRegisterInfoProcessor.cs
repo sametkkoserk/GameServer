@@ -4,7 +4,8 @@ using Runtime.Contexts.Main.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
 using strange.examples.multiplecontexts.main;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
 using MainEvent = Runtime.Contexts.Main.Enum.MainEvent;
 
 namespace Runtime.Contexts.Main.Processor

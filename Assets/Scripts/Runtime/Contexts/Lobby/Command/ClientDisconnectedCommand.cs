@@ -7,7 +7,8 @@ using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Main.Model.PlayerModel;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
 
 namespace Runtime.Contexts.Lobby.Command
 {

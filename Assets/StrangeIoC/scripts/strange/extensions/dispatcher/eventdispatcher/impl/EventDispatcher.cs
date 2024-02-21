@@ -35,16 +35,16 @@
 	* @see strange.extensions.dispatcher.api.ITriggerable
 	*/
 
-	using System;
+using System;
 using System.Collections.Generic;
-using strange.framework.api;
-using strange.framework.impl;
-using strange.extensions.dispatcher.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.pool.api;
-using strange.extensions.pool.impl;
+using StrangeIoC.scripts.strange.extensions.dispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.pool.api;
+using StrangeIoC.scripts.strange.extensions.pool.impl;
+using StrangeIoC.scripts.strange.framework.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.dispatcher.eventdispatcher.impl
+namespace StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.impl
 {
 	public class EventDispatcher : Binder, IEventDispatcher, ITriggerProvider, ITriggerable
 	{

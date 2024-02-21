@@ -14,9 +14,7 @@
  *		limitations under the License.
  */
 
-using System;
-
-namespace strange.extensions.injector.api
+namespace StrangeIoC.scripts.strange.extensions.injector.api
 {
 	public enum InjectionExceptionType
 	{

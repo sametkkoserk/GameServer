@@ -20,9 +20,7 @@
  * The interface for an event sent by the EventDispatcher
  */
 
-using System;
-
-namespace strange.extensions.dispatcher.eventdispatcher.api
+namespace StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api
 {
 	public interface IEvent
 	{

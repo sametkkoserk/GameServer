@@ -1,5 +1,5 @@
 using Runtime.Contexts.Network.Enum;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
 using UnityEngine.AddressableAssets;
 
 namespace Runtime.Contexts.Network.Command

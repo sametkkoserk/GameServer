@@ -62,11 +62,10 @@
  * to mediate.
  */
 
-using System;
-using strange.framework.api;
+using StrangeIoC.scripts.strange.framework.api;
 using UnityEngine;
 
-namespace strange.extensions.mediation.api
+namespace StrangeIoC.scripts.strange.extensions.mediation.api
 {
 	public interface IMediationBinder : IBinder
 	{

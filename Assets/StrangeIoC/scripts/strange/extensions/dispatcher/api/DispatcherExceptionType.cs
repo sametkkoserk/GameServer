@@ -14,9 +14,7 @@
  *		limitations under the License.
  */
 
-using System;
-
-namespace strange.extensions.dispatcher.api
+namespace StrangeIoC.scripts.strange.extensions.dispatcher.api
 {
 	public enum DispatcherExceptionType
 	{

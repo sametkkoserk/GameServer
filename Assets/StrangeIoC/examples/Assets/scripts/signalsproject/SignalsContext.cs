@@ -6,13 +6,11 @@
 /// on the differences 
 
 using System;
+using StrangeIoC.scripts.strange.extensions.command.api;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.impl;
 using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.dispatcher.eventdispatcher.impl;
-using strange.extensions.command.api;
-using strange.extensions.command.impl;
 
 namespace strange.examples.signals
 {

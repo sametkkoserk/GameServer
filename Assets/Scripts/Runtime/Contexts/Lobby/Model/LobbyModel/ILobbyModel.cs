@@ -16,13 +16,11 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
 
         void UpdateLobby(LobbyVo lobbyVo);
 
-
         void OnJoin(string lobbyCode, ClientVo clientVo);
 
         void OnReady(string lobbyCode, ushort id);
         
         void OnQuit(string lobbyCode, ushort id);
-        
         
         Color ColorGenerator();
     }

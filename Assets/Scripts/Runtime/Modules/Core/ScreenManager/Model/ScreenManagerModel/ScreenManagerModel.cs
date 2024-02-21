@@ -3,8 +3,9 @@ using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Modules.Core.ScreenManager.Enum;
 using Runtime.Modules.Core.ScreenManager.Vo;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 

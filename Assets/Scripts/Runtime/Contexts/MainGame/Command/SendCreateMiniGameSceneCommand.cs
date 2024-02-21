@@ -4,7 +4,8 @@ using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Command

@@ -1,5 +1,6 @@
 using Runtime.Contexts.Network.Services.NetworkManager;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 
 namespace Runtime.Contexts.Network.View.NetworkManager
 {

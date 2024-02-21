@@ -23,9 +23,9 @@
  */
 
 using System;
-using strange.extensions.command.api;
+using StrangeIoC.scripts.strange.extensions.command.api;
 
-namespace strange.extensions.command.impl
+namespace StrangeIoC.scripts.strange.extensions.command.impl
 {
 	public class CommandException : Exception
 	{

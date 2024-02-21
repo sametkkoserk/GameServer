@@ -7,8 +7,9 @@ using Riptide.Utils;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
 
 namespace Runtime.Contexts.Network.Services.NetworkManager

@@ -3,7 +3,7 @@
 /// string The URL
 
 using System;
-using strange.extensions.signal.impl;
+using StrangeIoC.scripts.strange.extensions.signal.impl;
 
 namespace strange.examples.signals
 {

@@ -1,4 +1,4 @@
-using strange.extensions.context.impl;
+using StrangeIoC.scripts.strange.extensions.context.impl;
 
 namespace Runtime.Contexts.Main.Config
 {

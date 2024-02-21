@@ -27,9 +27,8 @@
  */
 
 using System;
-using strange.framework.api;
 
-namespace strange.extensions.reflector.api
+namespace StrangeIoC.scripts.strange.extensions.reflector.api
 {
 	public interface IReflectionBinder
 	{

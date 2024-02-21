@@ -16,9 +16,9 @@
 
 
 using System;
-using strange.extensions.pool.api;
+using StrangeIoC.scripts.strange.extensions.pool.api;
 
-namespace strange.extensions.pool.impl
+namespace StrangeIoC.scripts.strange.extensions.pool.impl
 {
 	public class PoolException : Exception
 	{

@@ -14,9 +14,7 @@
  *		limitations under the License.
  */
 
-using System;
-
-namespace strange.framework.api
+namespace StrangeIoC.scripts.strange.framework.api
 {
 	public enum BindingConst
 	{

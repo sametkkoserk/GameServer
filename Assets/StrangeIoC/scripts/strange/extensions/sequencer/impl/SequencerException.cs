@@ -21,9 +21,9 @@
  */
 
 using System;
-using strange.extensions.sequencer.api;
+using StrangeIoC.scripts.strange.extensions.sequencer.api;
 
-namespace strange.extensions.sequencer.impl
+namespace StrangeIoC.scripts.strange.extensions.sequencer.impl
 {
 	public class SequencerException : Exception
 	{

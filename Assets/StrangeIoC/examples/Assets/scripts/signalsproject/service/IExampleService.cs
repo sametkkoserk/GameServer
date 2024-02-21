@@ -1,5 +1,4 @@
 using System;
-using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace strange.examples.signals
 {

@@ -25,8 +25,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using strange.examples.multiplecontexts.game;
-using strange.extensions.dispatcher.eventdispatcher.impl;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 
 namespace strange.examples.multiplecontexts.social
 {

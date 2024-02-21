@@ -14,9 +14,7 @@
  *		limitations under the License.
  */
 
-using System;
-
-namespace strange.extensions.reflector.api
+namespace StrangeIoC.scripts.strange.extensions.reflector.api
 {
 	public enum ReflectionExceptionType
 	{

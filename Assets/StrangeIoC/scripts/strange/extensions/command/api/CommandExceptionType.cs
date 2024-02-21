@@ -20,9 +20,7 @@
  * Errors relating to the CommandBinder
  */
 
-using System;
-
-namespace strange.extensions.command.api
+namespace StrangeIoC.scripts.strange.extensions.command.api
 {
 	public enum CommandExceptionType
 	{

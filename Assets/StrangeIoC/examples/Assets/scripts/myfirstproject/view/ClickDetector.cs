@@ -1,8 +1,8 @@
 /// Just a simple MonoBehaviour Click Detector
 
 using System;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
-using strange.extensions.mediation.impl;
 
 namespace strange.examples.myfirstproject
 {

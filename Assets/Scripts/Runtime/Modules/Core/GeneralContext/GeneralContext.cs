@@ -2,8 +2,8 @@ using Runtime.Contexts.Main.Model.PlayerModel;
 using Runtime.Modules.Core.ScreenManager.Model.ScreenManagerModel;
 using Runtime.Modules.Core.ScreenManager.View.LayerContainer;
 using Runtime.Modules.Core.ScreenManager.View.PanelContainer;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.impl;
 using UnityEngine;
 
 namespace Runtime.Modules.Core.GeneralContext

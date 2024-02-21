@@ -22,9 +22,8 @@
 /// Game includes a simple Asteroids-style game.
 
 using System;
+using StrangeIoC.scripts.strange.extensions.context.impl;
 using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
 
 namespace strange.examples.multiplecontexts.game
 {

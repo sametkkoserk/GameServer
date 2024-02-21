@@ -6,7 +6,7 @@ using Runtime.Contexts.Network.Enum;
 using Runtime.Modules.Core.Bundle.Model.BundleModel;
 using Runtime.Modules.Core.Discord.View.Behaviour;
 using Runtime.Modules.Core.GeneralContext;
-using strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
 using UnityEngine;
 
 namespace Runtime.Contexts.Main.Config

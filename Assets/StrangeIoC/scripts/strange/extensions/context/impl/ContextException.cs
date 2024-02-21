@@ -23,9 +23,9 @@
  */
 
 using System;
-using strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
 
-namespace strange.extensions.context.impl
+namespace StrangeIoC.scripts.strange.extensions.context.impl
 {
 	public class ContextException : Exception
 	{

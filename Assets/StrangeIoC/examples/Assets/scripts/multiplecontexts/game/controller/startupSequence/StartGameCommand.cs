@@ -17,10 +17,9 @@
 /// Kicks off the app, directly after context binding
 
 using System;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.command.impl;
-using strange.extensions.dispatcher.eventdispatcher.impl;
 
 namespace strange.examples.multiplecontexts.game
 {

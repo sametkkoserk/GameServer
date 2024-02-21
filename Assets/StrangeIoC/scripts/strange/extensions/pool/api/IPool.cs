@@ -48,9 +48,9 @@
  */
 
 using System;
-using strange.framework.api;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.extensions.pool.api
+namespace StrangeIoC.scripts.strange.extensions.pool.api
 {
 	public interface IPool<T> : IPool
 	{

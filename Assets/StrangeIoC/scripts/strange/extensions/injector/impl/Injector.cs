@@ -40,10 +40,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using strange.extensions.injector.api;
-using strange.extensions.reflector.api;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.reflector.api;
 
-namespace strange.extensions.injector.impl
+namespace StrangeIoC.scripts.strange.extensions.injector.impl
 {
 	public class Injector : IInjector
 	{

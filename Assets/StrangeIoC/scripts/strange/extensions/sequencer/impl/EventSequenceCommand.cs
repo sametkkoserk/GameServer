@@ -20,12 +20,11 @@
  * @deprecated
  */
 
-using System;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.sequencer.impl;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
 
-namespace strange.extensions.sequencer.impl
+namespace StrangeIoC.scripts.strange.extensions.sequencer.impl
 {
 	public class EventSequenceCommand : SequenceCommand
 	{

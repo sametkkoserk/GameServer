@@ -14,9 +14,7 @@
  *		limitations under the License.
  */
 
-using System;
-
-namespace strange.extensions.sequencer.api
+namespace StrangeIoC.scripts.strange.extensions.sequencer.api
 {
 	public enum SequencerExceptionType
 	{

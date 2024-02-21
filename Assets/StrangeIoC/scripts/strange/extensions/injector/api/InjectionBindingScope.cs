@@ -14,7 +14,7 @@
  *		limitations under the License.
  */
 
-namespace strange.extensions.injector.api
+namespace StrangeIoC.scripts.strange.extensions.injector.api
 {
 	public enum InjectionBindingScope
 	{

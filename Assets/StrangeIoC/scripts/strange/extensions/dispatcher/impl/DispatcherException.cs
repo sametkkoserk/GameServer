@@ -21,9 +21,9 @@
  */
 
 using System;
-using strange.extensions.dispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.api;
 
-namespace strange.extensions.dispatcher.impl
+namespace StrangeIoC.scripts.strange.extensions.dispatcher.impl
 {
 	public class DispatcherException : Exception
 	{

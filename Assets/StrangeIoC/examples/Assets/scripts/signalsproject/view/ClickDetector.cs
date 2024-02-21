@@ -1,9 +1,9 @@
 /// Uses a signal instead of an EventDispatcher
 
 using System;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.signal.impl;
 using UnityEngine;
-using strange.extensions.mediation.impl;
-using strange.extensions.signal.impl;
 
 namespace strange.examples.signals
 {

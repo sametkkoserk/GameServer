@@ -23,11 +23,10 @@
  * @see strange.extensions.injector.api.ICrossContextInjectionBinder
  */
 
-using strange.extensions.injector.impl;
-using strange.extensions.injector.api;
-using strange.framework.api;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.extensions.injector.impl
+namespace StrangeIoC.scripts.strange.extensions.injector.impl
 {
 	public class CrossContextInjectionBinder : InjectionBinder, ICrossContextInjectionBinder
 	{

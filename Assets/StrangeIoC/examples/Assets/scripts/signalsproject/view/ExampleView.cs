@@ -4,10 +4,9 @@
 
 using System;
 using System.Collections;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.signal.impl;
 using UnityEngine;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
-using strange.extensions.signal.impl;
 
 namespace strange.examples.signals
 {

@@ -53,15 +53,16 @@
 
 using System;
 using System.Collections.Generic;
-using strange.extensions.command.api;
-using strange.extensions.dispatcher.api;
-using strange.extensions.injector.api;
-using strange.extensions.pool.impl;
-using strange.framework.api;
-using strange.framework.impl;
-using strange.extensions.pool.api;
+using StrangeIoC.scripts.strange.extensions.command.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.injector.api;
+using StrangeIoC.scripts.strange.extensions.pool.api;
+using StrangeIoC.scripts.strange.extensions.pool.impl;
+using StrangeIoC.scripts.strange.framework.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.command.impl
+namespace StrangeIoC.scripts.strange.extensions.command.impl
 {
 	public class CommandBinder : Binder, ICommandBinder, IPooledCommandBinder, ITriggerable
 	{

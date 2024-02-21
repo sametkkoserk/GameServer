@@ -3,9 +3,9 @@
 /// Note how we no longer extend EventMediator, and inject Signals instead
 
 using System;
+using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 
 namespace strange.examples.signals
 {

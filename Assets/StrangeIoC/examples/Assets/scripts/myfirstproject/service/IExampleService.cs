@@ -1,5 +1,5 @@
 using System;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace strange.examples.myfirstproject
 {

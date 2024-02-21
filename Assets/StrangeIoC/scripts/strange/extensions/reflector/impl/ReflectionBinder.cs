@@ -24,16 +24,16 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using strange.extensions.reflector.api;
-using strange.framework.api;
-using strange.framework.impl;
-using System.Collections;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.reflector.api;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.extensions.reflector.impl
+namespace StrangeIoC.scripts.strange.extensions.reflector.impl
 {
-	public class ReflectionBinder : strange.framework.impl.Binder, IReflectionBinder
+	public class ReflectionBinder : global::StrangeIoC.scripts.strange.framework.impl.Binder, IReflectionBinder
 	{
 		public ReflectionBinder ()
 		{

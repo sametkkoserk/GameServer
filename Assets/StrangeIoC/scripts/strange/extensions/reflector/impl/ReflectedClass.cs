@@ -27,9 +27,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using strange.extensions.reflector.api;
+using StrangeIoC.scripts.strange.extensions.reflector.api;
 
-namespace strange.extensions.reflector.impl
+namespace StrangeIoC.scripts.strange.extensions.reflector.impl
 {
 	public class ReflectedClass : IReflectedClass
 	{

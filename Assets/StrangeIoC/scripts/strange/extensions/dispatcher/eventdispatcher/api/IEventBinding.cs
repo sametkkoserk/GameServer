@@ -28,10 +28,9 @@
  * @see strange.extensions.dispatcher.eventdispatcher.api.IEvent
  */
 
-using System;
-using strange.framework.api;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.extensions.dispatcher.eventdispatcher.api
+namespace StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api
 {
 	/// Delegate for adding a listener with a single argument
 	public delegate void EventCallback(IEvent payload);

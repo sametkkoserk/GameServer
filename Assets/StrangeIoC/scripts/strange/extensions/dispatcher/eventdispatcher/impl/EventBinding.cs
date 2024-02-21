@@ -28,13 +28,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using strange.extensions.dispatcher.api;
-using strange.extensions.dispatcher.impl;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.framework.api;
-using strange.framework.impl;
+using StrangeIoC.scripts.strange.extensions.dispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.impl;
+using StrangeIoC.scripts.strange.framework.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.dispatcher.eventdispatcher.impl
+namespace StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.impl
 {
 	public class EventBinding : Binding, IEventBinding
 	{
@@ -44,7 +44,7 @@ namespace strange.extensions.dispatcher.eventdispatcher.impl
 		{
 		}
 
-		public EventBinding (strange.framework.impl.Binder.BindingResolver resolver) : base(resolver)
+		public EventBinding (global::StrangeIoC.scripts.strange.framework.impl.Binder.BindingResolver resolver) : base(resolver)
 		{
 			keyConstraint = BindingConstraintType.ONE;
 			valueConstraint = BindingConstraintType.MANY;

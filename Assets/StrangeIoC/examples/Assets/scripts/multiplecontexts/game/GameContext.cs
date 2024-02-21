@@ -20,11 +20,9 @@
 /// you're experienced with strange.
 
 using System;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.impl;
 using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.dispatcher.eventdispatcher.impl;
 
 namespace strange.examples.multiplecontexts.game
 {

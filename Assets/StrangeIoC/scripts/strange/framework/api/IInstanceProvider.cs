@@ -24,7 +24,7 @@
 
 using System;
 
-namespace strange.framework.api
+namespace StrangeIoC.scripts.strange.framework.api
 {
 	public interface IInstanceProvider
 	{

@@ -16,8 +16,8 @@
 
 using System;
 using UnityEngine;
-using strange.extensions.command.impl;
 using strange.examples.multiplecontexts.main;
+using StrangeIoC.scripts.strange.extensions.command.impl;
 
 namespace strange.examples.multiplecontexts.game
 {

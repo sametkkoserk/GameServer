@@ -24,10 +24,9 @@
  * It's most important role is to instantiate and call `Start()` on the Context.
  */
 
-using System;
-using strange.extensions.mediation.api;
+using StrangeIoC.scripts.strange.extensions.mediation.api;
 
-namespace strange.extensions.context.api
+namespace StrangeIoC.scripts.strange.extensions.context.api
 {
 	public interface IContextView : IView
 	{

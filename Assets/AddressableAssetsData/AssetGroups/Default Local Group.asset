@@ -32,11 +32,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9979e691b63f9ee46a076760596dc928
-    m_Address: PlayerActionData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7322de2368ce14f418cd629bcb247af8
     m_Address: City
     m_ReadOnly: 0

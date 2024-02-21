@@ -30,9 +30,7 @@
  * it to the Pool.
  */
 
-using System;
-
-namespace strange.extensions.pool.api
+namespace StrangeIoC.scripts.strange.extensions.pool.api
 {
 	public interface IPoolable
 	{

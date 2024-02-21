@@ -2,8 +2,8 @@ using Runtime.Modules.Core.ScreenManager.Enum;
 using Runtime.Modules.Core.ScreenManager.Model.ScreenManagerModel;
 using Runtime.Modules.Core.ScreenManager.View.PanelContainer;
 using Runtime.Modules.Core.ScreenManager.Vo;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace Runtime.Modules.Core.ScreenManager.View.LayerContainer

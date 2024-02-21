@@ -21,9 +21,7 @@
  * are either a SemiBinding or a Pool. A ManagedList can have objects added or removed.
  */
 
-using System;
-
-namespace strange.framework.api
+namespace StrangeIoC.scripts.strange.framework.api
 {
 	public interface IManagedList
 	{

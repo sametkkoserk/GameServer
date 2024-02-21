@@ -23,11 +23,10 @@
  * perfectly to Binding.
  */
 
-using System;
-using strange.extensions.mediation.api;
-using strange.framework.impl;
+using StrangeIoC.scripts.strange.extensions.mediation.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.mediation.impl
+namespace StrangeIoC.scripts.strange.extensions.mediation.impl
 {
 	public class MediationBinding : Binding, IMediationBinding
 	{

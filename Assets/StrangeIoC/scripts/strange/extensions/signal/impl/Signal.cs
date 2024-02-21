@@ -67,7 +67,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace strange.extensions.signal.impl
+namespace StrangeIoC.scripts.strange.extensions.signal.impl
 {
 	/// Base concrete form for a Signal with no parameters
 	public class Signal : BaseSignal

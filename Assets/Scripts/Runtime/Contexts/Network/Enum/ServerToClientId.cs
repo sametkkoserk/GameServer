@@ -22,11 +22,9 @@ namespace Runtime.Contexts.Network.Enum
     RemainingTime,
     
     GameStateChanged,
-    PlayerActionChanged,
-    SendPlayerActionReference,
     
     UpdateCity,
-    SendArmingCity,
+    ChangePlayerFeature,
     
     MiniGameRewards,
     OpenMainGamePanel,

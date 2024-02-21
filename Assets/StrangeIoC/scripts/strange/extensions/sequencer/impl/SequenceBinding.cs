@@ -21,12 +21,11 @@
  */
 
 using System;
-using strange.extensions.command.impl;
-using strange.extensions.sequencer.api;
-using strange.framework.api;
-using strange.framework.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.sequencer.api;
+using StrangeIoC.scripts.strange.framework.impl;
 
-namespace strange.extensions.sequencer.impl
+namespace StrangeIoC.scripts.strange.extensions.sequencer.impl
 {
 	public class SequenceBinding : CommandBinding, ISequenceBinding
 	{

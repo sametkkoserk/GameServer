@@ -37,10 +37,10 @@
  * @see strange.framework.impl.Binder;
  */
 
-using strange.framework.api;
 using System;
+using StrangeIoC.scripts.strange.framework.api;
 
-namespace strange.framework.impl
+namespace StrangeIoC.scripts.strange.framework.impl
 {
 	public class Binding : IBinding
 	{

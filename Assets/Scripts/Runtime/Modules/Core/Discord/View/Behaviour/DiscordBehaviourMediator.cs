@@ -1,7 +1,8 @@
 using System.Collections;
 using Runtime.Modules.Core.Discord.Enum;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.Networking;
 
