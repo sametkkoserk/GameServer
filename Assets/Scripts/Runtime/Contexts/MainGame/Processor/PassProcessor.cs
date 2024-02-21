@@ -2,7 +2,8 @@ using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.command.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
 
 namespace Runtime.Contexts.MainGame.Processor
 {

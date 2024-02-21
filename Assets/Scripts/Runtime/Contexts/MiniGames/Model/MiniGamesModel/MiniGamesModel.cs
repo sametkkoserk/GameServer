@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Runtime.Contexts.MiniGames.View.MiniGame;
 using Runtime.Contexts.MiniGames.Vo;
+using StrangeIoC.scripts.strange.extensions.injector;
 
 namespace Runtime.Contexts.MiniGames.Model.MiniGamesModel
 {

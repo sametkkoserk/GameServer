@@ -14,17 +14,11 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
       
       List<LobbyVo> managerLobbyVos { get; set; }
       
-      Dictionary<PlayerActionKey, PlayerActionPermissionReferenceVo> necessaryKeysForActions { get; }
-
       Dictionary<string, MainMapMediator> mainMapMediators { get; set; }
+      
       Dictionary<string, MainGameManagerMediator> mainGameManagerMediators { get; set; }
       
-      bool loaded { get; }
-
-      IPromise Init();
-
       Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo);
-
 
       void MiniGameEnded(string LobbyCode, List<ushort> leaderBoard);
     }

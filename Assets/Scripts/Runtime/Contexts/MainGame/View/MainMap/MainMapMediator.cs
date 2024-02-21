@@ -6,17 +6,14 @@ using Runtime.Contexts.MainGame.View.City;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.injector;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Runtime.Contexts.MainGame.View.MainMap
 {
-  public enum MainMapEvent
-  {
-    
-  }
   public class MainMapMediator : EventMediator
   {
     [Inject]
@@ -98,8 +95,6 @@ namespace Runtime.Contexts.MainGame.View.MainMap
         clients = view.lobbyVo.clients
       };
       
-      LoadingPlayerActions();
-
       dispatcher.Dispatch(MainGameEvent.SendMap, mapGeneratorVo);
     }
     
@@ -127,22 +122,29 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       };
     }
     
-    public void OnClaimCity(CityVo cityVo, bool changeTurn = true)
+    public void OnClaimCity(ClaimCityVo claimCityVo, bool changeTurn = true)
     {
-      if (cityVo.ownerID != 0)
-        return;
-
-      if (view.mainGameManagerMediator.view.gameManagerVo.queueList.ElementAt(view.mainGameManagerMediator.view.gameManagerVo.queue) != cityVo.clientId)
-        return;
-
-      cityVo.ownerID = cityVo.clientId;
-      cityVo.soldierCount = 1;
-
-      view.cities[cityVo.ID] = cityVo;
-
-      SendPacketToLobbyVo<CityVo> vo = networkManager.SetSendPacketToLobbyVo(cityVo, view.lobbyVo.clients);
+      CityVo vo = view.cities[claimCityVo.cityId];
       
-      dispatcher.Dispatch(MainGameEvent.UpdateCity, vo);
+      if (vo.ownerID != 0)
+        return;
+
+      ushort queueId = view.mainGameManagerMediator.view.gameManagerVo.queueList.ElementAt(view.mainGameManagerMediator.view.gameManagerVo.queue);
+      if (queueId != claimCityVo.clientId)
+        return;
+
+      if (claimCityVo.soldierCount > view.mainGameManagerMediator.view.gameManagerVo.playerFeaturesVos[claimCityVo.clientId].freeSoldierCount)
+        return;
+      
+      vo.ownerID = claimCityVo.clientId;
+      vo.soldierCount = claimCityVo.soldierCount + 1;
+      view.cities[vo.ID] = vo;
+
+      SendPacketToLobbyVo<CityVo> sendPacketToLobbyVo = networkManager.SetSendPacketToLobbyVo(vo, view.lobbyVo.clients);
+      dispatcher.Dispatch(MainGameEvent.UpdateCity, sendPacketToLobbyVo);
+      
+      view.mainGameManagerMediator.view.gameManagerVo.playerFeaturesVos[claimCityVo.clientId].freeSoldierCount -= claimCityVo.soldierCount;
+      dispatcher.Dispatch(MainGameEvent.ChangePlayerFeature, view.mainGameManagerMediator.view.gameManagerVo.playerFeaturesVos[claimCityVo.clientId]);
 
       if (changeTurn)
         view.mainGameManagerMediator.ChangeTurn();
@@ -150,14 +152,17 @@ namespace Runtime.Contexts.MainGame.View.MainMap
 
     public void AssignCityRandomly(ushort queueId)
     {
-      List<int> emptyCities = GetEmptyCities(); 
-
+      List<int> emptyCities = GetEmptyCities();
       int randomEmptyCityId = emptyCities[Random.Range(0, emptyCities.Count)];
 
-      CityVo cityVo = view.cities[randomEmptyCityId];
-      cityVo.clientId = queueId;
+      ClaimCityVo claimCityVo = new()
+      {
+        soldierCount = 0,
+        cityId = randomEmptyCityId,
+        clientId = queueId
+      };
       
-      OnClaimCity(cityVo, false);
+      OnClaimCity(claimCityVo, false);
     }
 
     public void OnArmingToCity(ArmingVo armingVo)
@@ -195,28 +200,6 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       return emptyCities;
     }
     
-    private void LoadingPlayerActions()
-    {
-      if (!mainGameModel.loaded)
-      {
-        mainGameModel.Init().Then(SetPlayerActionsReferenceList);
-        return;
-      }
-      
-      SetPlayerActionsReferenceList();
-    }
-
-    private void SetPlayerActionsReferenceList()
-    {
-      PlayerActionPermissionReferenceSendVo vo = new()
-      {
-        allPlayerActionsReferenceList = mainGameModel.necessaryKeysForActions,
-        clients = view.lobbyVo.clients
-      };
-
-      dispatcher.Dispatch(MainGameEvent.SetAllPermissionPlayersAction, vo);
-    }
-
     public override void OnRemove()
     {
     }

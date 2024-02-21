@@ -8,17 +8,15 @@ namespace Runtime.Contexts.MainGame.Enum
     NextTurn,
     SendRemainingTime,
     
-    SetAllPermissionPlayersAction,
     ChangeGameState,
-    ChangePlayerAction,
     
     UpdateCity,
-    ArmingCity,
+    ChangePlayerFeature,
     AttackResult,
     FortifyResult,
     
     MiniGameRewards,
 
-    SendCreateMiniGameScene
+    SendCreateMiniGameScene,
   }
 }

@@ -6,6 +6,9 @@ namespace Runtime.Contexts.MainGame.Vo
   [ProtoContract]
   public class GameManagerVo
   {
+    [ProtoIgnore]
+    public ushort clientId;
+    
     [ProtoMember(1)]
     public List<ushort> queueList = new();
     
@@ -18,28 +21,19 @@ namespace Runtime.Contexts.MainGame.Vo
     [ProtoMember(4)]
     public GameStateVo gameStateVo = new();
 
-    [ProtoMember(5)]
-    public PlayerActionVo playerActionVo = new();
-
     [ProtoMember(6)]
     public Dictionary<ushort, PlayerFeaturesVo> playerFeaturesVos = new();
 
     [ProtoIgnore]
-    public bool startTimer;
+    public bool claimCityEnded;
 
     [ProtoIgnore]
-    public bool armingFinished;
+    public bool nextTurn = true;
 
     [ProtoIgnore]
-    public bool attackFinished;
-    
-    [ProtoIgnore]
-    public bool fortifyFinished;
+    public bool startTimer = true;
 
     [ProtoIgnore]
     public Dictionary<int, int> uncompletedAttackCityVos = new();
-
-    [ProtoIgnore]
-    public ushort clientId;
   }
 }

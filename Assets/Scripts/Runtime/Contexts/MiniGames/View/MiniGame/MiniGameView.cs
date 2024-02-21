@@ -1,5 +1,5 @@
 using Runtime.Contexts.Lobby.Vo;
-using strange.extensions.mediation.impl;
+using StrangeIoC.scripts.strange.extensions.mediation.impl;
 
 namespace Runtime.Contexts.MiniGames.View.MiniGame
 {

@@ -8,7 +8,7 @@ using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.Network.Enum;
 using Runtime.Modules.Core.GeneralContext;
-using strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.context.api;
 using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Config
@@ -36,11 +36,9 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(MainGameEvent.NextTurn).To<NextTurnCommand>();
             commandBinder.Bind(MainGameEvent.SendRemainingTime).To<SendRemainingTimeCommand>();
             commandBinder.Bind(MainGameEvent.ChangeGameState).To<ChangeGameStateCommand>();
-            commandBinder.Bind(MainGameEvent.ChangePlayerAction).To<ChangePlayerActionCommand>();
-            commandBinder.Bind(MainGameEvent.SetAllPermissionPlayersAction).To<SetAllPlayersActionReferenceCommand>();
             commandBinder.Bind(MainGameEvent.UpdateCity).To<UpdateCityCommand>();
             commandBinder.Bind(MainGameEvent.MiniGameRewards).To<MiniGameRewardsCommand>();
-            commandBinder.Bind(MainGameEvent.ArmingCity).To<SendArmingToCityInfoCommand>();
+            commandBinder.Bind(MainGameEvent.ChangePlayerFeature).To<ChangePlayerFeatureCommand>();
             commandBinder.Bind(MainGameEvent.AttackResult).To<AttackResultCommand>();
             commandBinder.Bind(MainGameEvent.FortifyResult).To<FortifyResultCommand>();
             commandBinder.Bind(MainGameEvent.SendCreateMiniGameScene).To<SendCreateMiniGameSceneCommand>();
