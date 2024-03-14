@@ -23,5 +23,6 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         void OnQuit(string lobbyCode, ushort id);
         
         Color ColorGenerator();
+        void OnAddBot(ushort fromId, string lobbyCode);
     }
 }

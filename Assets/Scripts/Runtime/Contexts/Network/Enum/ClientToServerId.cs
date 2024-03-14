@@ -12,6 +12,7 @@ namespace Runtime.Contexts.Network.Enum
     JoinLobby,
     QuitFromLobby,
     
+    AddBot,
     PlayerReady,
     GameSettingsChanged,
     GameStart,

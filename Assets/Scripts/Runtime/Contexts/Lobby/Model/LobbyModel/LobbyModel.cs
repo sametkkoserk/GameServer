@@ -10,6 +10,7 @@ using StrangeIoC.scripts.strange.extensions.context.api;
 using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
 using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Runtime.Contexts.Lobby.Model.LobbyModel
 {
@@ -66,8 +67,7 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
             createdLobbyVo.lobbyCode = GenerateLobbyCode(2);
             lobbies.Add(createdLobbyVo.lobbyCode, vo);
             lobbyCount += 1;
-            
-            
+
             DebugX.Log(DebugKey.Server, "New lobby is created. Lobby Code: " + createdLobbyVo.lobbyCode);
         }
         
@@ -154,6 +154,14 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
 
             Color color = new(r, g, b);
             return color;
+        }
+
+        public void OnAddBot(ushort fromId, string lobbyCode)
+        {
+            if (lobbies[lobbyCode].hostId==fromId)
+            {
+                UnityWebRequest.Get("http://localhost:8080/" + lobbyCode).SendWebRequest();
+            }
         }
     }
 }
