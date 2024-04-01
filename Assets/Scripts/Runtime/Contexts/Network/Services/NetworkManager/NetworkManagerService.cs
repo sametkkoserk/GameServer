@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Editor.Tools.DebugX.Runtime;
 using ProtoBuf;
 using Riptide;
 using Riptide.Utils;
@@ -73,6 +74,7 @@ namespace Runtime.Contexts.Network.Services.NetworkManager
         fromId = messageArgs.FromConnection.Id,
         message = messageArgs.Message.GetBytes()
       };
+      DebugX.Log(DebugKey.Processor,((ClientToServerId)messageArgs.MessageId)+" MessageReceived");
       crossDispatcher.Dispatch((ClientToServerId)messageArgs.MessageId, vo);
     }
 

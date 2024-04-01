@@ -15,6 +15,7 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
         {
             carControllers[clientId]
                 .SetValues(vo.verticalAxis, vo.horizontalAxis, false);
+            anythingChanged = true;
         }
         public override void CreatePlayers()
         {
@@ -30,6 +31,8 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
                         carControllers[lobbyVo.clients.ElementAt(index).Value.id] = obj.GetComponent<CarController>();
                         carControllers[lobbyVo.clients.ElementAt(index).Value.id].clientId =
                             lobbyVo.clients.ElementAt(index).Value.id;
+                        anythingChanged = true;
+
                     }
                 } ;
             }

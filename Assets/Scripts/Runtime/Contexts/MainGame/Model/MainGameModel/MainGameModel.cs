@@ -62,7 +62,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
         public void MiniGameEnded(string lobbyCode, List<ushort> leaderBoard)
         {
-            // mainGameManagerMediators[lobbyCode].OnMiniGameEnded(leaderBoard);
+            mainGameManagerMediators[lobbyCode].OnMiniGameEnded(leaderBoard);
         }
     }
 }
