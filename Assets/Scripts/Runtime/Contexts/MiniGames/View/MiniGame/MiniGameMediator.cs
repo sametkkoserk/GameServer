@@ -63,5 +63,14 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
       miniGamesModel.MiniGameEnded(view.lobbyVo.lobbyCode);
       Destroy(gameObject);
     }
+
+    public void SendMap(MiniGameMapGenerationVo vo)
+    {
+      dispatcher.Dispatch(MiniGamesEvent.SendMap,new SendPacketToLobbyVo<MiniGameMapGenerationVo>()
+      {
+        mainClass = vo,
+        clients = view.lobbyVo.clients
+      });
+    }
   }
 }

@@ -43,7 +43,7 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(MainGameEvent.FortifyResult).To<FortifyResultCommand>();
             commandBinder.Bind(MainGameEvent.SendCreateMiniGameScene).To<SendCreateMiniGameSceneCommand>();
             
-            commandBinder.Bind(ClientToServerId.SceneReady).To<SceneReadyProccessor>();
+            commandBinder.Bind(ClientToServerId.SceneReady).To<SceneReadyProcessor>();
             commandBinder.Bind(ClientToServerId.GameStart).To<GameStartProcessor>();
             commandBinder.Bind(ClientToServerId.ClaimCity).To<ClaimCityProcessor>();
             commandBinder.Bind(ClientToServerId.ArmingToCity).To<ArmingToCityProcessor>();

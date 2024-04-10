@@ -17,6 +17,9 @@ namespace Runtime.Contexts.MiniGames.MiniGames
     public MiniGameKeyScriptable keys;
     public LobbyVo lobbyVo;
     public Transform playerContainer;
+    public MapGenerator mapGenerator;
+    public GameStartController gameStartController;
+
 
     public List<ushort> leaderBoard = new List<ushort>();
 
@@ -37,6 +40,14 @@ namespace Runtime.Contexts.MiniGames.MiniGames
 
     public virtual void Start()
     {
+      if (mapGenerator)
+      {
+        MiniGameMapGenerationVo vo = mapGenerator.SetMap();
+        miniGameMediator.SendMap(vo);
+        gameStartController=GetComponentInChildren<GameStartController>();
+
+      }
+
       CreatePlayers();
     }
 
@@ -126,6 +137,7 @@ namespace Runtime.Contexts.MiniGames.MiniGames
         {
           if (handle.Status != AsyncOperationStatus.Succeeded) return;
           GameObject obj = handle.Result;
+          obj.transform.position=gameStartController.GetNextPoint();
           players[lobbyVo.clients.ElementAt(index).Value.id] = obj;
           anythingChanged = true;
         };

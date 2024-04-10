@@ -219,17 +219,17 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private void OnStartMiniGame()
     {
-       view.gameManagerVo.startTimer = false;
-       SetRandomQueue();
-       OnMiniGameEnded(view.gameManagerVo.queueList);
+       // view.gameManagerVo.startTimer = false;
+       // SetRandomQueue();
+       // OnMiniGameEnded(view.gameManagerVo.queueList);
 
-      // SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
-      // {
-      //   clients = view.lobbyVo.clients,
-      //   mainClass = view.lobbyVo
-      // };
-      // dispatcher.Dispatch(MainGameEvent.SendCreateMiniGameScene,vo);
-      // crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
+      SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
+      {
+        clients = view.lobbyVo.clients,
+        mainClass = view.lobbyVo
+      };
+      dispatcher.Dispatch(MainGameEvent.SendCreateMiniGameScene,vo);
+      crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
     }
 
     public async void OnMiniGameEnded(List<ushort> tourQueue)

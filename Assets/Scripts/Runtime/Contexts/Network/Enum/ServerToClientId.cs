@@ -34,6 +34,7 @@ namespace Runtime.Contexts.Network.Enum
     CreateMiniGameScene,
     MiniGameCreated,
     SendMiniGameState,
-    MiniGaneEnded
+    MiniGaneEnded,
+    SendMiniGameMap
   }
 }
