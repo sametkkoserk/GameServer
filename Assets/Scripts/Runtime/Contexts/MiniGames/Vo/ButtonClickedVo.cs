@@ -8,15 +8,17 @@ namespace Runtime.Contexts.MiniGames.Vo
     public class ClickedButtonsVo
     {
         [ProtoMember(1)]
-        public List<string> buttons;
-        
+        public List<string> clickedButtons;
         [ProtoMember(2)]
-        public float verticalAxis;
+        public List<string> releasedButtons;
+        
         [ProtoMember(3)]
+        public float verticalAxis;
+        [ProtoMember(4)]
         public float horizontalAxis;
         
         
-        [ProtoMember(4)]
+        [ProtoMember(5)]
         public string lobbyCode;
     }
 }

@@ -64,8 +64,8 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       {
         int value = i;
         
-        AsyncOperationHandle<GameObject> mainGameManager = Addressables.InstantiateAsync(MainGameKeys.City, gameObject.transform);
-        mainGameManager.Completed += handle =>
+        AsyncOperationHandle<GameObject> asyncOperation = Addressables.InstantiateAsync(MainGameKeys.City, gameObject.transform);
+        asyncOperation.Completed += handle =>
         {
           if (handle.Status != AsyncOperationStatus.Succeeded) return;
           GameObject loadedObject = handle.Result;
@@ -76,6 +76,7 @@ namespace Runtime.Contexts.MainGame.View.MainMap
           
           CityView cityView = loadedObject.GetComponent<CityView>();
           cityView.Init(city.Key, view.lobbyVo.lobbyCode);
+          Debug.Log(view.lobbyVo.lobbyCode);
         };
       }
     }

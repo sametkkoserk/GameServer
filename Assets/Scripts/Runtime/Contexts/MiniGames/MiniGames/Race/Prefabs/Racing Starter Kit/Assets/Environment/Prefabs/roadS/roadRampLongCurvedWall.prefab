@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 220432759271428460}
   - component: {fileID: 5604300676958034013}
   - component: {fileID: 2483406890535719099}
+  - component: {fileID: 1992053094868498415}
   m_Layer: 0
   m_Name: roadRampLongCurvedWall (1)
   m_TagString: Untagged
@@ -276,6 +277,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1992053094868498415
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2394409121506878363}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 7bf6dc5952f236c4f9bb0ef439173bcd, type: 3}
 --- !u!1 &8047196498599268605
 GameObject:
   m_ObjectHideFlags: 0
