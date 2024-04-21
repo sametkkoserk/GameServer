@@ -6,6 +6,8 @@ namespace Runtime.Contexts.MiniGames.Enum
         MiniGameCreated,
         SendState,
         OnMiniGameEnded,
-        SendMap
+        SendMap,
+        SendCreateMiniGameScene,
+        OnSceneReady
     }
 }

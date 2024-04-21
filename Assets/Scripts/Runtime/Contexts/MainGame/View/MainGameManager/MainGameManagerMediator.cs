@@ -223,12 +223,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
        // SetRandomQueue();
        // OnMiniGameEnded(view.gameManagerVo.queueList);
 
-      SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
-      {
-        clients = view.lobbyVo.clients,
-        mainClass = view.lobbyVo
-      };
-      dispatcher.Dispatch(MainGameEvent.SendCreateMiniGameScene,vo);
+
       crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
     }
 

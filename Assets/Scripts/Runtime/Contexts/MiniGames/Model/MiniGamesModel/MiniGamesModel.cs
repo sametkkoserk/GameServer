@@ -39,5 +39,10 @@ namespace Runtime.Contexts.MiniGames.Model.MiniGamesModel
         {
             miniGameMediators.Remove(lobbyCode);
         }
+
+        public void OnMiniGameSceneReady(string lobbyCode, ushort clientId)
+        {
+            miniGameMediators[lobbyCode].OnSceneReady(clientId);
+        }
     }
 }

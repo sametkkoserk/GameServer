@@ -133,8 +133,10 @@ namespace Runtime.Contexts.MiniGames.MiniGames
       for (int i = 0; i < lobbyVo.clients.Count; i++)
       {
         int index = i;
+
         Addressables.InstantiateAsync(keys.player, playerContainer).Completed += handle =>
         {
+
           if (handle.Status != AsyncOperationStatus.Succeeded) return;
           GameObject obj = handle.Result;
           obj.transform.position=gameStartController.GetNextPoint();

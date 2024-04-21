@@ -6,9 +6,8 @@ using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
 using StrangeIoC.scripts.strange.extensions.command.impl;
 using StrangeIoC.scripts.strange.extensions.injector;
-using UnityEngine;
 
-namespace Runtime.Contexts.MainGame.Command
+namespace Runtime.Contexts.MiniGames.Command
 {
     public class SendCreateMiniGameSceneCommand : EventCommand
     {

@@ -17,6 +17,5 @@ namespace Runtime.Contexts.MainGame.Enum
     
     MiniGameRewards,
 
-    SendCreateMiniGameScene,
   }
 }

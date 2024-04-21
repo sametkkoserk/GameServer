@@ -10,7 +10,8 @@ public class GameStartController : MonoBehaviour
     
     public Vector3 GetNextPoint()
     {
-        return playerSpawnPoints[counter].position;
+        Vector3 nextPoint=playerSpawnPoints[counter].position;
         counter++;
+        return nextPoint;
     }
 }

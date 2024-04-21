@@ -26,7 +26,7 @@ namespace Runtime.Contexts.MainGame.Processor
       gameStartVo.clientId = id;
 
       DebugX.Log(DebugKey.MainGame, $"Game start processor");
-      mainGameModel.mainMapMediators[gameStartVo.lobbyCode].OnGameStartCheck( gameStartVo);
+      mainGameModel.mainMapMediators[gameStartVo.lobbyCode].OnGameStartCheck(gameStartVo);
     }
   }
 }

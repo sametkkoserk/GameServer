@@ -12,5 +12,6 @@ namespace Runtime.Contexts.MiniGames.Model.MiniGamesModel
         string GetRandomMiniGame();
         void OnButtonClicked( ushort clientId, ClickedButtonsVo vo);
         void MiniGameEnded(string lobbyCode);
+        void OnMiniGameSceneReady(string voLobbyCode, ushort clientId);
     }
 }

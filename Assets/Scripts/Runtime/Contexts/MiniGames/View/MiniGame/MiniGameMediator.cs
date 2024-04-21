@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MiniGames.Enum;
@@ -26,9 +27,35 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
 
     public MiniGameController miniGameController;
 
+
+
     private void Start()
     {
       miniGamesModel.miniGameMediators[view.lobbyVo.lobbyCode] = this;
+      SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
+      {
+        clients = view.lobbyVo.clients,
+        mainClass = view.lobbyVo
+      };
+      dispatcher.Dispatch(MiniGamesEvent.SendCreateMiniGameScene,vo);
+      for (int i = 0; i < view.lobbyVo.clients.Count; i++)
+      {
+        view.lobbyVo.clients.ElementAt(i).Value.ready = false;
+      }
+
+      view.lobbyVo.readyCount = 0;
+    }
+
+    public void OnSceneReady(ushort clientId)
+    {
+      if (!view.lobbyVo.clients[clientId].ready)
+      {
+        view.lobbyVo.clients[clientId].ready = true;
+        view.lobbyVo.readyCount++;
+      }
+
+      if (view.lobbyVo.readyCount!=view.lobbyVo.clients.Count)return;
+
       SendPacketToLobbyVo<MiniGameCreatedVo> sendPacketToLobbyVo = new()
       {
         mainClass = new MiniGameCreatedVo() { miniGameKey = view.miniGameKey },
@@ -72,5 +99,7 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
         clients = view.lobbyVo.clients
       });
     }
+
+
   }
 }
