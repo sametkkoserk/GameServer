@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Runtime.Contexts.MainGame.Enum;
@@ -11,6 +12,7 @@ using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Contexts.MainGame.View.MainMap
 {
@@ -24,10 +26,6 @@ namespace Runtime.Contexts.MainGame.View.MainMap
 
     [Inject]
     public INetworkManagerService networkManager { get; set; }
-
-    public override void OnRegister()
-    {
-    }
 
     public void Start()
     {
@@ -63,14 +61,14 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       for (int i = 0; i < view.cities.Count; i++)
       {
         int value = i;
-        
-        AsyncOperationHandle<GameObject> asyncOperation = Addressables.InstantiateAsync(MainGameKeys.City, gameObject.transform);
+        KeyValuePair<int, CityVo> city = view.cities.ElementAt(value);
+
+        AsyncOperationHandle<GameObject> asyncOperation = Addressables.InstantiateAsync(MainGameKeys.City,new Vector3(25*value,3000,0),Quaternion.identity, gameObject.transform);
         asyncOperation.Completed += handle =>
         {
           if (handle.Status != AsyncOperationStatus.Succeeded) return;
           GameObject loadedObject = handle.Result;
 
-          KeyValuePair<int, CityVo> city = view.cities.ElementAt(value);
           loadedObject.name = city.Key.ToString();
           loadedObject.transform.localPosition = city.Value.position.ToVector3();
           
@@ -209,12 +207,7 @@ namespace Runtime.Contexts.MainGame.View.MainMap
         if (city.ownerID == 0 && city.isPlayable)
           emptyCities.Add(city.ID);
       }
-      
       return emptyCities;
-    }
-    
-    public override void OnRemove()
-    {
     }
   }
 }

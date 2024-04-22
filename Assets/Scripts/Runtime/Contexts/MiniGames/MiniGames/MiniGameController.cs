@@ -38,16 +38,14 @@ namespace Runtime.Contexts.MiniGames.MiniGames
     private int currentId=0;
     protected bool anythingChanged;
 
-    public virtual void Start()
+    public virtual void Init()
     {
       if (mapGenerator)
       {
         MiniGameMapGenerationVo vo = mapGenerator.SetMap();
         miniGameMediator.SendMap(vo);
         gameStartController=GetComponentInChildren<GameStartController>();
-
       }
-
       CreatePlayers();
     }
 
@@ -136,7 +134,6 @@ namespace Runtime.Contexts.MiniGames.MiniGames
 
         Addressables.InstantiateAsync(keys.player, playerContainer).Completed += handle =>
         {
-
           if (handle.Status != AsyncOperationStatus.Succeeded) return;
           GameObject obj = handle.Result;
           obj.transform.position=gameStartController.GetNextPoint();

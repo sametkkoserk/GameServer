@@ -30,19 +30,17 @@ namespace Runtime.Contexts.MainGame.View.MainGameContainer
         transform =
         {
           parent = gameObject.transform,
-          localPosition = new Vector3(mainGameModel.mainGameManagerMediators.Count * 20, 0, 0)
+          localPosition = new Vector3(mainGameModel.mainGameManagerMediators.Count * 100, 1000, 0)
         }
       };
-
-      AsyncOperationHandle<GameObject> mainMapObject = Addressables.InstantiateAsync(MainGameKeys.MainMap, lobbyObject.transform);
-
-      mainMapObject.Completed += handle =>
+      Addressables.InstantiateAsync(MainGameKeys.MainMap, lobbyObject.transform).Completed += handle =>
       {
-        if (handle.Status != AsyncOperationStatus.Succeeded) return;
-        GameObject loadedObject = handle.Result;
-
-        loadedObject.name = "Main Map";
-        loadedObject.transform.localPosition = new Vector3(0, 0, 0);
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+          GameObject obj = handle.Result;
+          obj.name = "Main Map";
+          obj.transform.localPosition = new Vector3(0, 0, 0);
+        }
       };
     }
 

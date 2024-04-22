@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
@@ -5,6 +6,7 @@ using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.View.MainMap;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Modules.Core.PromiseTool;
+using UnityEngine;
 
 namespace Runtime.Contexts.MainGame.Model.MainGameModel
 {
