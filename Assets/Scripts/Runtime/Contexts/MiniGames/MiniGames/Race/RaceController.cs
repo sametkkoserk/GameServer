@@ -31,6 +31,7 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
                         GameObject obj = handle.Result;
                         players[lobbyVo.clients.ElementAt(index).Value.id] = obj;
                         carControllers[lobbyVo.clients.ElementAt(index).Value.id] = obj.GetComponent<CarController>();
+                        obj.transform.position=gameStartController.GetNextPoint();
                         carControllers[lobbyVo.clients.ElementAt(index).Value.id].clientId =
                             lobbyVo.clients.ElementAt(index).Value.id;
                         anythingChanged = true;

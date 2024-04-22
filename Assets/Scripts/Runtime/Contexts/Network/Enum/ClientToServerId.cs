@@ -23,6 +23,7 @@ namespace Runtime.Contexts.Network.Enum
     ArmingToCity,
     Attack,
     Fortify,
-    ButtonClicked
+    ButtonClicked,
+    MiniGameSceneReady
   }
 }

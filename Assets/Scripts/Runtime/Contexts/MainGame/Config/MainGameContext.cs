@@ -41,7 +41,6 @@ namespace Runtime.Contexts.MainGame.Config
             commandBinder.Bind(MainGameEvent.ChangePlayerFeature).To<ChangePlayerFeatureCommand>();
             commandBinder.Bind(MainGameEvent.AttackResult).To<AttackResultCommand>();
             commandBinder.Bind(MainGameEvent.FortifyResult).To<FortifyResultCommand>();
-            commandBinder.Bind(MainGameEvent.SendCreateMiniGameScene).To<SendCreateMiniGameSceneCommand>();
             
             commandBinder.Bind(ClientToServerId.SceneReady).To<SceneReadyProcessor>();
             commandBinder.Bind(ClientToServerId.GameStart).To<GameStartProcessor>();
