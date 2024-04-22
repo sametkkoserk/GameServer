@@ -18,7 +18,9 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
         public Dictionary<string, MainMapMediator> mainMapMediators { get; set; }
         
         public Dictionary<string, MainGameManagerMediator> mainGameManagerMediators { get; set; }
+
         
+        public int ClaimCitySoldierCount { get; set; } = 5;
         
         [PostConstruct]
         public void OnPostConstruct()

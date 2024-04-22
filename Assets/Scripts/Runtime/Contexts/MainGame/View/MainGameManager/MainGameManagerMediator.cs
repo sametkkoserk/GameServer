@@ -49,12 +49,16 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       view.mainMapMediator.SetMainGameManager();
 
       for (int i = 0; i < view.lobbyVo.clients.Count; i++)
+      {
         view.gameManagerVo.playerFeaturesVos.Add(view.lobbyVo.clients.ElementAt(i).Key,
           new PlayerFeaturesVo
           {
-            freeSoldierCount = 5,
+            freeSoldierCount = mainGameModel.ClaimCitySoldierCount,
             clientId = view.lobbyVo.clients.ElementAt(i).Key
           });
+      }
+
+      view.gameManagerVo.claimCitySoldierCount = mainGameModel.ClaimCitySoldierCount;
 
       OnStartMiniGame();
     }
@@ -219,17 +223,17 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private void OnStartMiniGame()
     {
-       // view.gameManagerVo.startTimer = false;
-       // SetRandomQueue();
-       // OnMiniGameEnded(view.gameManagerVo.queueList);
+       view.gameManagerVo.startTimer = false;
+       SetRandomQueue();
+       OnMiniGameEnded(view.gameManagerVo.queueList);
 
-      SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
-      {
-        clients = view.lobbyVo.clients,
-        mainClass = view.lobbyVo
-      };
-      dispatcher.Dispatch(MainGameEvent.SendCreateMiniGameScene,vo);
-      crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
+      // SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
+      // {
+      //   clients = view.lobbyVo.clients,
+      //   mainClass = view.lobbyVo
+      // };
+      // dispatcher.Dispatch(MainGameEvent.SendCreateMiniGameScene,vo);
+      // crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
     }
 
     public async void OnMiniGameEnded(List<ushort> tourQueue)
@@ -303,7 +307,16 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private void ClaimCitySystem()
     {
-      if (view.mainMapMediator.GetEmptyCities().Count != 0) return;
+      if (view.gameManagerVo.playerFeaturesVos[GetLastPlayer()].clientId == GetCurrentPlayer())
+      {
+        view.gameManagerVo.claimCitySoldierCount--;
+        
+        if (view.gameManagerVo.claimCitySoldierCount > 0) return;
+      }
+      else
+      {
+        return;
+      }
 
       view.gameManagerVo.claimCityEnded = true;
       ChangeGameState(GameStateKey.MiniGame);
@@ -452,11 +465,72 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     
     #endregion
 
+    public int GetCurrentPlayer()
+    {
+      return view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
+    }
     public bool CheckLastPlayer()
     {
       ushort queueId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
 
       return queueId == view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queueList.Count - 1);
+    }
+
+    public ushort GetLastPlayer()
+    {
+      return view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queueList.Count - 1);
+    }
+
+    public bool IsClientTurn(ushort clientId)
+    {
+      ushort queueId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
+      return queueId == clientId;
+    }
+
+    public bool IsCityNeutral(int cityId)
+    {
+      ushort ownerId = view.mainMapMediator.view.cities[cityId].ownerID;
+      return ownerId == 0;
+    }
+
+    public bool IsCityOwnerTheClient(int cityId, ushort clientId)
+    {
+      ushort ownerId = view.mainMapMediator.view.cities[cityId].ownerID;
+      return ownerId == clientId;
+    }
+
+    public bool IsEnoughFreeSoldier(int wantedSoldierCount, ushort clientId)
+    {
+      return view.gameManagerVo.playerFeaturesVos[clientId].freeSoldierCount >= wantedSoldierCount;
+    }
+
+    public void ChangeCityOwner(int cityId, ushort clientId)
+    {
+      view.mainMapMediator.view.cities[cityId].ownerID = clientId;
+      
+      view.gameManagerVo.playerFeaturesVos[clientId].cities.Add(cityId);
+    }
+
+    public void SetCitySoldierCount(int cityId, int soldierCount)
+    {
+      view.mainMapMediator.view.cities[cityId].soldierCount = soldierCount;
+    }
+
+    public void IncreaseCitySoldierCount(int cityId, int increaseCount, ushort clientId)
+    {
+      view.mainMapMediator.view.cities[cityId].soldierCount += increaseCount;
+      
+      DecreaseFreeSoldierCount(clientId, increaseCount);
+    }
+
+    public void DecreaseFreeSoldierCount(ushort clientId, int soldierCount)
+    {
+      view.gameManagerVo.playerFeaturesVos[clientId].freeSoldierCount -= soldierCount;
+    }
+
+    public List<int> GetPlayerCities(ushort clientId)
+    {
+      return view.gameManagerVo.playerFeaturesVos[clientId].cities;
     }
 
     private void ChangeGameState(GameStateKey gameStateKey)

@@ -19,6 +19,8 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
       Dictionary<string, MainGameManagerMediator> mainGameManagerMediators { get; set; }
       
       Dictionary<int, CityVo> RandomMapGenerator(LobbyVo vo);
+      
+      public int ClaimCitySoldierCount { get; set; }
 
       void MiniGameEnded(string LobbyCode, List<ushort> leaderBoard);
     }

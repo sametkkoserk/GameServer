@@ -28,6 +28,9 @@ namespace Runtime.Contexts.MainGame.Vo
     public bool claimCityEnded;
 
     [ProtoIgnore]
+    public int claimCitySoldierCount;
+
+    [ProtoIgnore]
     public bool nextTurn = true;
 
     [ProtoIgnore]
