@@ -27,6 +27,8 @@ namespace Runtime.Contexts.MainGame.View.City
     public void OnTriggerEnter(Collider other)
     {
       CityView cityView = other.gameObject.GetComponent<CityView>();
+      Debug.Log(gameObject.name+view.GetLobbyCode()+view.GetId()+gameObject.transform.position);
+      Debug.Log(other.name+cityView.GetLobbyCode()+cityView.GetId()+other.transform.position);
 
       mainGameModel.mainMapMediators[view.GetLobbyCode()].SendMap(view.GetId(), cityView.GetId());
     }

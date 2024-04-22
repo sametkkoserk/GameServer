@@ -30,16 +30,12 @@ namespace Runtime.Contexts.MiniGames.View.MiniGameContainer
         {
             LobbyVo lobbyVo = (LobbyVo)payload.data;
             string newGame = miniGamesModel.GetRandomMiniGame();
-            Addressables.InstantiateAsync("MiniGame" , transform).Completed += handle =>
+            miniGamesModel.CreateNewGame("MiniGame",transform, obj =>
             {
-                if (handle.Status==AsyncOperationStatus.Succeeded)
-                {
-                    MiniGameView miniGameView=handle.Result.GetComponent<MiniGameView>();
-                    miniGameView.lobbyVo = lobbyVo;
-                    miniGameView.miniGameKey = newGame;
-                }
-            };
-
+                MiniGameView miniGameView=obj.GetComponent<MiniGameView>();
+                miniGameView.lobbyVo = lobbyVo;
+                miniGameView.miniGameKey = newGame;
+            } );
 
         }
 

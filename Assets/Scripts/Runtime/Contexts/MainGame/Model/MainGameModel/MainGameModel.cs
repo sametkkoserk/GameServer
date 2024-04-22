@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.View.MainGameManager;
@@ -6,6 +7,9 @@ using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Vo;
 using StrangeIoC.scripts.strange.extensions.injector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Contexts.MainGame.Model.MainGameModel
 {
@@ -19,7 +23,6 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
         
         public Dictionary<string, MainGameManagerMediator> mainGameManagerMediators { get; set; }
 
-        
         public int ClaimCitySoldierCount { get; set; } = 5;
         
         [PostConstruct]
@@ -66,5 +69,6 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
         {
             mainGameManagerMediators[lobbyCode].OnMiniGameEnded(leaderBoard);
         }
+        
     }
 }

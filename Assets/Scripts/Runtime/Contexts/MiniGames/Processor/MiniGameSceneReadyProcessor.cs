@@ -20,7 +20,6 @@ namespace Runtime.Contexts.MiniGames.Processor
 
             MiniGameSceneReadyVo vo = networkManager.GetData<MiniGameSceneReadyVo>(messageReceivedVo.message);
             miniGamesModel.OnMiniGameSceneReady(vo.lobbyCode,clientId);
-            DebugX.Log(DebugKey.Processor, $"Received: MiniGameSceneProcessor");
         }
 
     }

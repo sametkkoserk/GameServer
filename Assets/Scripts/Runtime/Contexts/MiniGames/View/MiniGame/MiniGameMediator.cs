@@ -9,6 +9,7 @@ using Runtime.Contexts.MiniGames.Vo;
 using Runtime.Contexts.Network.Vo;
 using StrangeIoC.scripts.strange.extensions.injector;
 using StrangeIoC.scripts.strange.extensions.mediation.impl;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -66,9 +67,11 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
       Addressables.InstantiateAsync(view.miniGameKey, transform).Completed += handle =>
       {
         if (handle.Status != AsyncOperationStatus.Succeeded) return;
+        handle.Result.transform.localPosition = Vector3.zero;
         miniGameController = handle.Result.GetComponent<MiniGameController>();
         miniGameController.miniGameMediator = this;
         miniGameController.lobbyVo = view.lobbyVo;
+        miniGameController.Init();
       };
     }
 

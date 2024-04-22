@@ -78,10 +78,10 @@ public class RaceMapGenerator : MapGenerator
     {
         int roadIndex = Random.Range(0, roads[direction].Count);
         GameObject selectedRoad = roads[direction][roadIndex];
-        GameObject newRoad = Instantiate(selectedRoad,new Vector3(0,500,0) ,Quaternion.Euler(0,90*currentDirection,0),transform);
+        GameObject newRoad = Instantiate(selectedRoad,new Vector3(0,2000,0) ,Quaternion.Euler(0,90*currentDirection,0),transform);
         RaceRoadItem roadItem = newRoad.GetComponent<RaceRoadItem>();
         Vector3 diff = roadItem.startPos.position - lastEnd;
-        newRoad.GetComponent<Transform>().position -= diff;
+        newRoad.GetComponent<Transform>().localPosition -= diff;
         roadItems.Add(roadItem);
         lastEnd = roadItem.endPos.position;
         currentDirection += roadItem.direction;
