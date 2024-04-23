@@ -15,6 +15,7 @@ namespace Runtime.Contexts.MiniGames.Model.MiniGamesModel
         void OnButtonClicked( ushort clientId, ClickedButtonsVo vo);
         void MiniGameEnded(string lobbyCode);
         void OnMiniGameSceneReady(string voLobbyCode, ushort clientId);
+        void OnMiniGameCreated(string lobbyCode, ushort clientId);
         void CreateNewGame(string key, Transform parent = null, Action<GameObject> action = null);
 
     }

@@ -39,10 +39,7 @@ namespace Runtime.Contexts.Lobby.Command
       if (playerReadyVo.startGame)
       {
         LobbyVo lobbyVo = lobbyModel.lobbies[playerReadyVo.lobbyCode];
-        for (int i = 0; i < lobbyVo.playerCount; i++)
-        {
-          lobbyVo.clients.ElementAt(i).Value.ready = false;
-        }
+
         lobbyVo.readyCount = 0;
         
         mainGameModel.mapLobbyVos.Add(lobbyVo);

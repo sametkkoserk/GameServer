@@ -92,11 +92,11 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         {
             LobbyVo lobbyVo = lobbies[lobbyCode];
             
-            if (lobbyVo.clients[id].ready)
+            if (lobbyVo.clients[id].state==(ushort)ClientState.LobbyReady)
                 return;
       
-            lobbyVo.clients[id].ready = true;
-            lobbyVo.readyCount += 1;
+            lobbyVo.clients[id].state=(ushort)ClientState.LobbyReady;
+            lobbyVo.readyCount ++;
             
             PlayerReadyVo playerReadyVo = new();
             playerReadyVo.startGame = lobbyVo.readyCount == lobbyVo.playerCount;
@@ -113,9 +113,9 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         public void OnQuit(string lobbyCode, ushort id)
         {
             LobbyVo lobbyVo = lobbies[lobbyCode];
-            if (lobbyVo.clients[id].ready)
+            if (lobbyVo.clients[id].state==(ushort)ClientState.LobbyReady)
             {
-                lobbyVo.readyCount -= 1;
+                lobbyVo.readyCount --;
             }
 
             QuitFromLobbyVo quitFromLobbyVo = new();

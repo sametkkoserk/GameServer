@@ -1,4 +1,5 @@
 using Editor.Tools.DebugX.Runtime;
+using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
@@ -19,14 +20,12 @@ namespace Runtime.Contexts.MainGame.Processor
     public override void Execute()
     {
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
-      ushort id = messageReceivedVo.fromId;
+      ushort clientId = messageReceivedVo.fromId;
       
-      SceneReadyVo vo = networkManager.GetData<SceneReadyVo>(messageReceivedVo.message);
-
-      vo.id = id;
+      ReadyVo vo = networkManager.GetData<ReadyVo>(messageReceivedVo.message);
       
       DebugX.Log(DebugKey.MainGame, $"Scene Ready processor");
-      mainGameModel.mainMapMediators[vo.lobbyCode].OnPlayerSceneReady(vo);
+      mainGameModel.mainMapMediators[vo.lobbyCode].OnPlayerSceneReady(vo.lobbyCode,clientId);
     }
   }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.View.City;
@@ -39,23 +40,17 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       view.mainGameManagerMediator = mainGameModel.mainGameManagerMediators[view.lobbyVo.lobbyCode];
     }
     
-    public void OnPlayerSceneReady(SceneReadyVo vo)
+    public void OnPlayerSceneReady(string lobbycode,ushort clientId)
     {
-      if (view.lobbyVo.clients[vo.id].ready)
+      if (view.lobbyVo.clients[clientId].state==(ushort)ClientState.MainGameSceneReady)
         return;
 
       view.lobbyVo.readyCount++;
-      view.lobbyVo.clients[vo.id].ready = true;
+      view.lobbyVo.clients[clientId].state = (ushort)ClientState.MainGameSceneReady;
       
       if (view.lobbyVo.readyCount < view.lobbyVo.playerCount)
         return;
-      
-      for (int i = 0; i < view.lobbyVo.clients.Count; i++)
-      {
-        view.lobbyVo.clients.ElementAt(i).Value.ready = false;
-      }
       view.lobbyVo.readyCount = 0;
-      
       view.cities = mainGameModel.RandomMapGenerator(view.lobbyVo);
 
       for (int i = 0; i < view.cities.Count; i++)
@@ -97,13 +92,13 @@ namespace Runtime.Contexts.MainGame.View.MainMap
       dispatcher.Dispatch(MainGameEvent.SendMap, mapGeneratorVo);
     }
     
-    public void OnGameStartCheck(GameStartVo vo)
+    public void OnGameStartCheck(string lobbyCode,ushort clientId)
     {
-      if (view.lobbyVo.clients[vo.clientId].ready)
+      if (view.lobbyVo.clients[clientId].state==(ushort)ClientState.MainGameStart)
         return;
 
       view.lobbyVo.readyCount++;
-      view.lobbyVo.clients[vo.clientId].ready = true;
+      view.lobbyVo.clients[clientId].state = (ushort)ClientState.MainGameStart;
       
       if (view.lobbyVo.readyCount < view.lobbyVo.playerCount)
         return;

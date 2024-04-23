@@ -16,6 +16,16 @@ namespace Runtime.Contexts.Lobby.Vo
     public PlayerColorVo playerColor;
     
     [ProtoMember(4)]
-    public bool ready;
+    public ushort state;
+  }
+
+  public enum ClientState
+  {
+    None,
+    LobbyReady,
+    MainGameSceneReady,
+    MainGameStart,
+    MiniGameSceneReady,
+    MiniGameCreated
   }
 }

@@ -44,7 +44,10 @@ namespace Runtime.Contexts.MiniGames.Model.MiniGamesModel
         {
             miniGameMediators[lobbyCode].OnSceneReady(clientId);
         }
-        
+        public void OnMiniGameCreated(string lobbyCode, ushort clientId)
+        {
+            miniGameMediators[lobbyCode].OnMiniGameCreated(clientId);
+        }
         public void CreateNewGame(string key,Transform parent=null,Action<GameObject> action=null)
         {
             Addressables.InstantiateAsync(key, parent).Completed += handle =>
