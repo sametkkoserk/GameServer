@@ -9,7 +9,7 @@ using StrangeIoC.scripts.strange.extensions.injector;
 
 namespace Runtime.Contexts.MiniGames.Processor
 {
-    public class MiniGameSceneReadyProcessor : EventCommand
+    public class MiniGameCreatedProcessor : EventCommand
     {
         [Inject] public INetworkManagerService networkManager { get; set; }
 
@@ -20,7 +20,7 @@ namespace Runtime.Contexts.MiniGames.Processor
             ushort clientId = messageReceivedVo.fromId;
 
             ReadyVo vo = networkManager.GetData<ReadyVo>(messageReceivedVo.message);
-            miniGamesModel.OnMiniGameSceneReady(vo.lobbyCode,clientId);
+            miniGamesModel.OnMiniGameCreated(vo.lobbyCode,clientId);
         }
 
     }

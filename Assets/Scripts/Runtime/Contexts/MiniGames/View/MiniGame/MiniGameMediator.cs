@@ -39,30 +39,26 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
         mainClass = view.lobbyVo
       };
       dispatcher.Dispatch(MiniGamesEvent.SendCreateMiniGameScene,vo);
-      for (int i = 0; i < view.lobbyVo.clients.Count; i++)
-      {
-        view.lobbyVo.clients.ElementAt(i).Value.ready = false;
-      }
-
+      
       view.lobbyVo.readyCount = 0;
     }
 
     public void OnSceneReady(ushort clientId)
     {
-      if (!view.lobbyVo.clients[clientId].ready)
+      if ((view.lobbyVo.clients[clientId].state!=(ushort)ClientState.MiniGameSceneReady))
       {
-        view.lobbyVo.clients[clientId].ready = true;
+        view.lobbyVo.clients[clientId].state=(ushort)ClientState.MiniGameSceneReady;
         view.lobbyVo.readyCount++;
       }
 
       if (view.lobbyVo.readyCount!=view.lobbyVo.clients.Count)return;
 
+      view.lobbyVo.readyCount = 0;
       SendPacketToLobbyVo<MiniGameCreatedVo> sendPacketToLobbyVo = new()
       {
         mainClass = new MiniGameCreatedVo() { miniGameKey = view.miniGameKey },
         clients = view.lobbyVo.clients
       };
-      dispatcher.Dispatch(MiniGamesEvent.MiniGameCreated, sendPacketToLobbyVo);
 
       Addressables.InstantiateAsync(view.miniGameKey, transform).Completed += handle =>
       {
@@ -71,10 +67,23 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
         miniGameController = handle.Result.GetComponent<MiniGameController>();
         miniGameController.miniGameMediator = this;
         miniGameController.lobbyVo = view.lobbyVo;
-        miniGameController.Init();
+        dispatcher.Dispatch(MiniGamesEvent.MiniGameCreated, sendPacketToLobbyVo);
+
       };
     }
 
+    public void OnMiniGameCreated(ushort clientId)
+    {
+      if ((view.lobbyVo.clients[clientId].state!=(ushort)ClientState.MiniGameCreated))
+      {
+        view.lobbyVo.clients[clientId].state=(ushort)ClientState.MiniGameCreated;
+        view.lobbyVo.readyCount++;
+      }
+
+      if (view.lobbyVo.readyCount!=view.lobbyVo.clients.Count)return;
+
+      miniGameController.Init();
+    }
     public void OnButtonClicked(ushort clientId, ClickedButtonsVo vo)
     {
       miniGameController.OnButtonClick(clientId, vo);

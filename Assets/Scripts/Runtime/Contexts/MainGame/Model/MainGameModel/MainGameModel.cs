@@ -25,6 +25,7 @@ namespace Runtime.Contexts.MainGame.Model.MainGameModel
 
         public int ClaimCitySoldierCount { get; set; } = 5;
         
+
         [PostConstruct]
         public void OnPostConstruct()
         {

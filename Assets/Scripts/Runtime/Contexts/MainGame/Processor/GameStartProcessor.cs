@@ -1,4 +1,5 @@
 using Editor.Tools.DebugX.Runtime;
+using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
@@ -21,12 +22,11 @@ namespace Runtime.Contexts.MainGame.Processor
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
       ushort id = messageReceivedVo.fromId;
       
-      GameStartVo gameStartVo = networkManager.GetData<GameStartVo>(messageReceivedVo.message);
+      ReadyVo vo = networkManager.GetData<ReadyVo>(messageReceivedVo.message);
 
-      gameStartVo.clientId = id;
 
       DebugX.Log(DebugKey.MainGame, $"Game start processor");
-      mainGameModel.mainMapMediators[gameStartVo.lobbyCode].OnGameStartCheck(gameStartVo);
+      mainGameModel.mainMapMediators[vo.lobbyCode].OnGameStartCheck(vo.lobbyCode,id);
     }
   }
 }
