@@ -28,5 +28,9 @@ namespace Runtime.Contexts.MiniGames.Vo
         public Dictionary<ushort, Vector3Vo> playerPositions;
         [ProtoMember(8)]
         public Dictionary<ushort, QuaternionVo> playerRotations;
+        
+        [ProtoMember(9)]
+        public Dictionary<ushort, Vector3Vo> playerVelocities;
+        
     }
 }

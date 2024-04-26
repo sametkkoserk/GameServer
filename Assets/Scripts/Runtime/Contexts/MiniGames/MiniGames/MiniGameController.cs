@@ -77,6 +77,8 @@ namespace Runtime.Contexts.MiniGames.MiniGames
 
         playerPositions = players.ToDictionary(pair => pair.Key, pair => new Vector3Vo(pair.Value.transform.position)),
         playerRotations = players.ToDictionary(pair => pair.Key, pair => new QuaternionVo(pair.Value.transform.rotation)),
+        
+        playerVelocities = players.ToDictionary(pair => pair.Key, pair => new Vector3Vo(pair.Value.GetComponent<Rigidbody>().velocity)),
       };
       ResetObjs();
     }

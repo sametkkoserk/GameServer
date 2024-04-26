@@ -18,7 +18,7 @@ public class RaceMapGenerator : MapGenerator
     public GameObject startObject;
     public GameObject endObject;
 
-    public int roadLength = 20; // Yol uzunluğu
+    public int roadLength = 15; // Yol uzunluğu
 
     private int currentDirection=0;
     
@@ -94,6 +94,9 @@ public class RaceMapGenerator : MapGenerator
         vo.mapItems = roadState;
         vo.positions = roadItems.ConvertAll(road => new Vector3Vo(road.transform.position));
         vo.rotations = roadItems.ConvertAll(road => new QuaternionVo(road.transform.rotation));
+        vo.checkPointsPos = roadItems.ConvertAll(road => new Vector3Vo(road.endPos.position));
+        vo.checkPointsRot = roadItems.ConvertAll(road => new QuaternionVo(road.endPos.rotation));
+
         return vo;
     }
 }
