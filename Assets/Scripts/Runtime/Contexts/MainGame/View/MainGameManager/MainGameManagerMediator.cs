@@ -21,7 +21,8 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
   public class MainGameManagerMediator : EventMediator
   {
     [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
-    public IEventDispatcher crossDispatcher{ get; set;}
+    public IEventDispatcher crossDispatcher { get; set; }
+
     [Inject]
     public MainGameManagerView view { get; set; }
 
@@ -126,7 +127,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
           view.gameManagerVo.startTimer = false;
           view.gameManagerVo.nextTurn = false;
-          
+
           OnStartMiniGame();
           return;
         }
@@ -203,7 +204,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
           view.gameManagerVo.startTimer = false;
           view.gameManagerVo.nextTurn = false;
-          
+
           OnStartMiniGame();
         }
         else
@@ -223,9 +224,9 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private void OnStartMiniGame()
     {
-       view.gameManagerVo.startTimer = false;
-       SetRandomQueue();
-       OnMiniGameEnded(view.gameManagerVo.queueList);
+      view.gameManagerVo.startTimer = false;
+      SetRandomQueue();
+      OnMiniGameEnded(view.gameManagerVo.queueList);
 
       // SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
       // {
@@ -310,8 +311,8 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       if (view.gameManagerVo.playerFeaturesVos[GetLastPlayer()].clientId == GetCurrentPlayer())
       {
         view.gameManagerVo.claimCitySoldierCount--;
-        
-        if (view.gameManagerVo.claimCitySoldierCount > 0) return;
+
+        if (view.gameManagerVo.claimCitySoldierCount >= 0) return;
       }
       else
       {
@@ -356,7 +357,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       {
         AttackerWin(attackerCityVo, defenderCityVo);
       }
-      else if (attackerCityVo.soldierCount < defenderCityVo.soldierCount)
+      else if (attackerCityVo.soldierCount <= defenderCityVo.soldierCount)
       {
         DefenderWin(attackerCityVo, defenderCityVo);
       }
@@ -364,12 +365,12 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       {
         return;
       }
-      
+
       view.gameManagerVo.uncompletedAttackCityVos.Clear();
       view.gameManagerVo.uncompletedAttackCityVos.Add(attackerCityVo.ID, defenderCityVo.ID);
       view.gameManagerVo.clientId = attackerCityVo.clientId;
     }
-    
+
     private void AttackerWin(CityVo attacker, CityVo defender)
     {
       CityVo attackerCity = view.mainMapMediator.view.GetSpecificCity(attacker.ID);
@@ -379,7 +380,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       if (attackerCity.soldierCount == 0)
         attackerCity.soldierCount = 1;
       view.mainMapMediator.view.SetSpecificCity(attackerCity);
-      
+
       defenderCity.soldierCount = 1;
       defenderCity.ownerID = attackerCity.ownerID;
       view.mainMapMediator.view.SetSpecificCity(defenderCity);
@@ -404,7 +405,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
       if (defenderCity.soldierCount == 0)
         defenderCity.soldierCount = 1;
       view.mainMapMediator.view.SetSpecificCity(defenderCity);
-      
+
       attackerCity.soldierCount = 1;
       view.mainMapMediator.view.SetSpecificCity(attackerCity);
 
@@ -462,13 +463,14 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
       dispatcher.Dispatch(MainGameEvent.FortifyResult, vo);
     }
-    
+
     #endregion
 
     public int GetCurrentPlayer()
     {
       return view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
     }
+
     public bool CheckLastPlayer()
     {
       ushort queueId = view.gameManagerVo.queueList.ElementAt(view.gameManagerVo.queue);
@@ -507,7 +509,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     public void ChangeCityOwner(int cityId, ushort clientId)
     {
       view.mainMapMediator.view.cities[cityId].ownerID = clientId;
-      
+
       view.gameManagerVo.playerFeaturesVos[clientId].cities.Add(cityId);
     }
 
@@ -519,7 +521,7 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
     public void IncreaseCitySoldierCount(int cityId, int increaseCount, ushort clientId)
     {
       view.mainMapMediator.view.cities[cityId].soldierCount += increaseCount;
-      
+
       DecreaseFreeSoldierCount(clientId, increaseCount);
     }
 
