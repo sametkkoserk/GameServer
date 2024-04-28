@@ -5,10 +5,12 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
 {
     public class CarController : MonoBehaviour
     {
+        public MiniGameController miniGameController;
         public ushort clientId;
         private float horizontalInput, verticalInput;
         private float currentSteerAngle, currentbreakForce;
         private bool isBreaking;
+        private int currentState = 0;
 
         // Settings
         [SerializeField] private float motorForce, breakForce, maxSteerAngle;
@@ -54,6 +56,24 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
             wheelCollider.GetWorldPose(out pos, out rot);
             wheelTransform.rotation = rot;
             wheelTransform.position = pos;
+        }
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.Log(other.gameObject.tag);
+            if (other.gameObject.tag=="CheckPoint")
+            {
+                int _index = other.gameObject.GetComponent<CheckPointController>().index;
+                if (_index>currentState)
+                {
+                    Debug.Log(other.gameObject.tag);
+                    currentState = _index;
+                    miniGameController.SetPlayerState(clientId,currentState);
+
+                }
+
+            }
         }
 
         public void SetValues(float verticalAxis, float horizontalAxis, bool space)

@@ -34,6 +34,8 @@ namespace Runtime.Contexts.MiniGames.MiniGames
 
     public Dictionary<ushort, GameObject> players = new ();
     private SendPacketToLobbyVo<MiniGameStateVo> stateVo = new();
+    
+    public Dictionary<ushort, int> playerStates = new Dictionary<ushort, int>();
 
     private int currentId=0;
     protected bool anythingChanged;
@@ -78,6 +80,7 @@ namespace Runtime.Contexts.MiniGames.MiniGames
         playerPositions = players.ToDictionary(pair => pair.Key, pair => new Vector3Vo(pair.Value.transform.position)),
         playerRotations = players.ToDictionary(pair => pair.Key, pair => new QuaternionVo(pair.Value.transform.rotation)),
         
+        playerStates = playerStates,
         playerVelocities = players.ToDictionary(pair => pair.Key, pair => new Vector3Vo(pair.Value.GetComponent<Rigidbody>().velocity)),
       };
       ResetObjs();
@@ -140,9 +143,14 @@ namespace Runtime.Contexts.MiniGames.MiniGames
           GameObject obj = handle.Result;
           obj.transform.position=gameStartController.GetNextPoint();
           players[lobbyVo.clients.ElementAt(index).Value.id] = obj;
+          playerStates[lobbyVo.clients.ElementAt(index).Value.id] = 0;
           anythingChanged = true;
         };
       }
+    }    
+    public virtual void SetPlayerState(ushort clientId, int currentState)
+    {
+      playerStates[clientId] = currentState;
     }
   }
 }

@@ -510,7 +510,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1300
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -539,8 +539,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381bc64be1f7bc940968f52559acfab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameController: {fileID: 0}
   clientId: 0
-  motorForce: 1000
+  motorForce: 500
   breakForce: 3000
   maxSteerAngle: 30
   frontLeftWheelCollider: {fileID: 2716459193614891142}
