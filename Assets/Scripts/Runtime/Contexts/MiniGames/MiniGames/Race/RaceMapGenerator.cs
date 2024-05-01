@@ -58,7 +58,7 @@ public class RaceMapGenerator : MapGenerator
 
     void GenerateMap()
     {
-        
+        lastEnd = transform.position;
         CreateRoad(3);
         while (roadItems.Count<roadLength)
         {
