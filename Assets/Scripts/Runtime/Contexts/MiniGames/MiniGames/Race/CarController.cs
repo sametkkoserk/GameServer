@@ -10,7 +10,9 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
         private float horizontalInput, verticalInput;
         private float currentSteerAngle, currentbreakForce;
         private bool isBreaking;
-        private int currentState = 0;
+        private int currentState = -1;
+        public bool isFlipped;
+        public float flippedTimer = 3f;
 
         // Settings
         [SerializeField] private float motorForce, breakForce, maxSteerAngle;
@@ -61,21 +63,18 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.tag);
-            if (other.gameObject.tag=="CheckPoint")
+            if (other.gameObject.CompareTag("CheckPoint"))
             {
                 int _index = other.gameObject.GetComponent<CheckPointController>().index;
-                if (_index>currentState)
+                if (_index==currentState+1)
                 {
                     Debug.Log(other.gameObject.tag);
                     currentState = _index;
                     miniGameController.SetPlayerState(clientId,currentState);
 
                 }
-
             }
         }
-
         public void SetValues(float verticalAxis, float horizontalAxis, bool space)
         {
             // Steering Input
@@ -90,6 +89,25 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
             HandleMotor();
             HandleSteering();
             UpdateWheels();
+        }
+
+        private void Update()
+        {
+            isFlipped = (Mathf.Abs(transform.rotation.eulerAngles.x)>80&&Mathf.Abs(transform.rotation.eulerAngles.x)<280)||(Mathf.Abs(transform.rotation.eulerAngles.z)>80&&Mathf.Abs(transform.rotation.eulerAngles.z)<280);
+            if (isFlipped)
+            {
+                flippedTimer -= Time.deltaTime;
+            }
+            else
+            {
+                flippedTimer = 3f;
+            }
+
+            if (flippedTimer<0)
+            {
+                transform.position=miniGameController.miniGameMapGenerationVo.checkPointsPos[currentState >= 0 ? currentState : 0].ToVector3();
+                transform.rotation = miniGameController.miniGameMapGenerationVo.checkPointsRot[currentState >= 0 ? currentState : 0].ToQuaternion();
+            }
         }
     }
 }

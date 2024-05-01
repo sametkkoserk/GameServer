@@ -19,12 +19,13 @@ public class RaceMapGenerator : MapGenerator
     public GameObject startObject;
     public GameObject endObject;
     public GameObject planeObject;
-    public int roadLength = 15; // Yol uzunluğu
+    private int roadLength = 15; // Yol uzunluğu
 
     private int currentDirection=0;
     
     private Vector3 lastEnd = new Vector3(0, 0, 0);
     private int lastTurn=-1 ;
+    
     
     
 
@@ -57,13 +58,9 @@ public class RaceMapGenerator : MapGenerator
 
     void GenerateMap()
     {
-
-        GameObject plane = Instantiate(planeObject, new Vector3(0, 2000, 0),
-            Quaternion.Euler(0, 90 * currentDirection, 0), transform);
-        Vector3 diff = plane.GetComponent<Transform>().position - lastEnd;
-        plane.GetComponent<Transform>().localPosition -= diff;
+        
         CreateRoad(3);
-        while (roadItems.Count<20)
+        while (roadItems.Count<roadLength)
         {
             int straightCount = Random.Range(0, 3);
             
@@ -77,7 +74,12 @@ public class RaceMapGenerator : MapGenerator
             
         }
         CreateRoad(4);
-
+        
+        GameObject plane = Instantiate(planeObject, new Vector3(0, 2000, 0),
+            Quaternion.Euler(0, 90 * currentDirection, 0), transform);
+        Vector3 diff = plane.GetComponent<Transform>().position - roadItems[roadItems.Count/2].endPos.position;
+        plane.GetComponent<Transform>().localPosition -= (diff+new Vector3(0,0.1f,0));
+        planeObject = plane;
     }
     
 
@@ -103,6 +105,7 @@ public class RaceMapGenerator : MapGenerator
         vo.mapItems = roadState;
         vo.positions = roadItems.ConvertAll(road => new Vector3Vo(road.transform.position));
         vo.rotations = roadItems.ConvertAll(road => new QuaternionVo(road.transform.rotation));
+        vo.staticMapPos = new Vector3Vo(planeObject.transform.position);
         vo.checkPointsPos = roadItems.ConvertAll(road => new Vector3Vo(road.endPos.position));
         vo.checkPointsRot = roadItems.ConvertAll(road => new QuaternionVo(road.endPos.rotation));
 

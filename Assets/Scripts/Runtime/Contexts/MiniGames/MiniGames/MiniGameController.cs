@@ -18,6 +18,7 @@ namespace Runtime.Contexts.MiniGames.MiniGames
     public LobbyVo lobbyVo;
     public Transform playerContainer;
     public MapGenerator mapGenerator;
+    public MiniGameMapGenerationVo miniGameMapGenerationVo;
     public GameStartController gameStartController;
 
 
@@ -44,8 +45,8 @@ namespace Runtime.Contexts.MiniGames.MiniGames
     {
       if (mapGenerator)
       {
-        MiniGameMapGenerationVo vo = mapGenerator.SetMap();
-        miniGameMediator.SendMap(vo);
+        miniGameMapGenerationVo = mapGenerator.SetMap();
+        miniGameMediator.SendMap(miniGameMapGenerationVo);
         gameStartController=GetComponentInChildren<GameStartController>();
       }
       CreatePlayers();
