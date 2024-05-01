@@ -27,8 +27,6 @@ namespace Runtime.Contexts.Main.Command
     public override void Execute()
     {
       RegisterInfoVo registerInfoVo = (RegisterInfoVo)evt.data;
-      //if (smt)
-      // There will be checking system in the future.
 
       playerModel.userList.Add(registerInfoVo.userId, registerInfoVo);
 
