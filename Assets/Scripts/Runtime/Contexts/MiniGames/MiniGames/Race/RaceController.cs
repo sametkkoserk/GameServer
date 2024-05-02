@@ -29,11 +29,16 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
                     if (handle.Status==AsyncOperationStatus.Succeeded)
                     {
                         GameObject obj = handle.Result;
-                        players[lobbyVo.clients.ElementAt(index).Value.id] = obj;
-                        carControllers[lobbyVo.clients.ElementAt(index).Value.id] = obj.GetComponent<CarController>();
                         obj.transform.position=gameStartController.GetNextPoint();
-                        carControllers[lobbyVo.clients.ElementAt(index).Value.id].clientId =
-                            lobbyVo.clients.ElementAt(index).Value.id;
+
+                        players[lobbyVo.clients.ElementAt(index).Value.id] = obj;
+                        
+                        CarController carController=obj.GetComponent<CarController>();
+                        carControllers[lobbyVo.clients.ElementAt(index).Value.id] =carController;
+                        carController.clientId = lobbyVo.clients.ElementAt(index).Value.id;
+                        carController.miniGameController = this;
+                        
+                        playerStates[lobbyVo.clients.ElementAt(index).Value.id] = -1;
                         anythingChanged = true;
 
                     }

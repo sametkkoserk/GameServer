@@ -32,6 +32,7 @@ namespace Runtime.Contexts.MiniGames.Model.MiniGamesModel
         
         public void OnButtonClicked(ushort clientId, ClickedButtonsVo vo)
         {
+            if (!miniGameMediators.ContainsKey(vo.lobbyCode))return;
             miniGameMediators[vo.lobbyCode].OnButtonClicked(clientId, vo);
         }
 
