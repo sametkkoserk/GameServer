@@ -22,6 +22,5 @@ namespace Runtime.Contexts.MiniGames.Command
             DebugX.Log(DebugKey.Server,"SendCreateMiniGameSceneCommand");
             networkManager.SendToLobby(message,vo.clients);
         }
-
     }
 }

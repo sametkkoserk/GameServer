@@ -38,6 +38,7 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
         clients = view.lobbyVo.clients,
         mainClass = view.lobbyVo
       };
+      
       dispatcher.Dispatch(MiniGamesEvent.SendCreateMiniGameScene,vo);
       
       view.lobbyVo.readyCount = 0;
@@ -98,8 +99,10 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
     {
       InfoVo vo = new() { clients = view.lobbyVo.clients };
       dispatcher.Dispatch(MiniGamesEvent.OnMiniGameEnded, vo);
+      
       mainGameModel.MiniGameEnded(view.lobbyVo.lobbyCode, leaderBoard);
       miniGamesModel.MiniGameEnded(view.lobbyVo.lobbyCode);
+      
       Destroy(gameObject);
     }
 

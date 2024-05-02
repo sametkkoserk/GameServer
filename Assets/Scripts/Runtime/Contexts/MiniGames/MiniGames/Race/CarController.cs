@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Runtime.Contexts.MiniGames.MiniGames.Race
@@ -66,12 +65,11 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
             if (other.gameObject.CompareTag("CheckPoint"))
             {
                 int _index = other.gameObject.GetComponent<CheckPointController>().index;
-                if (_index==currentState+1)
+                if (_index == currentState + 1)
                 {
                     Debug.Log(other.gameObject.tag);
                     currentState = _index;
                     miniGameController.SetPlayerState(clientId,currentState);
-
                 }
             }
         }
@@ -103,7 +101,7 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
                 flippedTimer = 3f;
             }
 
-            if (flippedTimer<0)
+            if (flippedTimer < 0)
             {
                 transform.position=miniGameController.miniGameMapGenerationVo.checkPointsPos[currentState >= 0 ? currentState : 0].ToVector3();
                 transform.rotation = miniGameController.miniGameMapGenerationVo.checkPointsRot[currentState >= 0 ? currentState : 0].ToQuaternion();

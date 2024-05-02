@@ -225,21 +225,19 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 
     private void OnStartMiniGame()
     {
-      //view.gameManagerVo.startTimer = false;
-      //SetRandomQueue();
-      //OnMiniGameEnded(view.gameManagerVo.queueList);
-
-
+      view.gameManagerVo.startTimer = false;
+      // SetRandomQueue();
+      // OnMiniGameEnded(view.gameManagerVo.queueList);
       crossDispatcher.Dispatch(MiniGamesEvent.OnCreateMiniGame,view.lobbyVo);
+      
     }
 
     public async void OnMiniGameEnded(List<ushort> tourQueue)
     {
-      SetRewards();
-
-      // view.gameManagerVo.queueList.Reverse();
       view.gameManagerVo.queueList = tourQueue;
       view.gameManagerVo.queue = -1;
+      
+      SetRewards();
 
       await WaitAsyncOperations(PanelClosingTimes.miniGameResults);
 

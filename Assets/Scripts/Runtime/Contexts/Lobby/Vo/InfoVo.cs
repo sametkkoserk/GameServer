@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using ProtoBuf;
-using UnityEngine;
 
 namespace Runtime.Contexts.Lobby.Vo
 {

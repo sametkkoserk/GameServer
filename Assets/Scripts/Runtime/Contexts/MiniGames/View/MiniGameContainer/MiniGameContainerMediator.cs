@@ -36,7 +36,6 @@ namespace Runtime.Contexts.MiniGames.View.MiniGameContainer
                 miniGameView.lobbyVo = lobbyVo;
                 miniGameView.miniGameKey = newGame;
             } );
-
         }
 
         public override void OnRemove()

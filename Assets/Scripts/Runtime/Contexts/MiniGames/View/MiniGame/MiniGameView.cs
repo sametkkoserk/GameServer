@@ -6,6 +6,7 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
     public class MiniGameView : EventView
     {
         public LobbyVo lobbyVo;
+        
         public string miniGameKey;
     }
 }
