@@ -15,6 +15,8 @@ namespace Runtime.Contexts.MiniGames.MiniGames.Race
         
         public override void OnButtonClick(ushort clientId, ClickedButtonsVo vo)
         {
+            if (!carControllers.ContainsKey(clientId))return;
+
             carControllers[clientId]
                 .SetValues(vo.verticalAxis, vo.horizontalAxis, false);
             anythingChanged = true;

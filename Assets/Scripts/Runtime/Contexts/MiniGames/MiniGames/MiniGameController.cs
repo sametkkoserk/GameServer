@@ -106,6 +106,8 @@ namespace Runtime.Contexts.MiniGames.MiniGames
 
     public void ClientFinished(ushort clientId)
     {
+      if (leaderBoard.Contains(clientId))return;
+
       leaderBoard.Add(clientId);
       if (leaderBoard.Count == players.Count)
       {

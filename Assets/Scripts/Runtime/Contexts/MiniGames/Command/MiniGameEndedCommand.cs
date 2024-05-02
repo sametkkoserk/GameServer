@@ -15,8 +15,9 @@ namespace Runtime.Contexts.MiniGames.Command
         public override void Execute()
         {
             InfoVo vo = (InfoVo)evt.data;
-
+            vo.message = "done";
             Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.MiniGameEnded);
+            networkManager.SetData(message, vo);
             networkManager.SendToLobby(message, vo.clients);
         }
     }

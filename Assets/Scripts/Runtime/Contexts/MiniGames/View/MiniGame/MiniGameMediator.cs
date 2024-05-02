@@ -15,6 +15,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Runtime.Contexts.MiniGames.View.MiniGame
 {
+  public enum MiniGameEvent
+  {
+    Init
+  }
   public class MiniGameMediator : EventMediator
   {
     [Inject]
@@ -28,9 +32,13 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
 
     public MiniGameController miniGameController;
 
-
-
-    private void Start()
+    public override void OnRegister()
+    {
+      base.OnRegister();
+      view.dispatcher.AddListener(MiniGameEvent.Init,Init);
+    }
+    
+    public void Init()
     {
       miniGamesModel.miniGameMediators[view.lobbyVo.lobbyCode] = this;
       SendPacketToLobbyVo<LobbyVo> vo = new SendPacketToLobbyVo<LobbyVo>()
@@ -38,7 +46,6 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
         clients = view.lobbyVo.clients,
         mainClass = view.lobbyVo
       };
-      
       dispatcher.Dispatch(MiniGamesEvent.SendCreateMiniGameScene,vo);
       
       view.lobbyVo.readyCount = 0;
@@ -87,6 +94,8 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
     }
     public void OnButtonClicked(ushort clientId, ClickedButtonsVo vo)
     {
+      if (!miniGameController)return;
+
       miniGameController.OnButtonClick(clientId, vo);
     }
 
@@ -115,6 +124,11 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
       });
     }
 
+    public override void OnRemove()
+    {
+      base.OnRemove();
+      view.dispatcher.RemoveListener(MiniGameEvent.Init,Init);
 
+    }
   }
 }

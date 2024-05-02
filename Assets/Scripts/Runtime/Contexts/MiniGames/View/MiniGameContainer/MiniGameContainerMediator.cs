@@ -35,6 +35,7 @@ namespace Runtime.Contexts.MiniGames.View.MiniGameContainer
                 MiniGameView miniGameView=obj.GetComponent<MiniGameView>();
                 miniGameView.lobbyVo = lobbyVo;
                 miniGameView.miniGameKey = newGame;
+                miniGameView.Init();
             } );
         }
 

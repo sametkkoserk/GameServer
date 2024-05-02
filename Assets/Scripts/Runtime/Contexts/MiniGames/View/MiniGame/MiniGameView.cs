@@ -8,5 +8,10 @@ namespace Runtime.Contexts.MiniGames.View.MiniGame
         public LobbyVo lobbyVo;
         
         public string miniGameKey;
+
+        public void Init()
+        {
+            dispatcher.Dispatch(MiniGameEvent.Init);
+        }
     }
 }
