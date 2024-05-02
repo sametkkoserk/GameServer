@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.Vo;
+using Runtime.Contexts.MiniGames.Enum;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
+using StrangeIoC.scripts.strange.extensions.context.api;
+using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
 using StrangeIoC.scripts.strange.extensions.injector;
 using StrangeIoC.scripts.strange.extensions.mediation.impl;
 using UnityEngine;
@@ -16,6 +19,9 @@ namespace Runtime.Contexts.MainGame.View.MainGameManager
 {
   public class MainGameManagerMediator : EventMediator
   {
+    [Inject(ContextKeys.CROSS_CONTEXT_DISPATCHER)]
+    public IEventDispatcher crossDispatcher { get; set; }
+    
     [Inject]
     public MainGameManagerView view { get; set; }
 
