@@ -3,9 +3,6 @@ using System.Linq;
 using Editor.Tools.DebugX.Runtime;
 using Runtime.Contexts.Lobby.Enum;
 using Runtime.Contexts.Lobby.Vo;
-using Runtime.Contexts.MainGame.View.MainGameManager;
-using Runtime.Contexts.MainGame.View.MainMap;
-using Runtime.Contexts.Network.Vo;
 using StrangeIoC.scripts.strange.extensions.context.api;
 using StrangeIoC.scripts.strange.extensions.dispatcher.eventdispatcher.api;
 using StrangeIoC.scripts.strange.extensions.injector;
@@ -29,7 +26,6 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         {
             lobbies = new Dictionary<string, LobbyVo>();
         }
-        
 
         public void DeleteLobby(string lobbyCode)
         {
@@ -57,9 +53,6 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
             
             return randomString;
         }
-        
-        
-        
         
         public void NewLobbyCreated(LobbyVo vo)
         {
@@ -92,14 +85,16 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         {
             LobbyVo lobbyVo = lobbies[lobbyCode];
             
-            if (lobbyVo.clients[id].state==(ushort)ClientState.LobbyReady)
+            if (lobbyVo.clients[id].state == (ushort)ClientState.LobbyReady)
                 return;
       
             lobbyVo.clients[id].state=(ushort)ClientState.LobbyReady;
             lobbyVo.readyCount ++;
             
-            PlayerReadyVo playerReadyVo = new();
-            playerReadyVo.startGame = lobbyVo.readyCount == lobbyVo.playerCount;
+            PlayerReadyVo playerReadyVo = new()
+            {
+                startGame = lobbyVo.readyCount == lobbyVo.playerCount
+            };
             lobbyVo.isStarted = playerReadyVo.startGame;
             playerReadyVo.clients = lobbyVo.clients;
             playerReadyVo.readyCount = lobbyVo.readyCount;
@@ -113,9 +108,9 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
         public void OnQuit(string lobbyCode, ushort id)
         {
             LobbyVo lobbyVo = lobbies[lobbyCode];
-            if (lobbyVo.clients[id].state==(ushort)ClientState.LobbyReady)
+            if (lobbyVo.clients[id].state == (ushort)ClientState.LobbyReady)
             {
-                lobbyVo.readyCount --;
+                lobbyVo.readyCount--;
             }
 
             QuitFromLobbyVo quitFromLobbyVo = new();
@@ -133,14 +128,13 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
                     quitFromLobbyVo.hostId = lobbyVo.hostId;
                 }
 
-
                 dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
                 return;
             }
       
             dispatcher.Dispatch(LobbyEvent.QuitFromLobbyDone, quitFromLobbyVo);
 
-            DebugX.Log(DebugKey.Server, "The lobby was closed because there was no one left in the lobby. Lobby Code: " +lobbyVo.lobbyCode);
+            DebugX.Log(DebugKey.Server, "The lobby was closed because there was no one left in the lobby. Lobby Code: " + lobbyVo.lobbyCode);
 
             DeleteLobby(lobbyVo.lobbyCode);
         }
@@ -158,7 +152,7 @@ namespace Runtime.Contexts.Lobby.Model.LobbyModel
 
         public void OnAddBot(ushort fromId, string lobbyCode)
         {
-            if (lobbies[lobbyCode].hostId==fromId)
+            if (lobbies[lobbyCode].hostId == fromId)
             {
                 UnityWebRequest.Get("http://localhost:8080/" + lobbyCode).SendWebRequest();
             }

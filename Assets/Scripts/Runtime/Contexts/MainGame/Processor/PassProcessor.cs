@@ -19,9 +19,9 @@ namespace Runtime.Contexts.MainGame.Processor
       MessageReceivedVo messageReceivedVo = (MessageReceivedVo)evt.data;
       ushort clientId = messageReceivedVo.fromId;
       
-      SendPacketWithLobbyCode<int> vo = networkManager.GetData<SendPacketWithLobbyCode<int>>(messageReceivedVo.message);
+      string lobbyCode = networkManager.GetData<string>(messageReceivedVo.message);
 
-      mainGameModel.mainGameManagerMediators[vo.lobbyCode].OnPass(clientId);
+      mainGameModel.mainGameManagerMediators[lobbyCode].OnPass(clientId);
 
       DebugX.Log(DebugKey.MainGame, "Pass Processor.");
 

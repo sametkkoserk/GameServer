@@ -5,6 +5,7 @@ using Runtime.Contexts.Lobby.Vo;
 using Runtime.Contexts.MainGame.Enum;
 using Runtime.Contexts.MainGame.Model.MainGameModel;
 using Runtime.Contexts.MainGame.View.City;
+using Runtime.Contexts.MainGame.View.MainGameManager;
 using Runtime.Contexts.MainGame.Vo;
 using Runtime.Contexts.Network.Services.NetworkManager;
 using Runtime.Contexts.Network.Vo;
@@ -118,31 +119,32 @@ namespace Runtime.Contexts.MainGame.View.MainMap
     
     public void OnClaimCity(ClaimCityVo claimCityVo, bool changeTurn = true)
     {
-      if (!view.mainGameManagerMediator.IsClientTurn(claimCityVo.clientId)) return;
+      MainGameManagerMediator gameManager = view.mainGameManagerMediator;
+      
+      if (!gameManager.IsClientTurn(claimCityVo.clientId)) return;
+      if (!gameManager.IsEnoughFreeSoldier(claimCityVo.soldierCount, claimCityVo.clientId)) return;
 
-      if (!view.mainGameManagerMediator.IsEnoughFreeSoldier(claimCityVo.soldierCount, claimCityVo.clientId)) return;
-
-      if (view.mainGameManagerMediator.IsCityNeutral(claimCityVo.cityId))
+      if (gameManager.IsCityNeutral(claimCityVo.cityId))
       {
-        view.mainGameManagerMediator.ChangeCityOwner(claimCityVo.cityId, claimCityVo.clientId);
-        view.mainGameManagerMediator.IncreaseCitySoldierCount(claimCityVo.cityId, claimCityVo.soldierCount, claimCityVo.clientId);
+        gameManager.ChangeCityOwner(claimCityVo.cityId, claimCityVo.clientId);
+        gameManager.IncreaseCitySoldierCount(claimCityVo.cityId, claimCityVo.soldierCount, claimCityVo.clientId);
       }
-      else if (!view.mainGameManagerMediator.IsCityOwnerTheClient(claimCityVo.cityId, claimCityVo.clientId))
+      else if (!gameManager.IsCityOwnerTheClient(claimCityVo.cityId, claimCityVo.clientId))
       {
         return;
       }
-      else if (view.mainGameManagerMediator.IsCityOwnerTheClient(claimCityVo.cityId, claimCityVo.clientId))
+      else if (gameManager.IsCityOwnerTheClient(claimCityVo.cityId, claimCityVo.clientId))
       {
-        view.mainGameManagerMediator.IncreaseCitySoldierCount(claimCityVo.cityId, claimCityVo.soldierCount, claimCityVo.clientId);
+        gameManager.IncreaseCitySoldierCount(claimCityVo.cityId, claimCityVo.soldierCount, claimCityVo.clientId);
       }
       
       SendPacketToLobbyVo<CityVo> sendPacketToLobbyVo = networkManager.SetSendPacketToLobbyVo(view.cities[claimCityVo.cityId], view.lobbyVo.clients);
       dispatcher.Dispatch(MainGameEvent.UpdateCity, sendPacketToLobbyVo);
       
-      dispatcher.Dispatch(MainGameEvent.ChangePlayerFeature, view.mainGameManagerMediator.view.gameManagerVo.playerFeaturesVos[claimCityVo.clientId]);
+      dispatcher.Dispatch(MainGameEvent.ChangePlayerFeature, gameManager.view.gameManagerVo.playerFeaturesVos[claimCityVo.clientId]);
 
       if (changeTurn)
-        view.mainGameManagerMediator.ChangeTurn();
+        gameManager.ChangeTurn();
     }
 
     public void AssignCityRandomly(ushort queueId)

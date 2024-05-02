@@ -40,11 +40,9 @@ namespace Runtime.Contexts.MiniGames.Config
             commandBinder.Bind(MiniGamesEvent.SendCreateMiniGameScene).To<SendCreateMiniGameSceneCommand>();
 
 
-
             commandBinder.Bind(ClientToServerId.ButtonClicked).To<ButtonClickedProcessor>();
             commandBinder.Bind(ClientToServerId.MiniGameSceneReady).To<MiniGameSceneReadyProcessor>();
             commandBinder.Bind(ClientToServerId.MiniGameCreated).To<MiniGameCreatedProcessor>();
-
         }
     }
 }

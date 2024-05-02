@@ -31,10 +31,11 @@ namespace Runtime.Contexts.Network.Enum
     
     Attack,
     Fortify,
+    
     CreateMiniGameScene,
     MiniGameCreated,
     SendMiniGameState,
-    MiniGaneEnded,
+    MiniGameEnded,
     SendMiniGameMap
   }
 }

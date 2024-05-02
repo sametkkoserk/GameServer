@@ -17,7 +17,7 @@ namespace Runtime.Contexts.MiniGames.Command
         {
             InfoVo vo = (InfoVo)evt.data;
 
-            Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.MiniGaneEnded);
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.MiniGameEnded);
             networkManager.SendToLobby(message,vo.clients);
         }
 
