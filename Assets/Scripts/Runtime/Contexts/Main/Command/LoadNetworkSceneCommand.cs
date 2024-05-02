@@ -1,5 +1,6 @@
 using Runtime.Contexts.Main.Enum;
 using StrangeIoC.scripts.strange.extensions.command.impl;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ namespace Runtime.Contexts.Main.Command
     {
         public override void Execute()
         {
+            Application.targetFrameRate = 45;
             Addressables.LoadSceneAsync(SceneKeys.NetworkScene, LoadSceneMode.Additive).Completed += handle =>
             {
                 Addressables.LoadSceneAsync(SceneKeys.LobbyScene, LoadSceneMode.Additive).Completed += handle2 =>
